@@ -1,0 +1,15 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'CJ-All-in-One' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for CJ-All-in-One
+  pod 'SnapKit'
+  pod 'NMapsMap'
+  pod 'Then'
+  pod 'Alamofire'
+  pod 'PanModal'
+
+end
