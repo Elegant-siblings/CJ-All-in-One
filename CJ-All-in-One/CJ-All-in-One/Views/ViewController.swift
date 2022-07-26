@@ -23,7 +23,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.barTintColor = .red
+//        navigationController?.navigationBar.tintColor = .red
+        navigationController?.navigationBar.backgroundColor = .red
+//        navigationController?.navigationItem.title = "Main"
+//        navigationController?.navigationBar.topItem?.title = "Main"
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
