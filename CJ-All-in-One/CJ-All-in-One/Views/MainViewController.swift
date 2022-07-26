@@ -47,6 +47,7 @@ class MainViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.setTitle("모집 신청하기", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
         return button
     } ()
     
@@ -111,7 +112,7 @@ class MainViewController: UIViewController {
         return sc
     }()
     
-    // -MARK: Actions
+    // -MARK: selectors
     @objc
     func detailTypeChanged(type: UISegmentedControl) {
         print(detailTypes[type.selectedSegmentIndex])
@@ -129,6 +130,7 @@ class MainViewController: UIViewController {
     
     @objc func touchUpApplyButton() {
         print("모집 신청하기")
+        navigationController?.pushViewController(ApplyViewController(), animated: true)
     }
 
 
@@ -155,7 +157,7 @@ class MainViewController: UIViewController {
 
     }
 
-    // -MARK: Settings
+    // -MARK: makeConstraints
     private func setConstraints() {
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
@@ -226,13 +228,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("click: \(tableLabels[indexPath.row])")
-//        print(lists[indexPath.row])
-//        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailViewController") as? DetailViewController else { return }
-//        vc.modalTransitionStyle = .coverVertical
-//        vc.modalPresentationStyle = .fullScreen
-//        vc.detail = details[indexPath.row]
-//        self.present(vc, animated: true, completion: nil)
+//        print("click: \(indexPath.row)")
+        
+        let vc = ResultViewController()
+        vc.string = "\(indexPath.row)"
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
 }
 
