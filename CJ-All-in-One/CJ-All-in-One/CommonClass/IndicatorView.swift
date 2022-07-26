@@ -41,4 +41,3 @@ open class IndicatorView {
         self.containerView.removeFromSuperview()
     }
 }
-
