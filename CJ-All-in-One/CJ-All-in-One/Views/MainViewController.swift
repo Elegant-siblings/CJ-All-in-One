@@ -104,8 +104,6 @@ class MainViewController: UIViewController {
         colorView.backgroundColor = .CjRed
 //        let foregroundImage = colorView.asImage()
         sc.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
-//        sc.setBackgroundImage(foregroundImage, for: .selected, barMetrics: .default)
-//        sc.setBackgroundImage(backgroundImage, for: .highlighted, barMetrics: .default)
 
         sc.selectedSegmentIndex = 0
         sc.apportionsSegmentWidthsByContent = false
@@ -127,6 +125,10 @@ class MainViewController: UIViewController {
     @objc
     func playTapped(type: UISegmentedControl) {
         print("play Tapped")
+    }
+    
+    @objc func touchUpApplyButton() {
+        print("모집 신청하기")
     }
 
 
