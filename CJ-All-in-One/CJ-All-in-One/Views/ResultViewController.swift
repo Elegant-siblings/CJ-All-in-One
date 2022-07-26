@@ -25,13 +25,14 @@ class ResultViewController: UIViewController {
     let gae = " 개"
     let locations = ["서울", "경기", "인천"]
     let lists = [
-        Item(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구"),
-        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 북구"),
-        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 북구"),
-        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 북구"),
-        Item(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 북구"),
-        Item(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 북구"),
-        Item(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구")
+        Item(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
+        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
+        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
+        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
+        Item(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
+        Item(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
+        Item(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
+        Item(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
     ]
     
     // -MARK: UIViews
@@ -77,10 +78,11 @@ class ResultViewController: UIViewController {
     
     
     // -MARK: Others
-    lazy var tableItem = ListTableView(rowHeight: 35, isScrollEnabled: false).then {
+    lazy var tableItem = ListTableView(rowHeight: 35, isScrollEnabled: true).then {
         $0.dataSource = self
         $0.register(ResultItemsTableViewCell.self, forCellReuseIdentifier: ResultItemsTableViewCell.identifier)
-//        $0.backgroundColor = .CjWhite
+        $0.alwaysBounceVertical = false
+        $0.bounces = $0.contentOffset.y > 0
     }
     lazy var buttonArrived = PrimaryButton(title: "터미널 도착").then {
         $0.addTarget(self, action: #selector(touchUpArrivedButton), for: .touchUpInside)
@@ -172,17 +174,25 @@ class ResultViewController: UIViewController {
 
 extension ResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return lists.count+1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ResultItemsTableViewCell.identifier, for: indexPath) as! ResultItemsTableViewCell
         if indexPath.row == 0 {
             cell.backgroundColor = .firstRowBackgroundColor
+            cell.labelNum.text = "#"
+            cell.labelCategory.text = "상품종류"
+            cell.labelTo.text = "배송지"
         }
         else {
             cell.backgroundColor = .CjWhite
+            cell.labelNum.text = "\(indexPath.row)"
+            cell.labelCategory.text = lists[indexPath.row-1].category
+            cell.labelTo.text = lists[indexPath.row-1].To
+//            cell.labelTo.textAlignment = .left
         }
+        cell.selectionStyle = .none
         return cell
     }
     
