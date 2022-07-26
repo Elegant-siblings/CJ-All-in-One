@@ -21,3 +21,6 @@ class Constant {
         ]
     }
 }
+
+let primaryButtonHeight = 48
+let primaryButtonWidth = 343
