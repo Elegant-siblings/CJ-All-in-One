@@ -15,6 +15,9 @@ import PanModal
 // MARK: - init 시 필요한 값: 1. 출발/목적지 위/경도 값 2. 경유지 포인트 위/경도 값(array)
 
 class FindPathViewController: UIViewController {
+    let buttonView = UIView().then {
+        $0.backgroundColor = .red
+    }
     
     let pathButton = MainButton(type: .main).then {
         $0.backgroundColor = .CjBlue
@@ -69,22 +72,17 @@ class FindPathViewController: UIViewController {
     //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
 //    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
 //    let destLocation = NMGLatLng(lat: 37.4282975, lng: 127.1837949)
-    var bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: 37.4282975, lng: 126.7644840),
-                                  northEast: NMGLatLng(lat: 37.7014553, lng: 127.1837949))
+    var bounds1 : NMGLatLngBounds!
     
-    let boundsArray = [NMGLatLngBounds(southWest: NMGLatLng(lat: 37.4282975, lng: 126.7644840),
-                                       northEast: NMGLatLng(lat: 37.55484, lng: 127.15238)),
-                       NMGLatLngBounds(southWest: NMGLatLng(lat: 37.55484, lng: 127.15238),
-                                       northEast: NMGLatLng(lat: 37.62344, lng: 127.20376)),
-                       NMGLatLngBounds(southWest: NMGLatLng(lat: 37.62344, lng: 127.20376),
-                                       northEast: NMGLatLng(lat: 37.7014553, lng: 127.1837949))]
+    var boundsArray = [NMGLatLngBounds]()
     var boundsIdx = 0
     
     // 경유지 정보
-    var wayPoitns = [NMGLatLng(lat: 37.55484, lng: 127.15238),
-                     NMGLatLng(lat: 37.62344, lng: 127.20376)]
+    var wayPoitns = [NMGLatLng]()
+    
+    var wayPointsForBounds = [NMGLatLng]()
     var wayPointsToString : String = ""
-    let wayPointNames = ["경유지1", "경유지2"]
+    var wayPointNames : [String] = []
 
     
     //경로
@@ -109,6 +107,8 @@ class FindPathViewController: UIViewController {
     //        self.bounds1.northEastLat= dest_lat
     //    }
     
+    var mapImage = UIImage()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,9 +127,11 @@ class FindPathViewController: UIViewController {
         zoomWayButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         
         view.addSubviews([mapView])
-        mapView.addSubviews([infoView, pathButton, zoomWayButton])
+        buttonView.addSubviews([pathButton, zoomWayButton])
+        mapView.addSubviews([infoView, buttonView])
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
         
+        self.view.bringSubviewToFront(buttonView)
 //        self.mapView.bringSubviewToFront(pathButton)
 //        self.mapView.bringSubviewToFront(zoomWayButton)
         
@@ -152,44 +154,7 @@ class FindPathViewController: UIViewController {
 //        pathButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         setConstraints()
         
-        // 출발 & 도착 위치 마커 찍기
-        let departMark = NMFMarker(position: bounds1.southWest)
-        departMark.mapView = mapView
-        departMark.iconImage = NMF_MARKER_IMAGE_BLACK
-        departMark.captionTextSize = 20
-        departMark.captionAligns = [NMFAlignType.top]
-        departMark.captionText = "출발지"
-        let destMark = NMFMarker(position: bounds1.northEast)
-        destMark.mapView = mapView
-        destMark.iconImage = NMF_MARKER_IMAGE_BLACK
-        destMark.captionTextSize = 20
-        destMark.captionAligns = [NMFAlignType.top]
-        destMark.captionText = "목적지"
-        // 경유지 마커 찍기
-        let way1Mark = NMFMarker(position: NMGLatLng(lat: self.wayPoitns[0].lat, lng: self.wayPoitns[0].lng))
-        way1Mark.iconImage = NMF_MARKER_IMAGE_RED
-        way1Mark.captionTextSize = 20
-        way1Mark.captionAligns = [NMFAlignType.top]
-        way1Mark.captionText = wayPointNames[0]
-        way1Mark.mapView = mapView
-        let way2Mark = NMFMarker(position: NMGLatLng(lat: self.wayPoitns[1].lat, lng: self.wayPoitns[1].lng))
-        way2Mark.iconImage = NMF_MARKER_IMAGE_YELLOW
-        way2Mark.captionTextSize = 20
-        way2Mark.captionAligns = [NMFAlignType.top]
-        way2Mark.captionText = wayPointNames[1]
-        way2Mark.mapView = mapView
-        
-        
-        //나중에 받아올 때 옵셔널 바인딩 필요
-        for i in wayPoitns {
-            wayPointsToString += "\(i.lng),\(i.lat)|"
-        }
-        wayPointsToString = String(wayPointsToString.dropLast())
-        
-        
-        dataManager.dockerExample()
-        
-        configurePath()
+        dataManager.dockerExample(delegate: self)
         
         
     }
@@ -218,6 +183,12 @@ class FindPathViewController: UIViewController {
             make.trailing.equalTo(mapView.snp.trailing).offset(-20)
             make.height.equalTo(31)
             make.bottom.equalTo(mapView.snp.bottom).offset(-60)
+        }
+        buttonView.snp.makeConstraints { make in
+            make.width.equalTo(80)
+            make.height.equalTo(150)
+            make.trailing.equalTo(self.view).offset(-20)
+            make.bottom.equalTo(infoView.snp.top).offset(-20)
         }
         // UIButton
         pathButton.snp.makeConstraints { make in
@@ -290,6 +261,49 @@ class FindPathViewController: UIViewController {
         dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
     }
     
+    func setMarker() {
+        // 출발 & 도착 위치 마커 찍기
+        let departMark = NMFMarker(position: bounds1.southWest)
+        departMark.mapView = mapView
+        departMark.iconImage = NMF_MARKER_IMAGE_BLACK
+        departMark.captionTextSize = 20
+        departMark.captionAligns = [NMFAlignType.top]
+        departMark.captionText = "출발지"
+        let destMark = NMFMarker(position: bounds1.northEast)
+        destMark.mapView = mapView
+        destMark.iconImage = NMF_MARKER_IMAGE_BLACK
+        destMark.captionTextSize = 20
+        destMark.captionAligns = [NMFAlignType.top]
+        destMark.captionText = "목적지"
+        
+        // 경유지 마커 찍기
+        var markList = [NMFMarker]()
+        let markImages = [NMF_MARKER_IMAGE_RED, NMF_MARKER_IMAGE_YELLOW, NMF_MARKER_IMAGE_PINK, NMF_MARKER_IMAGE_GREEN, NMF_MARKER_IMAGE_BLUE ]
+        for i in 0..<wayPoitns.count{
+            let mark = NMFMarker(position: NMGLatLng(lat: wayPoitns[i].lat, lng: wayPoitns[i].lng))
+            mark.iconImage = markImages[i]
+            mark.captionTextSize = 20
+            mark.captionAligns = [NMFAlignType.top]
+            mark.captionText = wayPointNames[i]
+            mark.mapView = mapView
+            markList.append(mark)
+        }
+    
+//        let way1Mark = NMFMarker(position: NMGLatLng(lat: self.wayPoitns[0].lat, lng: self.wayPoitns[0].lng))
+//        way1Mark.iconImage = NMF_MARKER_IMAGE_RED
+//        way1Mark.captionTextSize = 20
+//        way1Mark.captionAligns = [NMFAlignType.top]
+//        way1Mark.captionText = wayPointNames[0]
+//        way1Mark.mapView = mapView
+//        let way2Mark = NMFMarker(position: NMGLatLng(lat: self.wayPoitns[1].lat, lng: self.wayPoitns[1].lng))
+//        way2Mark.iconImage = NMF_MARKER_IMAGE_YELLOW
+//        way2Mark.captionTextSize = 20
+//        way2Mark.captionAligns = [NMFAlignType.top]
+//        way2Mark.captionText = wayPointNames[1]
+//        way2Mark.mapView = mapView
+        
+    }
+    
     
     
     @objc func serialPath() {
@@ -318,6 +332,7 @@ class FindPathViewController: UIViewController {
 extension FindPathViewController: ViewDelegate {
     func pushed() {
         let nextVC = DeliveryCompletedViewController()
+        nextVC.mapView.image = mapImage
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -325,7 +340,45 @@ extension FindPathViewController: ViewDelegate {
 extension FindPathViewController: NMFLocationManagerDelegate {
 }
 
-extension FindPathViewController: ViewControllerDelegate{
+extension FindPathViewController: FindPathViewControllerDelegate{
+    func didSuccessReceivedLngLat(_ result: Welcome) {
+        //서버에서 coords 먼저 전부 받는다
+        bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0), northEast: NMGLatLng(lat: Double(result.finish[0]) ?? 0, lng: Double(result.finish[1]) ?? 0))
+        
+        print(bounds1)
+        
+        for i in 0..<result.waypoint.count{
+            wayPoitns.append(NMGLatLng(lat: Double(result.waypoint[i][0]) ?? 0, lng: Double(result.waypoint[i][1]) ?? 0))
+            wayPointNames.append("경유지\(i+1)")
+        }
+        
+        print(wayPoitns)
+        
+        //출발지부터 목적지까지 전부 한 array에 받기
+        wayPointsForBounds.append(bounds1.southWest)
+        if wayPoitns.count > 0 {
+            for i in wayPoitns {
+                wayPointsForBounds.append(i)
+            }
+            
+            for i in wayPoitns {
+                wayPointsToString += "\(i.lng),\(i.lat)|"
+            }
+            wayPointsToString = String(wayPointsToString.dropLast())
+        }
+        wayPointsForBounds.append(bounds1.northEast)
+        
+        for i in 1..<wayPointsForBounds.count {
+            boundsArray.append(NMGLatLngBounds(southWest: wayPointsForBounds[i-1], northEast: wayPointsForBounds[i]))
+        }
+        
+        print(boundsArray)
+        
+
+        configurePath()
+        setMarker()
+    }
+    
     func didSuccessReturnPath(result: Trafast){
         
         // 경유지 인덱스 반환
@@ -351,6 +404,8 @@ extension FindPathViewController: ViewControllerDelegate{
         
         
 //        CoordsData.coords = CoordsData.coords.dropFirst()
+        
+        // Path 그리기
         initPath()
         
         distanceLabel.text = "\(result.summary.distance / 1000)km"
@@ -370,17 +425,12 @@ extension FindPathViewController: ViewControllerDelegate{
         camUpdate.animationDuration = 1
         mapView.moveCamera(camUpdate)
         
+        mapImage = mapView.asImage()
+        
         self.dismissIndicator()
         
     }
     
-    func didSuccessReceivedLngLat(result: Welcome) {
-        bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0), northEast: NMGLatLng(lat: Double(result.finish[0]) ?? 0, lng: Double(result.finish[1]) ?? 0))
-        
-        for i in result.waypoint{
-            wayPoitns.append(NMGLatLng(lat: Double(i[0]) ?? 0, lng: Double(i[1]) ?? 0))
-        }
-    }
     
     func failedToRequest(message: String){
         print(message)
@@ -395,9 +445,9 @@ struct MultiPartData {
     static let colors1: [NMFPathColor] = [
         NMFPathColor(color: UIColor.pathRed, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathYellow, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
+        NMFPathColor(color: UIColor.pathPink, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathGreen, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathBlue, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
-        NMFPathColor(color: UIColor.pathPink, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathBlack, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white)
     ]
 }

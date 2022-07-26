@@ -24,7 +24,7 @@
 		32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C56E288FE0C80000CCB6 /* UIFont.swift */; };
 		32A2C571288FE15D0000CCB6 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C570288FE15D0000CCB6 /* IndicatorView.swift */; };
 		32A2C573288FE16E0000CCB6 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C572288FE16E0000CCB6 /* Device.swift */; };
-		32A2C575288FE1AA0000CCB6 /* MapProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C574288FE1AA0000CCB6 /* MapProtocol.swift */; };
+		32A2C575288FE1AA0000CCB6 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C574288FE1AA0000CCB6 /* MapDelegate.swift */; };
 		32A2C577288FE1B60000CCB6 /* MapResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C576288FE1B60000CCB6 /* MapResponse.swift */; };
 		32A2C579288FE1BF0000CCB6 /* MapDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */; };
 		32A2C57D288FFC4C0000CCB6 /* DeliveryCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C57C288FFC4C0000CCB6 /* DeliveryCompletedViewController.swift */; };
@@ -44,7 +44,6 @@
 		1D546E77288D1DDD00160E82 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1D546E7C288D1DDF00160E82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D546E7F288D1DDF00160E82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1D546E81288D1DDF00160E82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Info.plist; sourceTree = "<group>"; };
 		32A2C55A288FDE710000CCB6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDelegate.swift; sourceTree = "<group>"; };
 		32A2C560288FDFF70000CCB6 /* LabelClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelClass.swift; sourceTree = "<group>"; };
@@ -57,7 +56,7 @@
 		32A2C56E288FE0C80000CCB6 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		32A2C570288FE15D0000CCB6 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		32A2C572288FE16E0000CCB6 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		32A2C574288FE1AA0000CCB6 /* MapProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProtocol.swift; sourceTree = "<group>"; };
+		32A2C574288FE1AA0000CCB6 /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		32A2C576288FE1B60000CCB6 /* MapResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResponse.swift; sourceTree = "<group>"; };
 		32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDataManager.swift; sourceTree = "<group>"; };
 		32A2C57C288FFC4C0000CCB6 /* DeliveryCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		32A2C583288FFCC40000CCB6 /* FindPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathViewController.swift; sourceTree = "<group>"; };
 		32A2C585288FFD010000CCB6 /* FindPathBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomViewController.swift; sourceTree = "<group>"; };
 		32A2C587288FFD390000CCB6 /* FindPathBottomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomTableViewCell.swift; sourceTree = "<group>"; };
+		32A2C589289001100000CCB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "/Users/jeongjiyun/Desktop/CJ_all_in_one/CJ-All-in-One/CJ-All-in-One/CJ-All-in-One/Info.plist"; sourceTree = "<absolute>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDetailTableViewCell.swift; sourceTree = "<group>"; };
 		87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CJ_All_in_One.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,27 +105,19 @@
 		1D546E72288D1DDD00160E82 /* CJ-All-in-One */ = {
 			isa = PBXGroup;
 			children = (
-				32A2C55D288FDE970000CCB6 /* Protocol  */,
 				32A2C55C288FDE790000CCB6 /* Resource */,
 				32A2C55A288FDE710000CCB6 /* Constant.swift */,
 				32A2C559288FDE5E0000CCB6 /* CommonClass */,
 				32A2C558288FDE530000CCB6 /* Extension */,
 				32A2C557288FDE0B0000CCB6 /* CustomClass */,
 				32A2C556288FDDCA0000CCB6 /* API */,
-				1D88E450288DD376009DCB4F /* Controllers */,
+				32A2C55D288FDE970000CCB6 /* Protocol  */,
 				1D88E44F288DD36F009DCB4F /* Views */,
-				1D88E44E288DD369009DCB4F /* Models */,
 				1D546E73288D1DDD00160E82 /* AppDelegate.swift */,
 				1D546E75288D1DDD00160E82 /* SceneDelegate.swift */,
+				32A2C589289001100000CCB6 /* Info.plist */,
 			);
 			path = "CJ-All-in-One";
-			sourceTree = "<group>";
-		};
-		1D88E44E288DD369009DCB4F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		1D88E44F288DD36F009DCB4F /* Views */ = {
@@ -137,13 +129,6 @@
 				785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		1D88E450288DD376009DCB4F /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		2BA054BBDDDC068C9EEE3FCC /* Pods */ = {
@@ -158,7 +143,6 @@
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				32A2C574288FE1AA0000CCB6 /* MapProtocol.swift */,
 				32A2C576288FE1B60000CCB6 /* MapResponse.swift */,
 				32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */,
 			);
@@ -201,7 +185,6 @@
 			children = (
 				1D546E7C288D1DDF00160E82 /* Assets.xcassets */,
 				1D546E7E288D1DDF00160E82 /* LaunchScreen.storyboard */,
-				1D546E81288D1DDF00160E82 /* Info.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -210,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */,
+				32A2C574288FE1AA0000CCB6 /* MapDelegate.swift */,
 			);
 			path = "Protocol ";
 			sourceTree = "<group>";
@@ -364,7 +348,7 @@
 				32A2C581288FFC730000CCB6 /* PieChartView.swift in Sources */,
 				32A2C55B288FDE710000CCB6 /* Constant.swift in Sources */,
 				32A2C588288FFD390000CCB6 /* FindPathBottomTableViewCell.swift in Sources */,
-				32A2C575288FE1AA0000CCB6 /* MapProtocol.swift in Sources */,
+				32A2C575288FE1AA0000CCB6 /* MapDelegate.swift in Sources */,
 				32A2C56B288FE09E0000CCB6 /* UIView.swift in Sources */,
 				32A2C573288FE16E0000CCB6 /* Device.swift in Sources */,
 				32A2C567288FE0930000CCB6 /* UIViewController.swift in Sources */,
@@ -518,9 +502,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H8B2PN25Z8;
+				DEVELOPMENT_TEAM = DJ9XQ898HT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CJ-All-in-One/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -535,6 +520,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "wonjune.CJ-All-in-One";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,9 +533,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H8B2PN25Z8;
+				DEVELOPMENT_TEAM = DJ9XQ898HT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CJ-All-in-One/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -564,6 +551,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "wonjune.CJ-All-in-One";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

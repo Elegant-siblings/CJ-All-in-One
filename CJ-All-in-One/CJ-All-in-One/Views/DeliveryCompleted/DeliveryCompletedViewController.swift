@@ -21,6 +21,7 @@ class DeliveryCompletedViewController: UIViewController {
     let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다"]
     var lists = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"]
     
+    var mapImage = UIImage()
     
     // UIScrollView 정의
     let scrollView = UIScrollView().then {
@@ -81,14 +82,19 @@ class DeliveryCompletedViewController: UIViewController {
     
     
     //MiddleView
+    let infoContainerView2 = UIView().then {
+        $0.backgroundColor = .clear
+    }
+    
+    
     let distanceInfoLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
         $0.textColor = .lightGray
         $0.text = "이동경로"
     }
-    let mapView = NMFMapView().then {
-        $0.cornerRadius = 15
-        $0.allowsZooming = true
+    let mapView = UIImageView().then {
+        $0.cornerRadius = 10
+        $0.clipsToBounds = true
         $0.layer.addShadow(location: [.bottom])
         $0.layer.borderWidth = 1
     }
@@ -129,9 +135,7 @@ class DeliveryCompletedViewController: UIViewController {
         $0.text = "미배송: 3개"
 
     }
-    let infoContainerView2 = UIView().then {
-        $0.backgroundColor = .clear
-    }
+    
     
     
     let tableView = UITableView().then {
@@ -205,7 +209,7 @@ class DeliveryCompletedViewController: UIViewController {
         scrollContentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(1150)
+            make.height.equalTo(1600)
         }
         
         
@@ -262,9 +266,17 @@ class DeliveryCompletedViewController: UIViewController {
         
         
         //MiddleView
-        distanceInfoLabel.snp.makeConstraints { make in
+        infoContainerView2.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(separateLine1.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
+            make.height.equalTo(220)
+        }
+        
+        distanceInfoLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(infoContainerView2.snp.bottom).offset(15)
         }
         mapView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -321,12 +333,12 @@ class DeliveryCompletedViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(completedItemCountLabel.snp.bottom).offset(13)
         }
-        infoContainerView2.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(24)
-            make.top.equalTo(separateLine2.snp.bottom)
-            make.leading.equalTo(verticalLine.snp.trailing)
-            make.height.equalTo(102)
-        }
+//        infoContainerView2.snp.makeConstraints { make in
+//            make.trailing.equalToSuperview().offset(24)
+//            make.top.equalTo(separateLine2.snp.bottom)
+//            make.leading.equalTo(verticalLine.snp.trailing)
+//            make.height.equalTo(102)
+//        }
         
         
         tableView.snp.makeConstraints { make in
@@ -353,20 +365,22 @@ class DeliveryCompletedViewController: UIViewController {
     
     private func presentCircleView() {
         
-//        let width = self.infoContainerView2.frame.width
         let width = CGFloat(172)
-        
-//        let height = self.infoContainerView2.frame.height
         let height = CGFloat(102)
         
         let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        pieChartView.center = self.infoContainerView2.center
         
         pieChartView.slices = [Slice(percent: 0.1, color: UIColor.CjRed),
                                 Slice(percent: 0.15, color: UIColor.CjYellow),
                                 Slice(percent: 0.75, color: UIColor.CjBlue)]
         
         self.infoContainerView2.addSubview(pieChartView)
+        
+        pieChartView.snp.makeConstraints { make in
+            make.top.equalTo(infoContainerView2.snp.top)
+            make.leading.equalTo(infoContainerView2.snp.leading)
+        }
+        
         pieChartView.animateChart()
     }
     
