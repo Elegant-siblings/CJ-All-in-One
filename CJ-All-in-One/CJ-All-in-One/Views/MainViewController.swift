@@ -134,12 +134,12 @@ class MainViewController: UIViewController {
     }
 
 
-
+    // -MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
-        navigationController?.navigationBar.backgroundColor = .deppBlue
-        navigationController?.navigationBar.barStyle = .default
+//        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.backgroundColor = .deppBlue
 //        navigationController?.navigationItem.title = "Main"
         
         self.view.addSubviews([
@@ -231,7 +231,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //        print("click: \(indexPath.row)")
         
         let vc = ResultViewController()
-        vc.string = "\(indexPath.row)"
         
         navigationController?.pushViewController(vc, animated: true)
         
