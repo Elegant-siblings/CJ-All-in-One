@@ -5,6 +5,9 @@
       location = "group:CJ-All-in-One.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:/Users/jeongjiyun/Desktop/CJ_all_in_one/CJ-All-in-One/CJ-All-in-One/CJ-All-in-One/Info.plist">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
