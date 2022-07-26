@@ -13,10 +13,27 @@ import Alamofire
 import PanModal
 
 class ViewController: UIViewController {
+    
+    lazy var nextButton = UIButton().then {
+        $0.backgroundColor = .red
+        $0.setTitle("go to next view", for: .normal)
+        $0.addTarget(self, action: #selector(touchup), for: .touchUpInside)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(300)
+        }
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func touchup() {
+        navigationController?.pushViewController(SecondViewController(), animated: true)
     }
 
 
