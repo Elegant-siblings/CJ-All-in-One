@@ -7,19 +7,31 @@
 
 import UIKit
 import Then
+import SnapKit
 
 class FindPathBottomTableViewCell: UITableViewCell {
     static let identifier = "InfoTableViewCell"
     
-    let titleLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-        $0.textColor = UIColor.gray
+    let numLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .gray
+    }
+    let titleLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .gray
+    }
+    let contentLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .gray
+    }
+    let wayLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.medium, size: 12)
+        $0.textColor = .gray
+    }
+    let checkImage = UIImageView().then {
+        $0.image = UIImage(named: "CellCheck")
     }
     
-    let contentLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-        $0.textColor = UIColor.gray
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,26 +40,43 @@ class FindPathBottomTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubviews([titleLabel,contentLabel])
+        self.contentView.addSubviews([numLabel,titleLabel,contentLabel,wayLabel, checkImage])
         
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(15)
-        }
-        contentLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.leading.equalToSuperview().offset(75)
-        }
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setConstraints() {
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(numLabel)
+            make.leading.equalTo(numLabel.snp.trailing).offset(20)
+        }
+        contentLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(numLabel)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(20)
+        }
+        wayLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(numLabel)
+            make.leading.equalTo(checkImage.snp.leading).offset(-20)
+        }
+        checkImage.snp.makeConstraints { make in
+            make.centerY.equalTo(numLabel)
+            make.trailing.equalToSuperview().offset(-20)
+            make.width.equalTo(15)
+            make.height.equalTo(15)
+        }
     }
 }

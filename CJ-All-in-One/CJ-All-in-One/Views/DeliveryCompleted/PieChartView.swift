@@ -71,6 +71,7 @@ class PieChartView: UIView {
         
         let label = UILabel()
         label.textColor = .black
+        label.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
         label.numberOfLines = 0
         label.textAlignment = .center
         addSubview(label)

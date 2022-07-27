@@ -85,6 +85,25 @@ class DeliveryCompletedViewController: UIViewController {
     let infoContainerView2 = UIView().then {
         $0.backgroundColor = .clear
     }
+    let onTimeLabel = MainLabel(type: .main).then {
+        $0.textColor = .black
+    }
+    let lowTimeLabel = MainLabel(type: .main).then {
+        $0.textColor = .black
+    }
+    let missTimeLabel = MainLabel(type: .main).then {
+        $0.textColor = .black
+    }
+    let onTimeImage = UIImageView().then {
+        $0.image = UIImage(named: "onTimeImage")
+    }
+    let lowTimeImage = UIImageView().then {
+        $0.image = UIImage(named: "lowTimeImage")
+    }
+    let missTimeImage = UIImageView().then {
+        $0.image = UIImage(named: "missTimeImage")
+    }
+    
     
     
     let distanceInfoLabel = MainLabel(type: .main).then {
@@ -190,9 +209,14 @@ class DeliveryCompletedViewController: UIViewController {
         scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton])
         
         infoContainerView1.addSubviews([itemCountLabel, missedItemCountLabel, completedItemCountLabel])
-        
+        infoContainerView2.addSubviews([onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
         
         setConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
         presentCircleView()
     }
     
@@ -356,7 +380,7 @@ class DeliveryCompletedViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
         }
         confirmButton.snp.makeConstraints { make in
-            make.bottom.equalTo(scrollContentView.snp.bottom).offset(-10)
+            make.bottom.equalTo(scrollContentView.snp.bottom).offset(-30)
             make.height.equalTo(48)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
@@ -365,10 +389,12 @@ class DeliveryCompletedViewController: UIViewController {
     
     private func presentCircleView() {
         
+        print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
+        
         let width = CGFloat(172)
         let height = CGFloat(102)
         
-        let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        let pieChartView = PieChartView(frame: CGRect(x: 5, y: 10, width: width, height: height))
         
         pieChartView.slices = [Slice(percent: 0.1, color: UIColor.CjRed),
                                 Slice(percent: 0.15, color: UIColor.CjYellow),
@@ -376,10 +402,10 @@ class DeliveryCompletedViewController: UIViewController {
         
         self.infoContainerView2.addSubview(pieChartView)
         
-        pieChartView.snp.makeConstraints { make in
-            make.top.equalTo(infoContainerView2.snp.top)
-            make.leading.equalTo(infoContainerView2.snp.leading)
-        }
+//        pieChartView.snp.makeConstraints { make in
+//            make.top.equalTo(infoContainerView2.snp.top)
+//            make.centerX.equalTo(infoContainerView2.snp.centerX)
+//        }
         
         pieChartView.animateChart()
     }

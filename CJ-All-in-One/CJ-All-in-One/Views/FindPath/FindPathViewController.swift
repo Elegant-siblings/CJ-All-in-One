@@ -15,13 +15,14 @@ import PanModal
 // MARK: - init 시 필요한 값: 1. 출발/목적지 위/경도 값 2. 경유지 포인트 위/경도 값(array)
 
 class FindPathViewController: UIViewController {
-    let buttonView = UIView().then {
-        $0.backgroundColor = .red
-    }
+    
+    var distance: String!
+    var time: String!
+    
     
     let pathButton = MainButton(type: .main).then {
         $0.backgroundColor = .CjBlue
-        $0.cornerRadius = 30
+        $0.layer.cornerRadius = 30
         $0.layer.borderColor = UIColor.CjBlue.cgColor
         $0.setImage(UIImage(systemName: "shippingbox"), for: .normal)
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
@@ -31,7 +32,7 @@ class FindPathViewController: UIViewController {
     }
     let zoomWayButton = MainButton(type: .main).then {
         $0.backgroundColor = .CjYellow
-        $0.cornerRadius = 30
+        $0.layer.cornerRadius = 30
         $0.layer.borderColor = UIColor.CjYellow.cgColor
         $0.setImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
@@ -126,12 +127,11 @@ class FindPathViewController: UIViewController {
         pathButton.addTarget(self, action: #selector(showTable), for: .touchUpInside)
         zoomWayButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         
-        view.addSubviews([mapView])
-        buttonView.addSubviews([pathButton, zoomWayButton])
-        mapView.addSubviews([infoView, buttonView])
+        view.addSubviews([mapView, pathButton, zoomWayButton])
+        mapView.addSubviews([infoView])
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
         
-        self.view.bringSubviewToFront(buttonView)
+//        self.view.bringSubviewToFront(buttonView)
 //        self.mapView.bringSubviewToFront(pathButton)
 //        self.mapView.bringSubviewToFront(zoomWayButton)
         
@@ -175,7 +175,7 @@ class FindPathViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.leading.equalTo(self.view)
             make.trailing.equalTo(self.view)
-            make.bottom.equalTo(self.view)
+            make.bottom.equalTo(self.view).offset(-150)
             make.top.equalTo(self.view)
         }
         infoView.snp.makeConstraints { make in
@@ -184,24 +184,18 @@ class FindPathViewController: UIViewController {
             make.height.equalTo(31)
             make.bottom.equalTo(mapView.snp.bottom).offset(-60)
         }
-        buttonView.snp.makeConstraints { make in
-            make.width.equalTo(80)
-            make.height.equalTo(150)
-            make.trailing.equalTo(self.view).offset(-20)
-            make.bottom.equalTo(infoView.snp.top).offset(-20)
-        }
         // UIButton
         pathButton.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(60)
             make.trailing.equalTo(self.view).offset(-30)
-            make.bottom.equalTo(infoView.snp.top).offset(-30)
+            make.bottom.equalTo(self.view).offset(-40)
         }
         zoomWayButton.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(60)
-            make.trailing.equalTo(self.view).offset(-30)
-            make.bottom.equalTo(pathButton.snp.top).offset(-10)
+            make.trailing.equalTo(pathButton.snp.leading).offset(-20)
+            make.bottom.equalTo(self.view).offset(-40)
         }
         
         // UILabel
@@ -322,8 +316,10 @@ class FindPathViewController: UIViewController {
     
     @objc func showTable() {
         print("show")
-        
+        bottomSheetVC.distance = distance
+        bottomSheetVC.time = time
         bottomSheetVC.delegate = self
+        bottomSheetVC.tableDelegate = self
         bottomSheetVC.modalPresentationStyle = .overCurrentContext
         self.presentPanModal(bottomSheetVC)
     }
@@ -336,6 +332,14 @@ extension FindPathViewController: ViewDelegate {
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
+
+extension FindPathViewController: TableViewDelegate {
+    func cellTouched() {
+        let nextVC = PackageDetailViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
 
 extension FindPathViewController: NMFLocationManagerDelegate {
 }
@@ -408,12 +412,15 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         // Path 그리기
         initPath()
         
-        distanceLabel.text = "\(result.summary.distance / 1000)km"
+        distance = "\(result.summary.distance / 1000)km"
+        distanceLabel.text = distance
+        
         
         let milliseconds = result.summary.duration
         let hours = ((milliseconds / (1000*60*60)) % 24)
         let mins = ((milliseconds / (1000*60)) % 60)
-        timeLabel.text = "\(hours)시간 \(mins)분"
+        time = "\(hours)시간 \(mins)분"
+        timeLabel.text = time
         
         let date = Date()
 //        let dateHour = Calendar.current.date(byAdding: .hour, value: hours, to: date)

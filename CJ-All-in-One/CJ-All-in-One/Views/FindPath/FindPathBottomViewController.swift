@@ -13,16 +13,21 @@ import SnapKit
 class FindPathBottomViewController: UIViewController {
     
     weak var delegate : ViewDelegate!
+    weak var tableDelegate: TableViewDelegate!
     
     // Table 정보
     let tableRowHeight = CGFloat(40)
-    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청사항"]
-    let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다"]
-    var lists = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"]
+    let titles = ["라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
+    let contents = ["서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
+    var ways = [1, 1, 2, 2, 3, 3, 4, 4]
+    var colors : [UIColor] = [UIColor.pathRed, UIColor.pathYellow, UIColor.pathPink, UIColor.pathGreen, UIColor.pathBlue, UIColor.pathBlack]
     
     // Bool Variable
     var onDelivery : Bool = true
     
+    // Other Variable
+    var distance: String!
+    var time: String!
     
     //MARK: - 컴포넌트 정의
     
@@ -34,7 +39,7 @@ class FindPathBottomViewController: UIViewController {
         $0.layer.cornerRadius = 5
         $0.layer.borderColor = UIColor.borderColor.cgColor
         $0.separatorStyle = .singleLine
-        $0.allowsSelection = false
+        $0.allowsSelection = true
         $0.separatorColor = UIColor.customLightGray
         $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         $0.layer.addShadow(location: [.top, .bottom])
@@ -49,25 +54,24 @@ class FindPathBottomViewController: UIViewController {
     }
     
     let leftDistanceLabel = MainLabel(type: .main).then {
-        $0.text = "남은 이동 거리: 124km"
+        $0.text = "남은 이동 거리: 127km"
         $0.textColor = .black
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 16)
-        
     }
     
     let deliveryEndTimeLabel = MainLabel(type: .main).then {
-        $0.text = "배달 종료 시간: 12:30"
+        $0.text = "예상 소요 시간: 12:30"
         $0.textColor = .black
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 16)
     }
     
-    let deliveryIngButton = MainButton(type: .main).then {
+    let deliveryIngButton = MainButton(type: .sub).then {
         $0.backgroundColor = .CjRed
         $0.layer.borderColor = UIColor.CjRed.cgColor
         $0.setTitle("배송중", for: .normal)
         $0.addTarget(self, action: #selector(toggleDeliveryStatus), for: .touchUpInside)
     }
-    let eatingMealButton = MainButton(type: .main).then {
+    let eatingMealButton = MainButton(type: .sub).then {
         $0.backgroundColor = .white
         $0.setTitleColor(.CjRed, for: .normal)
         $0.layer.borderColor = UIColor.CjRed.cgColor
@@ -87,6 +91,7 @@ class FindPathBottomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
         
         tableView.dataSource = self
@@ -96,6 +101,9 @@ class FindPathBottomViewController: UIViewController {
         
         
         setConstraints()
+        
+        leftDistanceLabel.text = "남은 이동거리: \(distance!)"
+        deliveryEndTimeLabel.text = "예상 소요시간: \(time!)"
         
     }
     
@@ -113,20 +121,18 @@ class FindPathBottomViewController: UIViewController {
         deliveryCompletedButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-30)
-            make.width.equalTo(Device.width * 0.7)
-            make.height.equalTo(36)
+            make.trailing.equalTo(self.view).offset(-24)
+            make.leading.equalTo(self.view).offset(24)
         }
         deliveryIngButton.snp.makeConstraints { make in
             make.leading.equalTo(deliveryCompletedButton.snp.leading)
-            make.bottom.equalTo(deliveryCompletedButton.snp.top).offset(-20)
-            make.width.equalTo(127)
-            make.height.equalTo(48)
+            make.bottom.equalTo(deliveryCompletedButton.snp.top).offset(-8)
+            make.trailing.equalTo(self.view.snp.centerX).offset(-5)
         }
         eatingMealButton.snp.makeConstraints { make in
             make.trailing.equalTo(deliveryCompletedButton.snp.trailing)
-            make.bottom.equalTo(deliveryCompletedButton.snp.top).offset(-20)
-            make.width.equalTo(127)
-            make.height.equalTo(48)
+            make.centerY.equalTo(deliveryIngButton.snp.centerY)
+            make.leading.equalTo(self.view.snp.centerX).offset(5)
         }
         
         //UILabel
@@ -168,15 +174,13 @@ class FindPathBottomViewController: UIViewController {
         print("pushed")
         self.dismiss(animated: true)
         delegate.pushed()
-        
     }
-
 }
 
 
 extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return titles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -188,13 +192,26 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
 //        default:
 //            cell.backgroundColor = .white
 //        }
+        cell.selectionStyle = .none
+        
+        // 셀 정보 업데이트
+        cell.numLabel.text = "\(indexPath.row + 1)"
         cell.titleLabel.text = titles[indexPath.row]
         cell.contentLabel.text = contents[indexPath.row]
+        cell.wayLabel.text = "\(ways[indexPath.row])"
+        cell.wayLabel.textColor = colors[ways[indexPath.row]-1]
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        self.dismiss(animated: true)
+        tableDelegate.cellTouched()
     }
 }
 

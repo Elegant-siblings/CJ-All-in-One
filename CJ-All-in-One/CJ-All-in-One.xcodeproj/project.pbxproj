@@ -33,6 +33,9 @@
 		32A2C584288FFCC40000CCB6 /* FindPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C583288FFCC40000CCB6 /* FindPathViewController.swift */; };
 		32A2C586288FFD010000CCB6 /* FindPathBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C585288FFD010000CCB6 /* FindPathBottomViewController.swift */; };
 		32A2C588288FFD390000CCB6 /* FindPathBottomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C587288FFD390000CCB6 /* FindPathBottomTableViewCell.swift */; };
+		32AB22EA2891040F0074DAB9 /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32AB22E92891040F0074DAB9 /* PackageDetailViewController.swift */; };
+		32B5606C2891400B004894C2 /* PackageBasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5606B2891400B004894C2 /* PackageBasicTableViewCell.swift */; };
+		32B5606E28914024004894C2 /* PackageDeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5606D28914024004894C2 /* PackageDeliveryTableViewCell.swift */; };
 		785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */; };
 		FC497AD73DCC33F91F5BC6D1 /* Pods_CJ_All_in_One.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +69,9 @@
 		32A2C585288FFD010000CCB6 /* FindPathBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomViewController.swift; sourceTree = "<group>"; };
 		32A2C587288FFD390000CCB6 /* FindPathBottomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomTableViewCell.swift; sourceTree = "<group>"; };
 		32A2C589289001100000CCB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "/Users/jeongjiyun/Desktop/CJ_all_in_one/CJ-All-in-One/CJ-All-in-One/CJ-All-in-One/Info.plist"; sourceTree = "<absolute>"; };
+		32AB22E92891040F0074DAB9 /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
+		32B5606B2891400B004894C2 /* PackageBasicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBasicTableViewCell.swift; sourceTree = "<group>"; };
+		32B5606D28914024004894C2 /* PackageDeliveryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDeliveryTableViewCell.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDetailTableViewCell.swift; sourceTree = "<group>"; };
 		87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CJ_All_in_One.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +129,7 @@
 		1D88E44F288DD36F009DCB4F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				32AB22E8289103F90074DAB9 /* PackageDetail */,
 				32A2C582288FFC840000CCB6 /* FindPath */,
 				32A2C57B288FFC250000CCB6 /* DeliveryCompleted */,
 				1D546E77288D1DDD00160E82 /* MainViewController.swift */,
@@ -216,6 +223,16 @@
 				32A2C587288FFD390000CCB6 /* FindPathBottomTableViewCell.swift */,
 			);
 			path = FindPath;
+			sourceTree = "<group>";
+		};
+		32AB22E8289103F90074DAB9 /* PackageDetail */ = {
+			isa = PBXGroup;
+			children = (
+				32AB22E92891040F0074DAB9 /* PackageDetailViewController.swift */,
+				32B5606B2891400B004894C2 /* PackageBasicTableViewCell.swift */,
+				32B5606D28914024004894C2 /* PackageDeliveryTableViewCell.swift */,
+			);
+			path = PackageDetail;
 			sourceTree = "<group>";
 		};
 		7088BD170D1F625BC806BDFC /* Frameworks */ = {
@@ -340,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32AB22EA2891040F0074DAB9 /* PackageDetailViewController.swift in Sources */,
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
 				1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */,
 				32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */,
@@ -351,6 +369,7 @@
 				32A2C575288FE1AA0000CCB6 /* MapDelegate.swift in Sources */,
 				32A2C56B288FE09E0000CCB6 /* UIView.swift in Sources */,
 				32A2C573288FE16E0000CCB6 /* Device.swift in Sources */,
+				32B5606C2891400B004894C2 /* PackageBasicTableViewCell.swift in Sources */,
 				32A2C567288FE0930000CCB6 /* UIViewController.swift in Sources */,
 				1D546E74288D1DDD00160E82 /* AppDelegate.swift in Sources */,
 				1D546E76288D1DDD00160E82 /* SceneDelegate.swift in Sources */,
@@ -362,6 +381,7 @@
 				32A2C57D288FFC4C0000CCB6 /* DeliveryCompletedViewController.swift in Sources */,
 				32A2C579288FE1BF0000CCB6 /* MapDataManager.swift in Sources */,
 				32A2C57F288FFC5E0000CCB6 /* DeliveryCompletedTableViewCell.swift in Sources */,
+				32B5606E28914024004894C2 /* PackageDeliveryTableViewCell.swift in Sources */,
 				32A2C584288FFCC40000CCB6 /* FindPathViewController.swift in Sources */,
 				32A2C563288FDFFE0000CCB6 /* ButtonClass.swift in Sources */,
 				32A2C55F288FDF8E0000CCB6 /* ViewDelegate.swift in Sources */,
