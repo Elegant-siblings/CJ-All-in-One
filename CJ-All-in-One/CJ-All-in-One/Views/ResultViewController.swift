@@ -15,6 +15,8 @@ struct Item {
     let To: String
 }
 
+
+
 class ResultViewController: UIViewController {
     
     // -MARK: Constants
@@ -73,9 +75,6 @@ class ResultViewController: UIViewController {
         }
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
-
-
-    
     
     // -MARK: Others
     lazy var tableItem = ListTableView(rowHeight: 35, isScrollEnabled: true).then {
@@ -111,6 +110,7 @@ class ResultViewController: UIViewController {
         ])
 //        viewTerminalInfo.backgroundColor = .CjRed
         
+        // -MARK: Make Constraints
         viewTerminalInfo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
@@ -150,10 +150,9 @@ class ResultViewController: UIViewController {
             make.top.equalTo(labelTotal.snp.bottom).offset(8)
             make.trailing.equalTo(labelTotal)
         }
-        
         tableItem.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-60)
+            make.width.equalToSuperview().offset(-50)
             make.height.equalTo(210)
             make.top.equalTo(labelTos.snp.bottom).offset(15)
         }
