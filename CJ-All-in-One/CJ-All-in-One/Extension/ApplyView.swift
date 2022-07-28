@@ -75,6 +75,7 @@ extension ApplyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             pickerTo.reloadComponent(1)
         }
         else {
+            self.receivAddr = citiesManager.cities[row].name
             print(citiesManager.cities[row].name)
         }
     }
@@ -117,40 +118,32 @@ extension ApplyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 // -MARK: TableView
 extension ApplyViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toLists.count+1
+        return toLists.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToListTableViewCell.identifier, for: indexPath) as! ToListTableViewCell
         cell.rowIndex = indexPath.row
-        if indexPath.row == 0 {
-            cell.backgroundColor = .firstRowBackgroundColor
-            cell.labelNum.text = "#"
-            cell.labelTo.text = "배송지역"
-            cell.fontSize = CGFloat(15)
-            cell.fontColor = UIColor.tableTitleTextColor
-        }
-        else {
-            cell.backgroundColor = .CjWhite
-            cell.labelTo.text = toLists[indexPath.row-1].city + " " + toLists[indexPath.row-1].goo
-            cell.fontSize = CGFloat(13)
-            cell.fontColor = UIColor.tableContentTextColor
-        }
+        cell.backgroundColor = .CjWhite
+        cell.labelNum.text = "\(indexPath.row+1)"
+        cell.labelTo.text = toLists[indexPath.row].city + " " + toLists[indexPath.row].goo
+        cell.fontSize = CGFloat(13)
+        cell.fontColor = UIColor.tableContentTextColor
         cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 && toLists.isEmpty != true {
-            toLists.remove(at: indexPath.row-1)
+            toLists.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .right)
             tableView.reloadData()
             tableView.endUpdates()
             
             tableView.snp.updateConstraints { make in
-                if tableTo.rowHeight*CGFloat(toLists.count+1) < 180 {
-                    make.height.equalTo(tableTo.rowHeight*CGFloat(toLists.count+1))
+                if tableTo.rowHeight*CGFloat(toLists.count) < 180 {
+                    make.height.equalTo(tableTo.rowHeight*CGFloat(toLists.count))
                 }
                 else {
                     make.height.equalTo(180)

@@ -36,12 +36,13 @@ class ApplyViewController: UIViewController {
     let addButtonRadius = CGFloat(17)
 
     
-    var type: String = "일반"
-    var date: Date = Date()
-    var time: String = "주간"
-    var count: String = "세단"
-    var city: String = "서울시"
+    var type: Bool = false
+    var date: String = ""
+    var time: Bool = false
+    var vehicle: String = "세단"
+    var city: String = "서울"
     var goo: String = "종로구"
+    var receivAddr: String = "서울"
     var toLists: [Location] = []
     
     //-MARK: UIView
@@ -79,7 +80,7 @@ class ApplyViewController: UIViewController {
     lazy var datePicker = UIDatePicker().then{
         $0.preferredDatePickerStyle = .automatic
         $0.datePickerMode = .date
-        $0.minimumDate = Date()
+//        $0.minimumDate = Date()
         $0.locale = Locale(identifier: "ko-KR")
         $0.timeZone = .autoupdatingCurrent
         $0.addTarget(self, action: #selector(handleDatePicker(_:)), for: .valueChanged)
@@ -274,33 +275,35 @@ class ApplyViewController: UIViewController {
     //-MARK: #Selector
     @objc
     func shippingTypeChanged(type: UISegmentedControl) {
-        var text: String = "일반"
+        var bool = false
         switch type.selectedSegmentIndex {
-            case 0:
-              text = "일반"
-            case 1:
-              text = "반품"
-            default: return
+        case 0:
+            bool = false
+        case 1:
+            bool = true
+        default: return
         }
-        self.type = text
+        self.type = bool
     }
     
     @objc
     func shippingTimeChanged(time: UISegmentedControl) {
-        var text: String = "주간"
+        var bool = false
         switch time.selectedSegmentIndex {
-            case 0:
-              text = "주간"
-            case 1:
-              text = "새벽"
-            default: return
+        case 0:
+            bool = false
+        case 1:
+            bool = true
+        default: return
         }
-        self.time = text
+        self.time = bool
     }
     
     @objc
     private func handleDatePicker(_ sender: UIDatePicker) {
-        self.date = sender.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        self.date = dateFormatter.string(from: sender.date)
     }
     
     @objc func donePicker() {
@@ -308,7 +311,7 @@ class ApplyViewController: UIViewController {
         self.pickerAvailCount.selectRow(row, inComponent: 0, animated: false)
         self.textFieldVehicleType.text = self.vehicles[row]
         self.textFieldVehicleType.resignFirstResponder()
-        self.count = textFieldVehicleType.text!
+        self.vehicle = textFieldVehicleType.text!
         warningLabel.textColor = .white
     }
     
@@ -320,27 +323,22 @@ class ApplyViewController: UIViewController {
     
     @objc func touchUpApplyButton() {
         print("업무조회")
+        if textFieldVehicleType.text == "" || toLists.count==0 {
+            return
+        }
         let vc = AssignViewController()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        vc.date = dateFormatter.string(from: self.date)
+        vc.date = self.date
         vc.toLists = self.toLists
-
+        vc.applyForm = ApplyDataModel(deliveryPK: [], deliveryManID: "AABBCCDDEEFFGGHH", deliveryDate: self.date, deliveryType: self.type, deliveryTime: self.time, deliveryCar: self.vehicle, terminalAddr: self.receivAddr)
         navigationController?.pushViewController(vc, animated: true)
         
-//        if textFieldVehicleType.text == "" {
-//            return
-//        }
-//        let applyInfo = ApplyManager(type: self.type, date: self.date, time: self.time, count: self.count, city: self.city, goo: self.goo)
-//        print(applyInfo)
     }
     
     @objc func touchUpAddButton() {
         print("click add button")
         toLists.append(Location(city: city, goo: goo))
-        //        tableTo.reloadData()
         tableTo.beginUpdates()
-        tableTo.insertRows(at: [IndexPath(row: toLists.count, section: 0)], with: .right)
+        tableTo.insertRows(at: [IndexPath(row: toLists.count-1, section: 0)], with: .right)
         tableTo.endUpdates()
         
         tableTo.snp.updateConstraints { make in
