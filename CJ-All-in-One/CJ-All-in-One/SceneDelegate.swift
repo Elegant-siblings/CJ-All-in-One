@@ -20,11 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         
         window = UIWindow(windowScene: windowScene)
-<<<<<<< HEAD
         window?.rootViewController = UINavigationController(rootViewController: FindPathViewController())
-=======
-        window?.rootViewController = UINavigationController(rootViewController: BarcodeViewController())
->>>>>>> b64fbb7 (create some views)
         window?.makeKeyAndVisible()
     }
 

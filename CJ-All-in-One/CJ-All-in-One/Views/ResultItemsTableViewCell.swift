@@ -13,46 +13,45 @@ class ResultItemsTableViewCell: UITableViewCell {
     
     lazy var viewNum = UIView()
     lazy var viewCategory = UIView()
-    lazy var viewTo = UIView()
+    lazy var viewReceivAddr = UIView()
     
     lazy var labelNum = UILabel()
     lazy var labelCategory = UILabel()
-    lazy var labelTo = UILabel()
+    lazy var labelReceivAddr = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
 //        viewNum.backgroundColor = .red
 //        viewCategory.backgroundColor = .blue
-//        viewTo.backgroundColor = .CjYellow
-        contentView.addSubviews([viewNum,viewCategory,viewTo])
+//        viewReceivAddr.backgroundColor = .CjYellow
+        contentView.addSubviews([viewNum,viewCategory,viewReceivAddr])
         viewNum.addSubviews([labelNum])
         viewCategory.addSubviews([labelCategory])
-        viewTo.addSubviews([labelTo])
+        viewReceivAddr.addSubviews([labelReceivAddr])
         
         viewNum.snp.makeConstraints { make in
             make.height.equalToSuperview()
-            make.leading.equalToSuperview().offset(2)
+            make.leading.equalToSuperview().offset(6)
             make.width.equalTo(35)
         }
         viewCategory.snp.makeConstraints { make in
             make.height.equalToSuperview()
-            make.leading.equalTo(viewNum.snp.trailing)
+            make.leading.equalTo(viewNum.snp.trailing).offset(3)
             make.width.equalTo(60)
         }
-        viewTo.snp.makeConstraints { make in
+        viewReceivAddr.snp.makeConstraints { make in
             make.height.equalToSuperview()
             make.leading.equalTo(viewCategory.snp.trailing).offset(10)
-            make.trailing.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-10)
         }
-        _ = [labelNum,labelCategory,labelTo].map { label in
+        _ = [labelNum,labelCategory,labelReceivAddr].map { label in
             label.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
                 make.leading.trailing.equalToSuperview()
             }
             label.font = .systemFont(ofSize: 12)
             label.textAlignment = .center
-
         }
 
     }
@@ -73,5 +72,4 @@ class ResultItemsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

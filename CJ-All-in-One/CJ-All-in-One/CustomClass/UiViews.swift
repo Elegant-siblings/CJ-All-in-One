@@ -38,17 +38,10 @@ class PrimaryButton: UIButton {
     convenience init(title: String) {
         self.init(frame: CGRect(x: 0, y: 0, width: primaryButtonWidth, height: primaryButtonWidth))
         self.setTitle(title, for: .normal)
-//        print("in init() before: \(self.layer.cornerRadius)")
-//        self.setBackgroundColor(.cjYellow, for: .normal)
-//        self.setBackgroundColor(.cjOragne, for: .highlighted)
-//        self.setBackgroundColor(.disableButtonColor, for: .disabled)
-//        print("in init() after: \(self.layer.cornerRadius)")
     }
     
     func configure() {
         self.layer.cornerRadius = 10
-//        print("in configure(): \(self.layer.cornerRadius)")
-//        self.backgroundColor = .cjYellow
         self.titleLabel?.font = .boldSystemFont(ofSize: 20)
     }
     
@@ -76,7 +69,13 @@ class PrimaryButton: UIButton {
     }
 }
 
+public enum TableScrollEnableType {
+    case none
+    case vertical
+}
+
 class ListTableView: UITableView {
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         
@@ -87,10 +86,25 @@ class ListTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(rowHeight: CGFloat, isScrollEnabled: Bool) {
+    convenience init(rowHeight: CGFloat, scrollType: TableScrollEnableType) {
         self.init(frame: .zero, style: .plain)
+        
+        lazy var header = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: rowHeight))
+        
+        header.backgroundColor = .firstRowBackgroundColor
+        self.tableHeaderView = header
+
+        
         self.rowHeight = rowHeight
-        self.isScrollEnabled = isScrollEnabled
+        switch scrollType {
+        case .none:
+            self.isScrollEnabled = false
+
+        case .vertical:
+            self.isScrollEnabled = true
+            self.alwaysBounceVertical = false
+            self.bounces = self.contentOffset.y > 0
+        }
     }
     
     private func configure() {

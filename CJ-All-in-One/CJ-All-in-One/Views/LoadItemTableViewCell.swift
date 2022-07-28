@@ -10,7 +10,7 @@ import UIKit
 class LoadItemTableViewCell: UITableViewCell {
     
     static let identifier = "LoadItemTableViewCell"
-
+ 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

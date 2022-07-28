@@ -18,4 +18,3 @@ protocol FindPathViewControllerDelegate: AnyObject{
     
     func didSuccessReceivedLngLat(_ result: Welcome)
 }
-

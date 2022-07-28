@@ -77,7 +77,7 @@ class ResultViewController: UIViewController {
     }
     
     // -MARK: Others
-    lazy var tableItem = ListTableView(rowHeight: 35, isScrollEnabled: true).then {
+    lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .none).then {
         $0.dataSource = self
         $0.register(ResultItemsTableViewCell.self, forCellReuseIdentifier: ResultItemsTableViewCell.identifier)
         $0.alwaysBounceVertical = false
@@ -114,7 +114,7 @@ class ResultViewController: UIViewController {
         viewTerminalInfo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
-            make.top.equalTo(70)
+            make.top.equalTo(40)
             make.height.equalTo(370)
         }
         labelTermInfoTitle.snp.makeConstraints { make in
@@ -168,6 +168,8 @@ class ResultViewController: UIViewController {
     // -MARK: selectors
     @objc func touchUpArrivedButton() {
         print("터미널 도착")
+        let vc = LoadViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -182,13 +184,13 @@ extension ResultViewController: UITableViewDataSource {
             cell.backgroundColor = .firstRowBackgroundColor
             cell.labelNum.text = "#"
             cell.labelCategory.text = "상품종류"
-            cell.labelTo.text = "배송지"
+            cell.labelReceivAddr.text = "배송지"
         }
         else {
             cell.backgroundColor = .CjWhite
             cell.labelNum.text = "\(indexPath.row)"
             cell.labelCategory.text = lists[indexPath.row-1].category
-            cell.labelTo.text = lists[indexPath.row-1].To
+            cell.labelReceivAddr.text = lists[indexPath.row-1].To
 //            cell.labelTo.textAlignment = .left
         }
         cell.selectionStyle = .none
