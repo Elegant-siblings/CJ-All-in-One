@@ -17,30 +17,15 @@ class DeliveryCompletedViewController: UIViewController {
     
     // Table 정보
     let tableRowHeight = CGFloat(40)
-<<<<<<< HEAD
-<<<<<<< HEAD
     let titles = ["#", "라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
     let contents = ["배송지", "서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
     
     var mapImage = UIImage()
-=======
-    let titles = ["#", "라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
-    let contents = ["배송지", "서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
-    
->>>>>>> 9f2b72d (test)
     
     //DeliveryPercent
     var onTime: String!
     var lowTime: String!
     var missTime: String!
-<<<<<<< HEAD
-=======
-    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청사항"]
-    let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다"]
-    var lists = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"]
->>>>>>> 377993d (test)
-=======
->>>>>>> 9f2b72d (test)
     
     
     // UIScrollView 정의
@@ -102,31 +87,17 @@ class DeliveryCompletedViewController: UIViewController {
     
     
     //MiddleView
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9f2b72d (test)
     let deliveryRateLabel = MainLabel(type: .main).then {
         $0.text = "배송률"
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
         $0.textColor = .lightGray
     }
-<<<<<<< HEAD
     
-=======
-=======
->>>>>>> 36da96d (test)
-=======
-
->>>>>>> 9f2b72d (test)
     let infoContainerView2 = UIView().then {
         $0.backgroundColor = .clear
     }
     let onTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
-<<<<<<< HEAD
-<<<<<<< HEAD
         $0.text = "정시 배송률"
     }
     let lowTimeLabel = MainLabel(type: .main).then {
@@ -136,22 +107,6 @@ class DeliveryCompletedViewController: UIViewController {
     let missTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
         $0.text = "분실률"
-=======
-=======
-        $0.text = "정시 배송률"
->>>>>>> 9f2b72d (test)
-    }
-    let lowTimeLabel = MainLabel(type: .main).then {
-        $0.textColor = .black
-        $0.text = "오배송률"
-    }
-    let missTimeLabel = MainLabel(type: .main).then {
-        $0.textColor = .black
-<<<<<<< HEAD
->>>>>>> 36da96d (test)
-=======
-        $0.text = "분실률"
->>>>>>> 9f2b72d (test)
     }
     let onTimeImage = UIImageView().then {
         $0.image = UIImage(named: "onTimeImage")
@@ -162,10 +117,6 @@ class DeliveryCompletedViewController: UIViewController {
     let missTimeImage = UIImageView().then {
         $0.image = UIImage(named: "missTimeImage")
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9f2b72d (test)
     let onTimePercentLabel = MainLabel(type: .main).then {
         $0.textColor = .CjBlue
     }
@@ -175,36 +126,17 @@ class DeliveryCompletedViewController: UIViewController {
     let missTimePercentLabel = MainLabel(type: .main).then {
         $0.textColor = .CjRed
     }
-<<<<<<< HEAD
     
     
     
-=======
->>>>>>> 377993d (test)
-=======
-    
-    
-    
->>>>>>> 4fd152a (Delivery Detail View)
->>>>>>> 36da96d (test)
-=======
-    
-    
->>>>>>> 9f2b72d (test)
     let distanceInfoLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
         $0.textColor = .lightGray
         $0.text = "이동경로"
     }
-<<<<<<< HEAD
     let mapView = UIImageView().then {
         $0.cornerRadius = 10
         $0.clipsToBounds = true
-=======
-    let mapView = NMFMapView().then {
-        $0.cornerRadius = 15
-        $0.allowsZooming = true
->>>>>>> 377993d (test)
         $0.layer.addShadow(location: [.bottom])
         $0.layer.borderWidth = 1
     }
@@ -232,67 +164,29 @@ class DeliveryCompletedViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     let itemCountLabel = MainLabel(type: .main).then {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 10)
->>>>>>> 377993d (test)
-=======
->>>>>>> 9f2b72d (test)
         $0.text = "배송 물품: 20개"
 
     }
     let completedItemCountLabel = MainLabel(type: .main).then {
-<<<<<<< HEAD
-<<<<<<< HEAD
         $0.text = "배송 완료: 17개"
     }
     let missedItemCountLabel = MainLabel(type: .main).then {
         $0.text = "미배송: 3개"
 
     }
-=======
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 10)
-=======
->>>>>>> 9f2b72d (test)
-        $0.text = "배송 완료: 17개"
-    }
-    let missedItemCountLabel = MainLabel(type: .main).then {
-        $0.text = "미배송: 3개"
-
-    }
-<<<<<<< HEAD
-    let infoContainerView2 = UIView().then {
-        $0.backgroundColor = .clear
-    }
-    
->>>>>>> 377993d (test)
-=======
->>>>>>> 9f2b72d (test)
     
     let tableView = UITableView().then {
 //        let table = ListTableView(
 //            rowHeight: tableRowHeight,
 //            isScrollEnabled: false)
         $0.layer.borderWidth = 0.2
-<<<<<<< HEAD
-<<<<<<< HEAD
         $0.layer.cornerRadius = 10
-=======
-        $0.layer.cornerRadius = 5
->>>>>>> 377993d (test)
-=======
-        $0.layer.cornerRadius = 10
->>>>>>> 9f2b72d (test)
         $0.layer.borderColor = UIColor.borderColor.cgColor
         $0.separatorStyle = .singleLine
         $0.allowsSelection = false
         $0.clipsToBounds = true
-<<<<<<< HEAD
 //        $0.alwaysBounceVertical = false
 //        $0.bounces = $0.contentOffset.y > 0
-=======
->>>>>>> 377993d (test)
         $0.separatorColor = UIColor.customLightGray
         $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         $0.layer.addShadow(location: [.top, .bottom])
@@ -308,14 +202,6 @@ class DeliveryCompletedViewController: UIViewController {
         $0.addTarget(self, action: #selector(confirm), for: .touchUpInside)
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 377993d (test)
-=======
->>>>>>> 9f2b72d (test)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -338,10 +224,6 @@ class DeliveryCompletedViewController: UIViewController {
         upperView.addSubviews([deliverySummaryLavbel, backButton])
         infoView.addSubviews([infoLabel, accountLabel, incomeLabel, deliveryLabel])
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9f2b72d (test)
         scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton, deliveryRateLabel])
         
         infoContainerView1.addSubviews([itemCountLabel, missedItemCountLabel, completedItemCountLabel])
@@ -353,22 +235,6 @@ class DeliveryCompletedViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-=======
-        scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton])
-        
-        infoContainerView1.addSubviews([itemCountLabel, missedItemCountLabel, completedItemCountLabel])
-        infoContainerView2.addSubviews([onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
-        
-        setConstraints()
-<<<<<<< HEAD
->>>>>>> 377993d (test)
-=======
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
->>>>>>> 36da96d (test)
         presentCircleView()
     }
     
@@ -385,15 +251,7 @@ class DeliveryCompletedViewController: UIViewController {
         scrollContentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-<<<<<<< HEAD
-<<<<<<< HEAD
             make.height.equalTo(1450)
-=======
-            make.height.equalTo(1150)
->>>>>>> 377993d (test)
-=======
-            make.height.equalTo(1450)
->>>>>>> 9f2b72d (test)
         }
         
         
@@ -420,15 +278,7 @@ class DeliveryCompletedViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         infoView.snp.makeConstraints { make in
-<<<<<<< HEAD
-<<<<<<< HEAD
             make.bottom.equalTo(upperView.snp.bottom).offset(25)
-=======
-            make.bottom.equalTo(upperView.snp.bottom).offset(43)
->>>>>>> 377993d (test)
-=======
-            make.bottom.equalTo(upperView.snp.bottom).offset(25)
->>>>>>> 9f2b72d (test)
             make.centerX.equalToSuperview()
             make.leading.equalTo(21)
             make.trailing.equalTo(-21)
@@ -458,8 +308,6 @@ class DeliveryCompletedViewController: UIViewController {
         
         
         //MiddleView
-<<<<<<< HEAD
-<<<<<<< HEAD
         deliveryRateLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(separateLine1.snp.bottom).offset(15)
@@ -564,154 +412,6 @@ class DeliveryCompletedViewController: UIViewController {
         distanceInfoLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(separateLine3.snp.bottom).offset(15)
-=======
-        distanceInfoLabel.snp.makeConstraints { make in
-=======
-
-        deliveryRateLabel.snp.makeConstraints { make in
->>>>>>> 9f2b72d (test)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(separateLine1.snp.bottom).offset(15)
->>>>>>> 377993d (test)
-        }
-        infoContainerView2.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(deliveryRateLabel.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-<<<<<<< HEAD
-            make.height.equalTo(220)
-        }
-        totalDistanceLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-<<<<<<< HEAD
-            make.top.equalTo(mapView.snp.bottom).offset(15)
-=======
-            make.top.equalTo(mapView.snp.bottom).offset(8)
->>>>>>> 377993d (test)
-        }
-        totalTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalDistanceLabel.snp.bottom).offset(5)
-        }
-        deliveryTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalTimeLabel.snp.bottom).offset(5)
-        }
-        mealTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(deliveryTimeLabel.snp.bottom).offset(5)
-        }
-<<<<<<< HEAD
-        
-        
-       
-        
-        confirmButton.snp.makeConstraints { make in
-            make.bottom.equalTo(scrollContentView.snp.bottom).offset(-30)
-=======
-        separateLine2.snp.makeConstraints { make in
-            make.top.equalTo(mealTimeLabel.snp.bottom).offset(8)
-            make.height.equalTo(1)
-            make.trailing.equalToSuperview().offset(-24)
-            make.leading.equalToSuperview().offset(24)
-=======
-            make.height.equalTo(200)
->>>>>>> 9f2b72d (test)
-        }
-        
-        onTimePercentLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-5)
-            make.top.equalToSuperview().offset(20)
-        }
-        onTimeLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(onTimePercentLabel.snp.leading).offset(-5)
-            make.centerY.equalTo(onTimePercentLabel.snp.centerY)
-        }
-        onTimeImage.snp.makeConstraints { make in
-            make.trailing.equalTo(onTimeLabel.snp.leading).offset(-5)
-            make.centerY.equalTo(onTimePercentLabel.snp.centerY)
-            make.height.equalTo(7)
-            make.width.equalTo(7)
-        }
-        
-        lowTimePercentLabel.snp.makeConstraints { make in
-            make.leading.equalTo(lowTimeLabel.snp.trailing).offset(5)
-            make.top.equalTo(onTimePercentLabel.snp.bottom).offset(10)
-        }
-        lowTimeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(lowTimeImage.snp.trailing).offset(5)
-            make.centerY.equalTo(lowTimePercentLabel.snp.centerY)
-        }
-        lowTimeImage.snp.makeConstraints { make in
-            make.leading.equalTo(onTimeImage.snp.leading)
-            make.centerY.equalTo(lowTimePercentLabel.snp.centerY)
-            make.height.equalTo(7)
-            make.width.equalTo(7)
-        }
-        
-        missTimePercentLabel.snp.makeConstraints { make in
-            make.leading.equalTo(missTimeLabel.snp.trailing).offset(5)
-            make.top.equalTo(lowTimePercentLabel.snp.bottom).offset(10)
-        }
-        missTimeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(missTimeImage.snp.trailing).offset(5)
-            make.centerY.equalTo(missTimePercentLabel.snp.centerY)
-        }
-        missTimeImage.snp.makeConstraints { make in
-            make.leading.equalTo(onTimeImage.snp.leading)
-            make.centerY.equalTo(missTimePercentLabel.snp.centerY)
-            make.height.equalTo(7)
-            make.width.equalTo(7)
-        }
-        
-        infoContainerView1.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(infoContainerView2.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(150)
-        }
-        itemCountLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(25)
-        }
-        completedItemCountLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(itemCountLabel.snp.bottom).offset(13)
-        }
-        missedItemCountLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(completedItemCountLabel.snp.bottom).offset(13)
-        }
-        infoContainerView2.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(24)
-            make.top.equalTo(separateLine2.snp.bottom)
-            make.leading.equalTo(verticalLine.snp.trailing)
-            make.height.equalTo(102)
-        }
-        
-        
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(infoContainerView1.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(220)
-
-//            make.height.equalTo(CGFloat(lists.count)*tableRowHeight)
-        }
-        separateLine3.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(25)
-            make.height.equalTo(1)
-            make.trailing.equalToSuperview().offset(-24)
-            make.leading.equalToSuperview().offset(24)
-        }
-        
-        
-        //FooterView
-        distanceInfoLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(separateLine3.snp.bottom).offset(15)
         }
         mapView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -741,12 +441,7 @@ class DeliveryCompletedViewController: UIViewController {
        
         
         confirmButton.snp.makeConstraints { make in
-<<<<<<< HEAD
-            make.bottom.equalTo(scrollContentView.snp.bottom).offset(-10)
->>>>>>> 377993d (test)
-=======
             make.bottom.equalTo(scrollContentView.snp.bottom).offset(-30)
->>>>>>> 36da96d (test)
             make.height.equalTo(48)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
@@ -755,78 +450,28 @@ class DeliveryCompletedViewController: UIViewController {
     
     private func presentCircleView() {
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
         
         let width = CGFloat(172)
         let height = CGFloat(102)
         
         let pieChartView = PieChartView(frame: CGRect(x: 5, y: 10, width: width, height: height))
-=======
-=======
->>>>>>> 36da96d (test)
-//        let width = self.infoContainerView2.frame.width
-=======
-=======
->>>>>>> 9f2b72d (test)
-        print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
-    
-        let width = CGFloat(172)
-        
-//        let height = self.infoContainerView2.frame.height
-        let height = CGFloat(102)
-        
-<<<<<<< HEAD
-<<<<<<< HEAD
-        let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        pieChartView.center = self.infoContainerView2.center
-<<<<<<< HEAD
->>>>>>> 377993d (test)
-=======
-=======
-        let pieChartView = PieChartView(frame: CGRect(x: 5, y: 10, width: width, height: height))
->>>>>>> 4fd152a (Delivery Detail View)
->>>>>>> 36da96d (test)
-=======
-        let pieChartView = PieChartView(frame: CGRect(x: 5, y: 10, width: width, height: height))
->>>>>>> 9f2b72d (test)
         
         pieChartView.slices = [Slice(percent: 0.1, color: UIColor.CjRed),
                                 Slice(percent: 0.15, color: UIColor.CjYellow),
                                 Slice(percent: 0.75, color: UIColor.CjBlue)]
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9f2b72d (test)
         onTimePercentLabel.text = "75%"
         lowTimePercentLabel.text = "15%"
         missTimePercentLabel.text = "10%"
         
         self.infoContainerView2.addSubview(pieChartView)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 36da96d (test)
         
 //        pieChartView.snp.makeConstraints { make in
 //            make.top.equalTo(infoContainerView2.snp.top)
 //            make.centerX.equalTo(infoContainerView2.snp.centerX)
 //        }
         
-<<<<<<< HEAD
-=======
-        self.infoContainerView2.addSubview(pieChartView)
->>>>>>> 377993d (test)
-=======
->>>>>>> 4fd152a (Delivery Detail View)
->>>>>>> 36da96d (test)
-=======
->>>>>>> 9f2b72d (test)
         pieChartView.animateChart()
     }
     
@@ -844,15 +489,7 @@ class DeliveryCompletedViewController: UIViewController {
 
 extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-<<<<<<< HEAD
-<<<<<<< HEAD
         return titles.count
-=======
-        return lists.count
->>>>>>> 377993d (test)
-=======
-        return titles.count
->>>>>>> 9f2b72d (test)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -864,10 +501,6 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
 //        default:
 //            cell.backgroundColor = .white
 //        }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9f2b72d (test)
         
         cell.numLabel.text = "\(indexPath.row + 1)"
         cell.titleLabel.text = titles[indexPath.row]
@@ -899,13 +532,6 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
         
         }
         
-<<<<<<< HEAD
-=======
-        cell.titleLabel.text = titles[indexPath.row]
-        cell.contentLabel.text = contents[indexPath.row]
->>>>>>> 377993d (test)
-=======
->>>>>>> 9f2b72d (test)
         return cell
     }
     
