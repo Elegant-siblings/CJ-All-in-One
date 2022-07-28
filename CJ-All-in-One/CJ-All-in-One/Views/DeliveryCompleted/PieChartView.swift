@@ -15,7 +15,7 @@ struct Slice {
 
 class PieChartView: UIView {
     
-    let animation_duration: CGFloat = 1 // 전체 애니메이션 시간
+    let animation_duration: CGFloat = 1.5 // 전체 애니메이션 시간
     var slices: [Slice]? // 파이 그래프의 요소들(슬라이스들)
     var sliceIndex: Int = 0 // 현재 그리고 있는 슬라이스가 몇번째인지에 대한 정보
     var currentPercent: CGFloat = 0.0
@@ -31,7 +31,7 @@ class PieChartView: UIView {
         if slices != nil && slices!.count > 0 {
             let firstSlice = slices![0]
             addSlice(firstSlice)
-            addLabel(firstSlice)
+//            addLabel(firstSlice)
         }
     }
     
@@ -135,7 +135,7 @@ extension PieChartView: CAAnimationDelegate {
             if sliceIndex < slices!.count {
                 let nextSlice = slices![sliceIndex]
                 addSlice(nextSlice)
-                addLabel(nextSlice)
+//                addLabel(nextSlice)
             }
         }
     }

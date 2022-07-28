@@ -121,7 +121,7 @@ class PackageDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        self.navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
         
         basicTableView.dataSource = self
         basicTableView.delegate = self

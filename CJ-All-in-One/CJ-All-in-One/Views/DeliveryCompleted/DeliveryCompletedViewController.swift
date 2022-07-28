@@ -17,11 +17,16 @@ class DeliveryCompletedViewController: UIViewController {
     
     // Table 정보
     let tableRowHeight = CGFloat(40)
-    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청사항"]
-    let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다"]
-    var lists = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"]
+    let titles = ["#", "라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
+    let contents = ["배송지", "서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
     
     var mapImage = UIImage()
+    
+    //DeliveryPercent
+    var onTime: String!
+    var lowTime: String!
+    var missTime: String!
+    
     
     // UIScrollView 정의
     let scrollView = UIScrollView().then {
@@ -82,17 +87,26 @@ class DeliveryCompletedViewController: UIViewController {
     
     
     //MiddleView
+    let deliveryRateLabel = MainLabel(type: .main).then {
+        $0.text = "배송률"
+        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
+        $0.textColor = .lightGray
+    }
+    
     let infoContainerView2 = UIView().then {
         $0.backgroundColor = .clear
     }
     let onTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
+        $0.text = "정시 배송률"
     }
     let lowTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
+        $0.text = "오배송률"
     }
     let missTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
+        $0.text = "분실률"
     }
     let onTimeImage = UIImageView().then {
         $0.image = UIImage(named: "onTimeImage")
@@ -102,6 +116,15 @@ class DeliveryCompletedViewController: UIViewController {
     }
     let missTimeImage = UIImageView().then {
         $0.image = UIImage(named: "missTimeImage")
+    }
+    let onTimePercentLabel = MainLabel(type: .main).then {
+        $0.textColor = .CjBlue
+    }
+    let lowTimePercentLabel = MainLabel(type: .main).then {
+        $0.textColor = .CjYellow
+    }
+    let missTimePercentLabel = MainLabel(type: .main).then {
+        $0.textColor = .CjRed
     }
     
     
@@ -141,28 +164,23 @@ class DeliveryCompletedViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     let itemCountLabel = MainLabel(type: .main).then {
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 10)
         $0.text = "배송 물품: 20개"
 
     }
     let completedItemCountLabel = MainLabel(type: .main).then {
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 10)
         $0.text = "배송 완료: 17개"
     }
     let missedItemCountLabel = MainLabel(type: .main).then {
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 10)
         $0.text = "미배송: 3개"
 
     }
-    
-    
     
     let tableView = UITableView().then {
 //        let table = ListTableView(
 //            rowHeight: tableRowHeight,
 //            isScrollEnabled: false)
         $0.layer.borderWidth = 0.2
-        $0.layer.cornerRadius = 5
+        $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.borderColor.cgColor
         $0.separatorStyle = .singleLine
         $0.allowsSelection = false
@@ -181,8 +199,6 @@ class DeliveryCompletedViewController: UIViewController {
         $0.layer.borderColor = UIColor.CjYellow.cgColor
         $0.addTarget(self, action: #selector(confirm), for: .touchUpInside)
     }
-
-
 
     
     override func viewDidLoad() {
@@ -206,10 +222,10 @@ class DeliveryCompletedViewController: UIViewController {
         upperView.addSubviews([deliverySummaryLavbel, backButton])
         infoView.addSubviews([infoLabel, accountLabel, incomeLabel, deliveryLabel])
         
-        scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton])
+        scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton, deliveryRateLabel])
         
         infoContainerView1.addSubviews([itemCountLabel, missedItemCountLabel, completedItemCountLabel])
-        infoContainerView2.addSubviews([onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
+        infoContainerView2.addSubviews([onTimePercentLabel, missTimePercentLabel, lowTimePercentLabel, onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
         
         setConstraints()
     }
@@ -233,7 +249,7 @@ class DeliveryCompletedViewController: UIViewController {
         scrollContentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(1600)
+            make.height.equalTo(1450)
         }
         
         
@@ -260,7 +276,7 @@ class DeliveryCompletedViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         infoView.snp.makeConstraints { make in
-            make.bottom.equalTo(upperView.snp.bottom).offset(43)
+            make.bottom.equalTo(upperView.snp.bottom).offset(25)
             make.centerX.equalToSuperview()
             make.leading.equalTo(21)
             make.trailing.equalTo(-21)
@@ -290,60 +306,69 @@ class DeliveryCompletedViewController: UIViewController {
         
         
         //MiddleView
-        infoContainerView2.snp.makeConstraints { make in
+        deliveryRateLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(separateLine1.snp.bottom).offset(15)
+        }
+        infoContainerView2.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(deliveryRateLabel.snp.bottom).offset(15)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(220)
+            make.height.equalTo(200)
         }
         
-        distanceInfoLabel.snp.makeConstraints { make in
+        onTimePercentLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-5)
+            make.top.equalToSuperview().offset(20)
+        }
+        onTimeLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(onTimePercentLabel.snp.leading).offset(-5)
+            make.centerY.equalTo(onTimePercentLabel.snp.centerY)
+        }
+        onTimeImage.snp.makeConstraints { make in
+            make.trailing.equalTo(onTimeLabel.snp.leading).offset(-5)
+            make.centerY.equalTo(onTimePercentLabel.snp.centerY)
+            make.height.equalTo(7)
+            make.width.equalTo(7)
+        }
+        
+        lowTimePercentLabel.snp.makeConstraints { make in
+            make.leading.equalTo(lowTimeLabel.snp.trailing).offset(5)
+            make.top.equalTo(onTimePercentLabel.snp.bottom).offset(10)
+        }
+        lowTimeLabel.snp.makeConstraints { make in
+            make.leading.equalTo(lowTimeImage.snp.trailing).offset(5)
+            make.centerY.equalTo(lowTimePercentLabel.snp.centerY)
+        }
+        lowTimeImage.snp.makeConstraints { make in
+            make.leading.equalTo(onTimeImage.snp.leading)
+            make.centerY.equalTo(lowTimePercentLabel.snp.centerY)
+            make.height.equalTo(7)
+            make.width.equalTo(7)
+        }
+        
+        missTimePercentLabel.snp.makeConstraints { make in
+            make.leading.equalTo(missTimeLabel.snp.trailing).offset(5)
+            make.top.equalTo(lowTimePercentLabel.snp.bottom).offset(10)
+        }
+        missTimeLabel.snp.makeConstraints { make in
+            make.leading.equalTo(missTimeImage.snp.trailing).offset(5)
+            make.centerY.equalTo(missTimePercentLabel.snp.centerY)
+        }
+        missTimeImage.snp.makeConstraints { make in
+            make.leading.equalTo(onTimeImage.snp.leading)
+            make.centerY.equalTo(missTimePercentLabel.snp.centerY)
+            make.height.equalTo(7)
+            make.width.equalTo(7)
+        }
+        
+        infoContainerView1.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(infoContainerView2.snp.bottom).offset(15)
-        }
-        mapView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(distanceInfoLabel.snp.bottom).offset(15)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(220)
-        }
-        totalDistanceLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(mapView.snp.bottom).offset(8)
-        }
-        totalTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalDistanceLabel.snp.bottom).offset(5)
-        }
-        deliveryTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalTimeLabel.snp.bottom).offset(5)
-        }
-        mealTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(deliveryTimeLabel.snp.bottom).offset(5)
-        }
-        separateLine2.snp.makeConstraints { make in
-            make.top.equalTo(mealTimeLabel.snp.bottom).offset(8)
-            make.height.equalTo(1)
-            make.trailing.equalToSuperview().offset(-24)
-            make.leading.equalToSuperview().offset(24)
-        }
-        
-        //FooterView
-        verticalLine.snp.makeConstraints { make in
-            make.width.equalTo(1)
-            make.height.equalTo(92)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(separateLine2.snp.bottom).offset(10)
-        }
-        infoContainerView1.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(24)
-            make.top.equalTo(separateLine2.snp.bottom)
-            make.trailing.equalTo(verticalLine.snp.leading)
-            make.height.equalTo(102)
+            make.height.equalTo(150)
         }
         itemCountLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -366,7 +391,7 @@ class DeliveryCompletedViewController: UIViewController {
         
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(verticalLine.snp.bottom).offset(20)
+            make.top.equalTo(infoContainerView1.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(220)
@@ -374,11 +399,45 @@ class DeliveryCompletedViewController: UIViewController {
 //            make.height.equalTo(CGFloat(lists.count)*tableRowHeight)
         }
         separateLine3.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(18)
+            make.top.equalTo(tableView.snp.bottom).offset(25)
             make.height.equalTo(1)
             make.trailing.equalToSuperview().offset(-24)
             make.leading.equalToSuperview().offset(24)
         }
+        
+        
+        //FooterView
+        distanceInfoLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(separateLine3.snp.bottom).offset(15)
+        }
+        mapView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(distanceInfoLabel.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
+            make.height.equalTo(220)
+        }
+        totalDistanceLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(mapView.snp.bottom).offset(15)
+        }
+        totalTimeLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(totalDistanceLabel.snp.bottom).offset(5)
+        }
+        deliveryTimeLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(totalTimeLabel.snp.bottom).offset(5)
+        }
+        mealTimeLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(deliveryTimeLabel.snp.bottom).offset(5)
+        }
+        
+        
+       
+        
         confirmButton.snp.makeConstraints { make in
             make.bottom.equalTo(scrollContentView.snp.bottom).offset(-30)
             make.height.equalTo(48)
@@ -399,6 +458,10 @@ class DeliveryCompletedViewController: UIViewController {
         pieChartView.slices = [Slice(percent: 0.1, color: UIColor.CjRed),
                                 Slice(percent: 0.15, color: UIColor.CjYellow),
                                 Slice(percent: 0.75, color: UIColor.CjBlue)]
+        
+        onTimePercentLabel.text = "75%"
+        lowTimePercentLabel.text = "15%"
+        missTimePercentLabel.text = "10%"
         
         self.infoContainerView2.addSubview(pieChartView)
         
@@ -424,7 +487,7 @@ class DeliveryCompletedViewController: UIViewController {
 
 extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return titles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -436,8 +499,37 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
 //        default:
 //            cell.backgroundColor = .white
 //        }
+        
+        cell.numLabel.text = "\(indexPath.row + 1)"
         cell.titleLabel.text = titles[indexPath.row]
         cell.contentLabel.text = contents[indexPath.row]
+        
+        // 셀 정보 업데이트
+        if indexPath.row == 0{
+            cell.contentView.backgroundColor = .darkGray
+            cell.checkImage.isHidden = true
+            cell.confirmLabel.isHidden = false
+        
+            
+            
+            
+            
+            cell.numLabel.textColor = .lightGray
+            cell.titleLabel.textColor = .lightGray
+            cell.contentLabel.textColor = .lightGray
+            
+        } else {
+            cell.contentView.backgroundColor = .white
+            cell.checkImage.isHidden = false
+            cell.confirmLabel.isHidden = true
+
+            
+            cell.numLabel.textColor = .gray
+            cell.titleLabel.textColor = .gray
+            cell.contentLabel.textColor = .gray
+        
+        }
+        
         return cell
     }
     
