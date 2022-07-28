@@ -172,15 +172,9 @@
 		1D88E44F288DD36F009DCB4F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				78BA596E2892C90C0000A5AD /* FindPath */,
-				78BA59672892C8D20000A5AD /* Package */,
-				78BA59602892C8780000A5AD /* DeliveryCompleted */,
-=======
 				3207A9392892B94700F0E740 /* Package */,
 				3207A9382892B93600F0E740 /* FindPath */,
 				3207A9372892B92A00F0E740 /* DeliveryCompleted */,
->>>>>>> 02d181d (Map View Modify)
 				1D546E77288D1DDD00160E82 /* MainViewController.swift */,
 				785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */,
 				78D942B42890169300C8B224 /* ApplyViewController.swift */,
@@ -468,16 +462,10 @@
 				32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */,
 				78ABB2B4289162C30072C41E /* ApplyProtocol.swift in Sources */,
 				32A2C571288FE15D0000CCB6 /* IndicatorView.swift in Sources */,
-<<<<<<< HEAD
-				78BA596B2892C8D20000A5AD /* PackageDeliveryTableViewCell.swift in Sources */,
-				78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */,
-				32A2C55B288FDE710000CCB6 /* Constant.swift in Sources */,
-=======
 				3207A93F2892BA0C00F0E740 /* PieChartView.swift in Sources */,
 				78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */,
 				32A2C55B288FDE710000CCB6 /* Constant.swift in Sources */,
 				3207A93D2892B9EC00F0E740 /* DeliveryCompletedTableViewCell.swift in Sources */,
->>>>>>> 02d181d (Map View Modify)
 				78ABB2A6289147500072C41E /* ReaderView.swift in Sources */,
 				3207A9452892BA7800F0E740 /* FindPathBottomTableViewCell.swift in Sources */,
 				32A2C56B288FE09E0000CCB6 /* UIView.swift in Sources */,
