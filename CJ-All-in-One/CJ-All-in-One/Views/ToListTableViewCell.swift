@@ -29,7 +29,6 @@ class ToListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubviews([labelNum,labelTo])
-        print("init \(rowIndex)")
         
         labelNum.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -57,11 +56,5 @@ class ToListTableViewCell: UITableViewCell {
             $0.font = .systemFont(ofSize: fontSize, weight: .bold)
             $0.textColor = fontColor
         }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        print("prepareForReuse")
     }
 }

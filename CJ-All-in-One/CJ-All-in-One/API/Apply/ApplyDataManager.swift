@@ -8,11 +8,10 @@
 import Foundation
 import Alamofire
 
-//let url = "http://34.125.0.122:3000/"
-let base_url = "http://34.125.0.122:3000/"
-//let urlString = "http://34.125.0.122:3000/works?deliveryDate=20220501&receiverAdd1=서울&receiverAdd2=마포구"
+
 
 class ApplyDataManager: ApplyDataManagerDelegate {
+    
     func getAssignedItems(date: String, locations: [Location], _ viewController: AssignViewController) {
         
         let path = "/works?"
@@ -26,22 +25,32 @@ class ApplyDataManager: ApplyDataManagerDelegate {
         _ = addr1.popLast()
         _ = addr2.popLast()
         urlString += "deliveryDate=\(date)&receiverAdd1="+addr1+"&receiverAdd2="+addr2
-        
+        print("URL: ", urlString)
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
-            print(url)
             AF.request(url, method: .get)
                 .validate()
                 .responseDecodable(of: AssignedItem.self) {
                     response in
                     switch response.result {
                     case .success(let response):
-//                        print(response.rows)
+                        print(response)
                         viewController.successAssignItems(response.rows)
                     case .failure(let error):
                         print(error)
                     }
                 }
+        }
+    }
+    
+    func applyTask(applyForm: ApplyDataModel) {
+        
+        var urlString = "http://34.125.0.122:3000/works/register?deliveryPK=1,2,3,4&deliveryManID=AABBCCDDEEFFGGHH&deliveryDate=20220515&deliveryType=0&deliveryTime=0&deliveryCar=세단&terminalAddr=서울"
+        
+//        let path =
+        
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
+            AF.request(url, method: .get)
         }
     }
 }

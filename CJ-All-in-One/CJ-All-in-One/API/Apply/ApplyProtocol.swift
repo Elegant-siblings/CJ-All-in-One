@@ -10,4 +10,5 @@ import UIKit
 
 protocol ApplyDataManagerDelegate {
     func getAssignedItems(date: String, locations: [Location], _ viewController: AssignViewController)
+    func applyTask(applyForm: ApplyDataModel)
 }

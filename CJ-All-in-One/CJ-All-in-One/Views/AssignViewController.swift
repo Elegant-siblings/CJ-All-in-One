@@ -14,6 +14,7 @@ class AssignViewController: UIViewController {
     var selectedItems:[Row] = []
     var date = ""
     var toLists: [Location] = []
+    var applyForm: ApplyDataModel?
     
     // -MARK: UILabels
     lazy var labelTitle = UILabel().then {
@@ -104,6 +105,7 @@ class AssignViewController: UIViewController {
         super.viewDidLoad()
         
         print("in viewDidLoad")
+//        print(applyForm!)
         print(date, toLists)
         view.backgroundColor = .CjWhite
         
@@ -125,11 +127,11 @@ class AssignViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(labelTitle.snp.bottom).offset(30)
             make.width.equalToSuperview().offset(-40)
-            make.height.equalTo(150)
+            make.height.equalTo(270)
         }
         tableSelectedItem.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(tableViewedItem.snp.bottom).offset(30)
+            make.top.equalTo(labelTitle.snp.bottom).offset(30)
             make.width.equalToSuperview().offset(-40)
             make.height.equalTo(tableSelectedItem.rowHeight)
         }
@@ -139,9 +141,7 @@ class AssignViewController: UIViewController {
 extension AssignViewController {
     func successAssignItems(_ result: [Row]) {
         viewedItems = result
-//        print("in successAssignItems")
         tableViewedItem.reloadData()
-//        print(result.count)
     }
 }
 

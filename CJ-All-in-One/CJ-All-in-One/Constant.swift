@@ -24,3 +24,5 @@ class Constant {
 
 let primaryButtonHeight = 48
 let primaryButtonWidth = 343
+let base_url = "http://34.125.0.122:3000"
+let ManId = "AABBCCDDEEFFGGHH"
