@@ -185,6 +185,8 @@ class DeliveryCompletedViewController: UIViewController {
         $0.separatorStyle = .singleLine
         $0.allowsSelection = false
         $0.clipsToBounds = true
+//        $0.alwaysBounceVertical = false
+//        $0.bounces = $0.contentOffset.y > 0
         $0.separatorColor = UIColor.customLightGray
         $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         $0.layer.addShadow(location: [.top, .bottom])
