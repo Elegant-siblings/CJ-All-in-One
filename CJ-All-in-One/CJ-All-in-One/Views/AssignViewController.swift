@@ -14,6 +14,7 @@ class AssignViewController: UIViewController {
     var selectedItems:[Row] = []
     var date = ""
     var toLists: [Location] = []
+    var applyForm: ApplyDataModel?
     
     // -MARK: UILabels
     lazy var labelTitle = UILabel().then {
@@ -104,6 +105,7 @@ class AssignViewController: UIViewController {
         super.viewDidLoad()
         
         print("in viewDidLoad")
+        print(applyForm!)
         print(date, toLists)
         view.backgroundColor = .CjWhite
         
@@ -139,9 +141,7 @@ class AssignViewController: UIViewController {
 extension AssignViewController {
     func successAssignItems(_ result: [Row]) {
         viewedItems = result
-//        print("in successAssignItems")
         tableViewedItem.reloadData()
-//        print(result.count)
     }
 }
 
