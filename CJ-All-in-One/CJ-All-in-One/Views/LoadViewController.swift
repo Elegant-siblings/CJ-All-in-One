@@ -12,13 +12,13 @@ class LoadViewController: UIViewController {
     
     let lists = [
         Item(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
-        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
-        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
-        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
-        Item(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
-        Item(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
-        Item(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
-        Item(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
+//        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
+//        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
+//        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
+//        Item(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
+//        Item(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
+//        Item(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
+//        Item(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
     ]
     
     let nums = [1,1,2,2,3,3,1,2]
@@ -35,7 +35,7 @@ class LoadViewController: UIViewController {
         $0.addTarget(self, action: #selector(touchUpCompleteButton), for: .touchUpInside)
     }
     
-    lazy var tableItem = ListTableView(rowHeight: 35, isScrollEnabled: true).then {
+    lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .none).then {
         $0.dataSource = self
         $0.register(LoadItemTableViewCell.self, forCellReuseIdentifier: LoadItemTableViewCell.identifier)
         $0.alwaysBounceVertical = false
@@ -69,14 +69,14 @@ class LoadViewController: UIViewController {
         viewVehicleImageContainer.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(labelItemLoadTitle.snp.bottom).offset(15)
-            make.width.equalTo(275)
-            make.height.equalTo(400)
+            make.width.equalTo(200)
+            make.height.equalTo(300)
         }
         
         tableItem.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-50)
-            make.height.equalTo(210)
+            make.height.equalTo(200)
             make.top.equalTo(viewVehicleImageContainer.snp.bottom).offset(15)
         }
 
@@ -95,7 +95,7 @@ class LoadViewController: UIViewController {
 
 extension LoadViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        lists.count
+        return lists.count+1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
