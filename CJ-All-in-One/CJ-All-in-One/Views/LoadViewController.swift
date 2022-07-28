@@ -31,7 +31,6 @@ class LoadViewController: UIViewController {
     }
     
     lazy var buttonComplete = MainButton(type: .main).then {
-        $0.isEnabled = true
         $0.setTitle("물품 적재 완료", for: .normal)
         $0.addTarget(self, action: #selector(touchUpCompleteButton), for: .touchUpInside)
     }
@@ -83,9 +82,9 @@ class LoadViewController: UIViewController {
 
         buttonComplete.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(755)
-            make.width.equalTo(primaryButtonWidth)
-            make.height.equalTo(primaryButtonHeight)
+            make.top.equalTo(mainButtonTopOffset)
+            make.width.equalTo(mainButtonWidth)
+            make.height.equalTo(mainButtonHeight)
         }
     }
     

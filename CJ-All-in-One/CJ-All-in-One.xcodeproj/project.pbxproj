@@ -10,7 +10,6 @@
 		1D546E74288D1DDD00160E82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D546E73288D1DDD00160E82 /* AppDelegate.swift */; };
 		1D546E76288D1DDD00160E82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D546E75288D1DDD00160E82 /* SceneDelegate.swift */; };
 		1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D546E77288D1DDD00160E82 /* MainViewController.swift */; };
-		1D546E7D288D1DDF00160E82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D546E7C288D1DDF00160E82 /* Assets.xcassets */; };
 		1D546E80288D1DDF00160E82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D546E7E288D1DDF00160E82 /* LaunchScreen.storyboard */; };
 		3207A93B2892B9A600F0E740 /* DeliveryCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3207A93A2892B9A600F0E740 /* DeliveryCompletedViewController.swift */; };
 		3207A93D2892B9EC00F0E740 /* DeliveryCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3207A93C2892B9EC00F0E740 /* DeliveryCompletedTableViewCell.swift */; };
@@ -36,6 +35,7 @@
 		32A2C573288FE16E0000CCB6 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C572288FE16E0000CCB6 /* Device.swift */; };
 		32A2C577288FE1B60000CCB6 /* MapResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C576288FE1B60000CCB6 /* MapResponse.swift */; };
 		32A2C579288FE1BF0000CCB6 /* MapDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */; };
+		7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */; };
 		785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */; };
 		78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABB2A32891462E0072C41E /* BarcodeViewController.swift */; };
 		78ABB2A6289147500072C41E /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABB2A5289147500072C41E /* ReaderView.swift */; };
@@ -51,16 +51,8 @@
 		78B494032891980A0073CB0B /* AssignedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B494022891980A0073CB0B /* AssignedTableViewCell.swift */; };
 		78B4940528928A9B0073CB0B /* ApplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B4940428928A9A0073CB0B /* ApplyView.swift */; };
 		78B4940828928F090073CB0B /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B4940728928F090073CB0B /* CityModel.swift */; };
-		78BA59642892C8780000A5AD /* DeliveryCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59612892C8780000A5AD /* DeliveryCompletedViewController.swift */; };
-		78BA59652892C8780000A5AD /* DeliveryCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59622892C8780000A5AD /* DeliveryCompletedTableViewCell.swift */; };
-		78BA59662892C8780000A5AD /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59632892C8780000A5AD /* PieChartView.swift */; };
-		78BA596B2892C8D20000A5AD /* PackageDeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59682892C8D20000A5AD /* PackageDeliveryTableViewCell.swift */; };
-		78BA596C2892C8D20000A5AD /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59692892C8D20000A5AD /* PackageDetailViewController.swift */; };
-		78BA596D2892C8D20000A5AD /* PackageBasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA596A2892C8D20000A5AD /* PackageBasicTableViewCell.swift */; };
-		78BA59702892C9270000A5AD /* FindPathBottomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA596F2892C9270000A5AD /* FindPathBottomTableViewCell.swift */; };
-		78BA59722892C9420000A5AD /* FindPathBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59712892C9420000A5AD /* FindPathBottomViewController.swift */; };
-		78BA59742892C9570000A5AD /* FindPathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59732892C9570000A5AD /* FindPathViewController.swift */; };
 		78BA59762892C9B40000A5AD /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59752892C9B40000A5AD /* MapDelegate.swift */; };
+		78BA59792892F74C0000A5AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D546E7C288D1DDF00160E82 /* Assets.xcassets */; };
 		78D942B52890169300C8B224 /* ApplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B42890169300C8B224 /* ApplyViewController.swift */; };
 		78D942B7289016CA00C8B224 /* ToListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */; };
 		78D942B92890174700C8B224 /* UiViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B82890174700C8B224 /* UiViews.swift */; };
@@ -102,6 +94,7 @@
 		32A2C576288FE1B60000CCB6 /* MapResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResponse.swift; sourceTree = "<group>"; };
 		32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDataManager.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
+		7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDetailTableViewCell.swift; sourceTree = "<group>"; };
 		78ABB2A32891462E0072C41E /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
 		78ABB2A5289147500072C41E /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
@@ -117,15 +110,6 @@
 		78B494022891980A0073CB0B /* AssignedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedTableViewCell.swift; sourceTree = "<group>"; };
 		78B4940428928A9A0073CB0B /* ApplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyView.swift; sourceTree = "<group>"; };
 		78B4940728928F090073CB0B /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
-		78BA59612892C8780000A5AD /* DeliveryCompletedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedViewController.swift; sourceTree = "<group>"; };
-		78BA59622892C8780000A5AD /* DeliveryCompletedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedTableViewCell.swift; sourceTree = "<group>"; };
-		78BA59632892C8780000A5AD /* PieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
-		78BA59682892C8D20000A5AD /* PackageDeliveryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageDeliveryTableViewCell.swift; sourceTree = "<group>"; };
-		78BA59692892C8D20000A5AD /* PackageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
-		78BA596A2892C8D20000A5AD /* PackageBasicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageBasicTableViewCell.swift; sourceTree = "<group>"; };
-		78BA596F2892C9270000A5AD /* FindPathBottomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomTableViewCell.swift; sourceTree = "<group>"; };
-		78BA59712892C9420000A5AD /* FindPathBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomViewController.swift; sourceTree = "<group>"; };
-		78BA59732892C9570000A5AD /* FindPathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathViewController.swift; sourceTree = "<group>"; };
 		78BA59752892C9B40000A5AD /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		78D942B42890169300C8B224 /* ApplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyViewController.swift; sourceTree = "<group>"; };
 		78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToListTableViewCell.swift; sourceTree = "<group>"; };
@@ -155,6 +139,7 @@
 				1D546E71288D1DDD00160E82 /* Products */,
 				2BA054BBDDDC068C9EEE3FCC /* Pods */,
 				7088BD170D1F625BC806BDFC /* Frameworks */,
+				78BA59782892F4A80000A5AD /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +178,7 @@
 				1D546E77288D1DDD00160E82 /* MainViewController.swift */,
 				785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */,
 				78D942B42890169300C8B224 /* ApplyViewController.swift */,
+				7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */,
 				78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */,
 				78D942BA28901B6F00C8B224 /* ResultViewController.swift */,
 				78D942BC2890497800C8B224 /* ResultItemsTableViewCell.swift */,
@@ -345,34 +331,11 @@
 			name = Struct;
 			sourceTree = "<group>";
 		};
-		78BA59602892C8780000A5AD /* DeliveryCompleted */ = {
+		78BA59782892F4A80000A5AD /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				78BA59612892C8780000A5AD /* DeliveryCompletedViewController.swift */,
-				78BA59622892C8780000A5AD /* DeliveryCompletedTableViewCell.swift */,
-				78BA59632892C8780000A5AD /* PieChartView.swift */,
 			);
-			path = DeliveryCompleted;
-			sourceTree = "<group>";
-		};
-		78BA59672892C8D20000A5AD /* Package */ = {
-			isa = PBXGroup;
-			children = (
-				78BA59682892C8D20000A5AD /* PackageDeliveryTableViewCell.swift */,
-				78BA59692892C8D20000A5AD /* PackageDetailViewController.swift */,
-				78BA596A2892C8D20000A5AD /* PackageBasicTableViewCell.swift */,
-			);
-			path = Package;
-			sourceTree = "<group>";
-		};
-		78BA596E2892C90C0000A5AD /* FindPath */ = {
-			isa = PBXGroup;
-			children = (
-				78BA596F2892C9270000A5AD /* FindPathBottomTableViewCell.swift */,
-				78BA59712892C9420000A5AD /* FindPathBottomViewController.swift */,
-				78BA59732892C9570000A5AD /* FindPathViewController.swift */,
-			);
-			path = FindPath;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,8 +398,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78BA59792892F74C0000A5AD /* Assets.xcassets in Resources */,
 				1D546E80288D1DDF00160E82 /* LaunchScreen.storyboard in Resources */,
-				1D546E7D288D1DDF00160E82 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,12 +452,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78BA59652892C8780000A5AD /* DeliveryCompletedTableViewCell.swift in Sources */,
 				78ABB2AA289152350072C41E /* LoadItemTableViewCell.swift in Sources */,
 				78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */,
 				78BA59762892C9B40000A5AD /* MapDelegate.swift in Sources */,
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
 				1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */,
+				7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */,
 				78ABB2AD289162640072C41E /* ResultProtocol.swift in Sources */,
 				32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */,
 				78ABB2B4289162C30072C41E /* ApplyProtocol.swift in Sources */,
@@ -506,19 +469,15 @@
 				78ABB2A6289147500072C41E /* ReaderView.swift in Sources */,
 				3207A9452892BA7800F0E740 /* FindPathBottomTableViewCell.swift in Sources */,
 				32A2C56B288FE09E0000CCB6 /* UIView.swift in Sources */,
-				78BA59702892C9270000A5AD /* FindPathBottomTableViewCell.swift in Sources */,
 				32A2C573288FE16E0000CCB6 /* Device.swift in Sources */,
 				32A2C567288FE0930000CCB6 /* UIViewController.swift in Sources */,
 				78D942BB28901B6F00C8B224 /* ResultViewController.swift in Sources */,
-				78BA59662892C8780000A5AD /* PieChartView.swift in Sources */,
 				78ABB2AF2891626B0072C41E /* ResultResponse.swift in Sources */,
-				78BA59742892C9570000A5AD /* FindPathViewController.swift in Sources */,
 				1D546E74288D1DDD00160E82 /* AppDelegate.swift in Sources */,
 				3207A94D2892BB8E00F0E740 /* MapDelegate.swift in Sources */,
 				3207A9472892BAA000F0E740 /* PackageDetailViewController.swift in Sources */,
 				78ABB2B8289162D40072C41E /* ApplyDataManager.swift in Sources */,
 				78ABB2B1289162750072C41E /* ResultDataManager.swift in Sources */,
-				78BA596D2892C8D20000A5AD /* PackageBasicTableViewCell.swift in Sources */,
 				78B4940828928F090073CB0B /* CityModel.swift in Sources */,
 				78D942B92890174700C8B224 /* UiViews.swift in Sources */,
 				78B494012891708D0073CB0B /* AssignViewController.swift in Sources */,
@@ -529,14 +488,11 @@
 				32A2C56D288FE0BD0000CCB6 /* CALayer.swift in Sources */,
 				785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */,
 				32A2C565288FE0080000CCB6 /* NavBarClass.swift in Sources */,
-				78BA59722892C9420000A5AD /* FindPathBottomViewController.swift in Sources */,
-				78BA59642892C8780000A5AD /* DeliveryCompletedViewController.swift in Sources */,
 				32A2C577288FE1B60000CCB6 /* MapResponse.swift in Sources */,
 				3207A9432892BA4B00F0E740 /* FindPathBottomViewController.swift in Sources */,
 				32A2C579288FE1BF0000CCB6 /* MapDataManager.swift in Sources */,
 				78D942B52890169300C8B224 /* ApplyViewController.swift in Sources */,
 				78B4940528928A9B0073CB0B /* ApplyView.swift in Sources */,
-				78BA596C2892C8D20000A5AD /* PackageDetailViewController.swift in Sources */,
 				78D942B7289016CA00C8B224 /* ToListTableViewCell.swift in Sources */,
 				3207A9412892BA2E00F0E740 /* FindPathViewController.swift in Sources */,
 				3207A93B2892B9A600F0E740 /* DeliveryCompletedViewController.swift in Sources */,

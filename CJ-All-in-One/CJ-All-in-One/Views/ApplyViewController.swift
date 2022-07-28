@@ -15,7 +15,7 @@ struct Location {
 }
 
 struct ApplyDataModel {
-    let deliveryPK: [Int]
+    var deliveryPK: [Int]
     let deliveryManID: String
     let deliveryDate: String
     let deliveryType: Bool
@@ -46,9 +46,7 @@ class ApplyViewController: UIViewController {
     var toLists: [Location] = []
     
     //-MARK: UIView
-    lazy var navBar = UIView().then{
-        $0.backgroundColor = .deppBlue
-    }
+    lazy var navBar = CustomNavigationBar(title: "모집 신청")
     
     lazy var labelShippingType = ApplySectionTitleLabel(title: "배송타입")
     lazy var labelDate = ApplySectionTitleLabel(title: "날짜")
@@ -112,7 +110,7 @@ class ApplyViewController: UIViewController {
     }()
     
     lazy var applyButton = MainButton(type: .main).then {
-        $0.isEnabled = false
+        $0.isEnabled = true
         $0.setTitle("업무조회", for: .normal)
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
@@ -137,6 +135,7 @@ class ApplyViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .CjWhite
+        navigationController?.navigationBar.tintColor = .CjWhite
         
         pickerAvailCount.delegate = self
         pickerAvailCount.dataSource = self
@@ -183,9 +182,7 @@ class ApplyViewController: UIViewController {
     // -MARK: makeConstraints
     private func setConstraints() {
         navBar.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(80)
+            make.top.leading.trailing.equalToSuperview()
         }
         
         labelShippingType.snp.makeConstraints{ make in
@@ -268,8 +265,8 @@ class ApplyViewController: UIViewController {
         applyButton.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.top.equalTo(755)
-            make.width.equalTo(primaryButtonWidth)
-            make.height.equalTo(primaryButtonHeight)
+            make.width.equalTo(mainButtonWidth)
+            make.height.equalTo(mainButtonHeight)
         }
     }
     
@@ -323,7 +320,7 @@ class ApplyViewController: UIViewController {
     }
     
     @objc func touchUpApplyButton() {
-//        print("업무조회")
+        print("업무조회")
         if textFieldVehicleType.text == "" || toLists.count==0 {
             return
         }

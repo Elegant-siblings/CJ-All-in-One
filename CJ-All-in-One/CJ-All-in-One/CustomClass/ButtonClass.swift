@@ -36,7 +36,6 @@ class MainButton: UIButton {
             self.setTitleColor(.white, for: .normal)
             self.titleLabel?.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
             self.backgroundColor = .CjYellow
-            self.borderWidth = 1
             self.layer.cornerRadius = 10
             self.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner)
             self.snp.makeConstraints { make in
