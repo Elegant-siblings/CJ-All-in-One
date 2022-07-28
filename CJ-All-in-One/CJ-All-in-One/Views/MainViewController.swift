@@ -199,9 +199,9 @@ class MainViewController: UIViewController {
         }
         buttonApply.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(self.view.snp.top).offset(754)
-            make.width.equalTo(primaryButtonWidth)
-            make.height.equalTo(primaryButtonHeight)
+            make.top.equalTo(self.view.snp.top).offset(mainButtonTopOffset)
+            make.width.equalTo(mainButtonWidth)
+            make.height.equalTo(mainButtonHeight)
         }
         tableHistory.snp.makeConstraints { make in
             make.width.height.equalToSuperview()
@@ -238,7 +238,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = ResultViewController()
         
         navigationController?.pushViewController(vc, animated: true)
-        
     }
 }
 

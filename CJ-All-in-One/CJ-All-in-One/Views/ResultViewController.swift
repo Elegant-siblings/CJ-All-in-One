@@ -165,9 +165,9 @@ class ResultViewController: UIViewController {
         
         buttonArrived.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
-            make.width.equalTo(primaryButtonWidth)
-            make.height.equalTo(primaryButtonHeight)
-            make.top.equalTo(self.view.snp.top).offset(754)
+            make.width.equalTo(mainButtonWidth)
+            make.height.equalTo(mainButtonHeight)
+            make.top.equalTo(self.view.snp.top).offset(mainButtonTopOffset)
         }
 
     }

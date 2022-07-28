@@ -21,12 +21,13 @@ protocol AssignCellDelegate: AnyObject {
 class AssignedTableViewCell: UITableViewCell {
     
     static let identifier = "AssignedTableViewCell"
-    let buttonRadius = CGFloat(10)
+    let buttonRadius = CGFloat(12)
     
     var cellDelegate: AssignCellDelegate?
     var pk: Int = 0
     var buttonType: ButtonType = .add
     var rowIndex = 0
+    var isAddbuttonEnabled = 1
     
     lazy var viewNum = UIView()
     lazy var viewCategory = UIView()
@@ -98,6 +99,7 @@ class AssignedTableViewCell: UITableViewCell {
         case .add:
             button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
             button.addTarget(self, action: #selector(touchUpAddButton(sender:)), for: .touchUpInside)
+            button.isEnabled = isAddbuttonEnabled == 1 ? true : false
             button.tintColor = .CjBlue
         case .remove:
             button.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)

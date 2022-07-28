@@ -82,9 +82,9 @@ class LoadViewController: UIViewController {
 
         buttonComplete.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(755)
-            make.width.equalTo(primaryButtonWidth)
-            make.height.equalTo(primaryButtonHeight)
+            make.top.equalTo(mainButtonTopOffset)
+            make.width.equalTo(mainButtonWidth)
+            make.height.equalTo(mainButtonHeight)
         }
     }
     
