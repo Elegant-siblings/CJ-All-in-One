@@ -12,6 +12,7 @@ import SnapKit
 class DeliveryCompletedTableViewCell: UITableViewCell {
     static let identifier = "DeliveryCompletedTableViewCell"
     
+<<<<<<< HEAD
     let numLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
         $0.textColor = .gray
@@ -32,6 +33,16 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
     }
     let checkImage = UIImageView().then {
         $0.image = UIImage(named: "CellCheck")
+=======
+    let titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        $0.textColor = UIColor.gray
+    }
+    
+    let contentLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        $0.textColor = UIColor.gray
+>>>>>>> 377993d (test)
     }
     
     override func awakeFromNib() {
@@ -45,6 +56,7 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+<<<<<<< HEAD
     override func prepareForReuse() {
         super.prepareForReuse()
     }
@@ -55,11 +67,27 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
         self.contentView.addSubviews([numLabel, titleLabel, contentLabel, checkImage, confirmLabel])
         
         setConstraints()
+=======
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.contentView.addSubviews([titleLabel,contentLabel])
+        
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(15)
+        }
+        contentLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
+            make.leading.equalToSuperview().offset(75)
+        }
+>>>>>>> 377993d (test)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+<<<<<<< HEAD
     
     
     func setConstraints() {
@@ -87,5 +115,7 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-20)
         }
     }
+=======
+>>>>>>> 377993d (test)
 }
 

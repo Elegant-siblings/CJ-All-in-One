@@ -16,6 +16,7 @@ import PanModal
 
 class FindPathViewController: UIViewController {
     
+<<<<<<< HEAD
     var distance: String!
     var time: String!
     
@@ -23,20 +24,37 @@ class FindPathViewController: UIViewController {
     let pathButton = UIButton().then {
         $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 30
+=======
+    let pathButton = MainButton(type: .main).then {
+        $0.backgroundColor = .CjBlue
+        $0.cornerRadius = 30
+>>>>>>> 377993d (test)
         $0.layer.borderColor = UIColor.CjBlue.cgColor
         $0.setImage(UIImage(systemName: "shippingbox"), for: .normal)
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
+<<<<<<< HEAD
     }
     let zoomWayButton = UIButton().then {
         $0.backgroundColor = .CjYellow
         $0.layer.cornerRadius = 30
+=======
+        
+    }
+    let zoomWayButton = MainButton(type: .main).then {
+        $0.backgroundColor = .CjYellow
+        $0.cornerRadius = 30
+>>>>>>> 377993d (test)
         $0.layer.borderColor = UIColor.CjYellow.cgColor
         $0.setImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 377993d (test)
     }
     
     let distanceLabel = UILabel().then {
@@ -71,6 +89,7 @@ class FindPathViewController: UIViewController {
     //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
 //    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
 //    let destLocation = NMGLatLng(lat: 37.4282975, lng: 127.1837949)
+<<<<<<< HEAD
     var bounds1 : NMGLatLngBounds!
     
     var boundsArray = [NMGLatLngBounds]()
@@ -82,6 +101,24 @@ class FindPathViewController: UIViewController {
     var wayPointsForBounds = [NMGLatLng]()
     var wayPointsToString : String = ""
     var wayPointNames : [String] = []
+=======
+    var bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: 37.4282975, lng: 126.7644840),
+                                  northEast: NMGLatLng(lat: 37.7014553, lng: 127.1837949))
+    
+    let boundsArray = [NMGLatLngBounds(southWest: NMGLatLng(lat: 37.4282975, lng: 126.7644840),
+                                       northEast: NMGLatLng(lat: 37.55484, lng: 127.15238)),
+                       NMGLatLngBounds(southWest: NMGLatLng(lat: 37.55484, lng: 127.15238),
+                                       northEast: NMGLatLng(lat: 37.62344, lng: 127.20376)),
+                       NMGLatLngBounds(southWest: NMGLatLng(lat: 37.62344, lng: 127.20376),
+                                       northEast: NMGLatLng(lat: 37.7014553, lng: 127.1837949))]
+    var boundsIdx = 0
+    
+    // 경유지 정보
+    var wayPoitns = [NMGLatLng(lat: 37.55484, lng: 127.15238),
+                     NMGLatLng(lat: 37.62344, lng: 127.20376)]
+    var wayPointsToString : String = ""
+    let wayPointNames = ["경유지1", "경유지2"]
+>>>>>>> 377993d (test)
 
     
     //경로
@@ -106,8 +143,11 @@ class FindPathViewController: UIViewController {
     //        self.bounds1.northEastLat= dest_lat
     //    }
     
+<<<<<<< HEAD
     var mapImage = UIImage()
     
+=======
+>>>>>>> 377993d (test)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,11 +165,18 @@ class FindPathViewController: UIViewController {
         pathButton.addTarget(self, action: #selector(showTable), for: .touchUpInside)
         zoomWayButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         
+<<<<<<< HEAD
         view.addSubviews([mapView, pathButton, zoomWayButton])
         mapView.addSubviews([infoView])
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
         
 //        self.view.bringSubviewToFront(buttonView)
+=======
+        view.addSubviews([mapView])
+        mapView.addSubviews([infoView, pathButton, zoomWayButton])
+        infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
+        
+>>>>>>> 377993d (test)
 //        self.mapView.bringSubviewToFront(pathButton)
 //        self.mapView.bringSubviewToFront(zoomWayButton)
         
@@ -152,7 +199,48 @@ class FindPathViewController: UIViewController {
 //        pathButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         setConstraints()
         
+<<<<<<< HEAD
         dataManager.dockerExample(delegate: self)
+=======
+        // 출발 & 도착 위치 마커 찍기
+        let departMark = NMFMarker(position: bounds1.southWest)
+        departMark.mapView = mapView
+        departMark.iconImage = NMF_MARKER_IMAGE_BLACK
+        departMark.captionTextSize = 20
+        departMark.captionAligns = [NMFAlignType.top]
+        departMark.captionText = "출발지"
+        let destMark = NMFMarker(position: bounds1.northEast)
+        destMark.mapView = mapView
+        destMark.iconImage = NMF_MARKER_IMAGE_BLACK
+        destMark.captionTextSize = 20
+        destMark.captionAligns = [NMFAlignType.top]
+        destMark.captionText = "목적지"
+        // 경유지 마커 찍기
+        let way1Mark = NMFMarker(position: NMGLatLng(lat: self.wayPoitns[0].lat, lng: self.wayPoitns[0].lng))
+        way1Mark.iconImage = NMF_MARKER_IMAGE_RED
+        way1Mark.captionTextSize = 20
+        way1Mark.captionAligns = [NMFAlignType.top]
+        way1Mark.captionText = wayPointNames[0]
+        way1Mark.mapView = mapView
+        let way2Mark = NMFMarker(position: NMGLatLng(lat: self.wayPoitns[1].lat, lng: self.wayPoitns[1].lng))
+        way2Mark.iconImage = NMF_MARKER_IMAGE_YELLOW
+        way2Mark.captionTextSize = 20
+        way2Mark.captionAligns = [NMFAlignType.top]
+        way2Mark.captionText = wayPointNames[1]
+        way2Mark.mapView = mapView
+        
+        
+        //나중에 받아올 때 옵셔널 바인딩 필요
+        for i in wayPoitns {
+            wayPointsToString += "\(i.lng),\(i.lat)|"
+        }
+        wayPointsToString = String(wayPointsToString.dropLast())
+        
+        
+        dataManager.dockerExample()
+        
+        configurePath()
+>>>>>>> 377993d (test)
         
         
     }
@@ -173,7 +261,11 @@ class FindPathViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.leading.equalTo(self.view)
             make.trailing.equalTo(self.view)
+<<<<<<< HEAD
             make.bottom.equalTo(self.view).offset(-150)
+=======
+            make.bottom.equalTo(self.view)
+>>>>>>> 377993d (test)
             make.top.equalTo(self.view)
         }
         infoView.snp.makeConstraints { make in
@@ -187,13 +279,22 @@ class FindPathViewController: UIViewController {
             make.width.equalTo(60)
             make.height.equalTo(60)
             make.trailing.equalTo(self.view).offset(-30)
+<<<<<<< HEAD
             make.bottom.equalTo(self.view).offset(-40)
+=======
+            make.bottom.equalTo(infoView.snp.top).offset(-30)
+>>>>>>> 377993d (test)
         }
         zoomWayButton.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(60)
+<<<<<<< HEAD
             make.trailing.equalTo(pathButton.snp.leading).offset(-20)
             make.bottom.equalTo(self.view).offset(-40)
+=======
+            make.trailing.equalTo(self.view).offset(-30)
+            make.bottom.equalTo(pathButton.snp.top).offset(-10)
+>>>>>>> 377993d (test)
         }
         
         // UILabel
@@ -253,6 +354,7 @@ class FindPathViewController: UIViewController {
         dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
     }
     
+<<<<<<< HEAD
     func setMarker() {
         // 출발 & 도착 위치 마커 찍기
         let departMark = NMFMarker(position: bounds1.southWest)
@@ -296,6 +398,8 @@ class FindPathViewController: UIViewController {
         
     }
     
+=======
+>>>>>>> 377993d (test)
     
     
     @objc func serialPath() {
@@ -314,10 +418,15 @@ class FindPathViewController: UIViewController {
     
     @objc func showTable() {
         print("show")
+<<<<<<< HEAD
         bottomSheetVC.distance = distance
         bottomSheetVC.time = time
         bottomSheetVC.delegate = self
         bottomSheetVC.tableDelegate = self
+=======
+        
+        bottomSheetVC.delegate = self
+>>>>>>> 377993d (test)
         bottomSheetVC.modalPresentationStyle = .overCurrentContext
         self.presentPanModal(bottomSheetVC)
     }
@@ -326,11 +435,15 @@ class FindPathViewController: UIViewController {
 extension FindPathViewController: ViewDelegate {
     func pushed() {
         let nextVC = DeliveryCompletedViewController()
+<<<<<<< HEAD
         nextVC.mapView.image = mapImage
+=======
+>>>>>>> 377993d (test)
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
+<<<<<<< HEAD
 extension FindPathViewController: TableViewDelegate {
     func cellTouched() {
         let nextVC = PackageDetailViewController()
@@ -381,6 +494,12 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         setMarker()
     }
     
+=======
+extension FindPathViewController: NMFLocationManagerDelegate {
+}
+
+extension FindPathViewController: ViewControllerDelegate{
+>>>>>>> 377993d (test)
     func didSuccessReturnPath(result: Trafast){
         
         // 경유지 인덱스 반환
@@ -406,6 +525,7 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         
         
 //        CoordsData.coords = CoordsData.coords.dropFirst()
+<<<<<<< HEAD
         
         // Path 그리기
         initPath()
@@ -413,12 +533,21 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         distance = "\(result.summary.distance / 1000)km"
         distanceLabel.text = distance
         
+=======
+        initPath()
+        
+        distanceLabel.text = "\(result.summary.distance / 1000)km"
+>>>>>>> 377993d (test)
         
         let milliseconds = result.summary.duration
         let hours = ((milliseconds / (1000*60*60)) % 24)
         let mins = ((milliseconds / (1000*60)) % 60)
+<<<<<<< HEAD
         time = "\(hours)시간 \(mins)분"
         timeLabel.text = time
+=======
+        timeLabel.text = "\(hours)시간 \(mins)분"
+>>>>>>> 377993d (test)
         
         let date = Date()
 //        let dateHour = Calendar.current.date(byAdding: .hour, value: hours, to: date)
@@ -430,12 +559,25 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         camUpdate.animationDuration = 1
         mapView.moveCamera(camUpdate)
         
+<<<<<<< HEAD
         mapImage = mapView.asImage()
         
+=======
+>>>>>>> 377993d (test)
         self.dismissIndicator()
         
     }
     
+<<<<<<< HEAD
+=======
+    func didSuccessReceivedLngLat(result: Welcome) {
+        bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0), northEast: NMGLatLng(lat: Double(result.finish[0]) ?? 0, lng: Double(result.finish[1]) ?? 0))
+        
+        for i in result.waypoint{
+            wayPoitns.append(NMGLatLng(lat: Double(i[0]) ?? 0, lng: Double(i[1]) ?? 0))
+        }
+    }
+>>>>>>> 377993d (test)
     
     func failedToRequest(message: String){
         print(message)
@@ -450,9 +592,15 @@ struct MultiPartData {
     static let colors1: [NMFPathColor] = [
         NMFPathColor(color: UIColor.pathRed, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathYellow, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
+<<<<<<< HEAD
         NMFPathColor(color: UIColor.pathPink, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathGreen, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
         NMFPathColor(color: UIColor.pathBlue, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
+=======
+        NMFPathColor(color: UIColor.pathGreen, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
+        NMFPathColor(color: UIColor.pathBlue, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
+        NMFPathColor(color: UIColor.pathPink, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white),
+>>>>>>> 377993d (test)
         NMFPathColor(color: UIColor.pathBlack, outlineColor: UIColor.white, passedColor: UIColor.gray, passedOutlineColor: UIColor.white)
     ]
 }
