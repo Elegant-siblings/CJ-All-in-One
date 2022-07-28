@@ -34,11 +34,17 @@
 		32A2C586288FFD010000CCB6 /* FindPathBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C585288FFD010000CCB6 /* FindPathBottomViewController.swift */; };
 		32A2C588288FFD390000CCB6 /* FindPathBottomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C587288FFD390000CCB6 /* FindPathBottomTableViewCell.swift */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		32AB22EA2891040F0074DAB9 /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32AB22E92891040F0074DAB9 /* PackageDetailViewController.swift */; };
 		32B5606C2891400B004894C2 /* PackageBasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5606B2891400B004894C2 /* PackageBasicTableViewCell.swift */; };
 		32B5606E28914024004894C2 /* PackageDeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5606D28914024004894C2 /* PackageDeliveryTableViewCell.swift */; };
 =======
 >>>>>>> 377993d (test)
+=======
+		32AB22EA2891040F0074DAB9 /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32AB22E92891040F0074DAB9 /* PackageDetailViewController.swift */; };
+		32B5606C2891400B004894C2 /* PackageBasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5606B2891400B004894C2 /* PackageBasicTableViewCell.swift */; };
+		32B5606E28914024004894C2 /* PackageDeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B5606D28914024004894C2 /* PackageDeliveryTableViewCell.swift */; };
+>>>>>>> 36da96d (test)
 		785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */; };
 		FC497AD73DCC33F91F5BC6D1 /* Pods_CJ_All_in_One.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */; };
 /* End PBXBuildFile section */
@@ -72,12 +78,20 @@
 		32A2C585288FFD010000CCB6 /* FindPathBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomViewController.swift; sourceTree = "<group>"; };
 		32A2C587288FFD390000CCB6 /* FindPathBottomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPathBottomTableViewCell.swift; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 36da96d (test)
 		32A2C589289001100000CCB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "/Users/jeongjiyun/Desktop/CJ_all_in_one/CJ-All-in-One/CJ-All-in-One/CJ-All-in-One/Info.plist"; sourceTree = "<absolute>"; };
 		32AB22E92891040F0074DAB9 /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
 		32B5606B2891400B004894C2 /* PackageBasicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBasicTableViewCell.swift; sourceTree = "<group>"; };
 		32B5606D28914024004894C2 /* PackageDeliveryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDeliveryTableViewCell.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 =======
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 4fd152a (Delivery Detail View)
+>>>>>>> 36da96d (test)
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDetailTableViewCell.swift; sourceTree = "<group>"; };
 		87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CJ_All_in_One.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,9 +150,13 @@
 			isa = PBXGroup;
 			children = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				32AB22E8289103F90074DAB9 /* PackageDetail */,
 =======
 >>>>>>> 377993d (test)
+=======
+				32AB22E8289103F90074DAB9 /* PackageDetail */,
+>>>>>>> 36da96d (test)
 				32A2C582288FFC840000CCB6 /* FindPath */,
 				32A2C57B288FFC250000CCB6 /* DeliveryCompleted */,
 				1D546E77288D1DDD00160E82 /* MainViewController.swift */,
@@ -235,6 +253,9 @@
 			sourceTree = "<group>";
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 36da96d (test)
 		32AB22E8289103F90074DAB9 /* PackageDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,8 +266,11 @@
 			path = PackageDetail;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 36da96d (test)
 		7088BD170D1F625BC806BDFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,7 +393,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				32AB22EA2891040F0074DAB9 /* PackageDetailViewController.swift in Sources */,
+=======
+<<<<<<< HEAD
+				78ABB2AA289152350072C41E /* LoadItemTableViewCell.swift in Sources */,
+				78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */,
+=======
+				32AB22EA2891040F0074DAB9 /* PackageDetailViewController.swift in Sources */,
+>>>>>>> 4fd152a (Delivery Detail View)
+>>>>>>> 36da96d (test)
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
 				1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */,
 				32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */,
@@ -420,6 +453,7 @@
 				78D942BD2890497800C8B224 /* ResultItemsTableViewCell.swift in Sources */,
 =======
 				32A2C57F288FFC5E0000CCB6 /* DeliveryCompletedTableViewCell.swift in Sources */,
+				32B5606E28914024004894C2 /* PackageDeliveryTableViewCell.swift in Sources */,
 				32A2C584288FFCC40000CCB6 /* FindPathViewController.swift in Sources */,
 >>>>>>> 24fe52a (Merged file)
 >>>>>>> 377993d (test)

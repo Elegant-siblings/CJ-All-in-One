@@ -8,14 +8,21 @@
 import UIKit
 import Then
 <<<<<<< HEAD
+<<<<<<< HEAD
 import SnapKit
 =======
 >>>>>>> 377993d (test)
+=======
+import SnapKit
+>>>>>>> 36da96d (test)
 
 class FindPathBottomTableViewCell: UITableViewCell {
     static let identifier = "InfoTableViewCell"
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 36da96d (test)
     let numLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
         $0.textColor = .gray
@@ -34,6 +41,7 @@ class FindPathBottomTableViewCell: UITableViewCell {
     }
     let checkImage = UIImageView().then {
         $0.image = UIImage(named: "CellCheck")
+<<<<<<< HEAD
     }
     
 =======
@@ -47,6 +55,10 @@ class FindPathBottomTableViewCell: UITableViewCell {
         $0.textColor = UIColor.gray
     }
 >>>>>>> 377993d (test)
+=======
+    }
+    
+>>>>>>> 36da96d (test)
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,15 +68,19 @@ class FindPathBottomTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 36da96d (test)
         // Configure the view for the selected state
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+<<<<<<< HEAD
 <<<<<<< HEAD
         self.contentView.addSubviews([numLabel,titleLabel,contentLabel,wayLabel, checkImage])
         
@@ -81,12 +97,20 @@ class FindPathBottomTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().offset(75)
         }
 >>>>>>> 377993d (test)
+=======
+        self.contentView.addSubviews([numLabel,titleLabel,contentLabel,wayLabel, checkImage])
+        
+        setConstraints()
+>>>>>>> 36da96d (test)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 36da96d (test)
     
     func setConstraints() {
         numLabel.snp.makeConstraints { make in
@@ -112,6 +136,9 @@ class FindPathBottomTableViewCell: UITableViewCell {
             make.height.equalTo(15)
         }
     }
+<<<<<<< HEAD
 =======
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 36da96d (test)
 }

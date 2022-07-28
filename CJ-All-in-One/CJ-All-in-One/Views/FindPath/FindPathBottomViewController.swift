@@ -28,6 +28,10 @@ class FindPathBottomViewController: UIViewController {
     // Other Variable
     var distance: String!
     var time: String!
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 36da96d (test)
     //MARK: - 컴포넌트 정의
     
     let tableView = UITableView().then {

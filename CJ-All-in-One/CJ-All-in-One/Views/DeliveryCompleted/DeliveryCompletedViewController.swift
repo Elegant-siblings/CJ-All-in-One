@@ -94,17 +94,22 @@ class DeliveryCompletedViewController: UIViewController {
     
     //MiddleView
 <<<<<<< HEAD
+<<<<<<< HEAD
     let deliveryRateLabel = MainLabel(type: .main).then {
         $0.text = "배송률"
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
         $0.textColor = .lightGray
     }
     
+=======
+=======
+>>>>>>> 36da96d (test)
     let infoContainerView2 = UIView().then {
         $0.backgroundColor = .clear
     }
     let onTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
+<<<<<<< HEAD
         $0.text = "정시 배송률"
     }
     let lowTimeLabel = MainLabel(type: .main).then {
@@ -114,6 +119,14 @@ class DeliveryCompletedViewController: UIViewController {
     let missTimeLabel = MainLabel(type: .main).then {
         $0.textColor = .black
         $0.text = "분실률"
+=======
+    }
+    let lowTimeLabel = MainLabel(type: .main).then {
+        $0.textColor = .black
+    }
+    let missTimeLabel = MainLabel(type: .main).then {
+        $0.textColor = .black
+>>>>>>> 36da96d (test)
     }
     let onTimeImage = UIImageView().then {
         $0.image = UIImage(named: "onTimeImage")
@@ -124,6 +137,7 @@ class DeliveryCompletedViewController: UIViewController {
     let missTimeImage = UIImageView().then {
         $0.image = UIImage(named: "missTimeImage")
     }
+<<<<<<< HEAD
     let onTimePercentLabel = MainLabel(type: .main).then {
         $0.textColor = .CjBlue
     }
@@ -138,6 +152,12 @@ class DeliveryCompletedViewController: UIViewController {
     
 =======
 >>>>>>> 377993d (test)
+=======
+    
+    
+    
+>>>>>>> 4fd152a (Delivery Detail View)
+>>>>>>> 36da96d (test)
     let distanceInfoLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
         $0.textColor = .lightGray
@@ -286,10 +306,18 @@ class DeliveryCompletedViewController: UIViewController {
         scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton])
         
         infoContainerView1.addSubviews([itemCountLabel, missedItemCountLabel, completedItemCountLabel])
-        
+        infoContainerView2.addSubviews([onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
         
         setConstraints()
+<<<<<<< HEAD
 >>>>>>> 377993d (test)
+=======
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+>>>>>>> 36da96d (test)
         presentCircleView()
     }
     
@@ -572,8 +600,12 @@ class DeliveryCompletedViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
         }
         confirmButton.snp.makeConstraints { make in
+<<<<<<< HEAD
             make.bottom.equalTo(scrollContentView.snp.bottom).offset(-10)
 >>>>>>> 377993d (test)
+=======
+            make.bottom.equalTo(scrollContentView.snp.bottom).offset(-30)
+>>>>>>> 36da96d (test)
             make.height.equalTo(48)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
@@ -583,6 +615,7 @@ class DeliveryCompletedViewController: UIViewController {
     private func presentCircleView() {
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
         
         let width = CGFloat(172)
@@ -590,15 +623,28 @@ class DeliveryCompletedViewController: UIViewController {
         
         let pieChartView = PieChartView(frame: CGRect(x: 5, y: 10, width: width, height: height))
 =======
+=======
+>>>>>>> 36da96d (test)
 //        let width = self.infoContainerView2.frame.width
+=======
+        print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
+        
+>>>>>>> 4fd152a (Delivery Detail View)
         let width = CGFloat(172)
         
 //        let height = self.infoContainerView2.frame.height
         let height = CGFloat(102)
         
+<<<<<<< HEAD
         let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         pieChartView.center = self.infoContainerView2.center
+<<<<<<< HEAD
 >>>>>>> 377993d (test)
+=======
+=======
+        let pieChartView = PieChartView(frame: CGRect(x: 5, y: 10, width: width, height: height))
+>>>>>>> 4fd152a (Delivery Detail View)
+>>>>>>> 36da96d (test)
         
         pieChartView.slices = [Slice(percent: 0.1, color: UIColor.CjRed),
                                 Slice(percent: 0.15, color: UIColor.CjYellow),
@@ -610,15 +656,24 @@ class DeliveryCompletedViewController: UIViewController {
         missTimePercentLabel.text = "10%"
         
         self.infoContainerView2.addSubview(pieChartView)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 36da96d (test)
         
 //        pieChartView.snp.makeConstraints { make in
 //            make.top.equalTo(infoContainerView2.snp.top)
 //            make.centerX.equalTo(infoContainerView2.snp.centerX)
 //        }
         
+<<<<<<< HEAD
 =======
         self.infoContainerView2.addSubview(pieChartView)
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 4fd152a (Delivery Detail View)
+>>>>>>> 36da96d (test)
         pieChartView.animateChart()
     }
     

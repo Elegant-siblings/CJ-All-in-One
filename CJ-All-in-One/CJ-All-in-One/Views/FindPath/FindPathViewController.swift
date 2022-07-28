@@ -17,6 +17,7 @@ import PanModal
 class FindPathViewController: UIViewController {
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     var distance: String!
     var time: String!
     
@@ -29,6 +30,14 @@ class FindPathViewController: UIViewController {
         $0.backgroundColor = .CjBlue
         $0.cornerRadius = 30
 >>>>>>> 377993d (test)
+=======
+    var distance: String!
+    var time: String!
+    
+    let pathButton = MainButton(type: .main).then {
+        $0.backgroundColor = .CjBlue
+        $0.layer.cornerRadius = 30
+>>>>>>> 36da96d (test)
         $0.layer.borderColor = UIColor.CjBlue.cgColor
         $0.setImage(UIImage(systemName: "shippingbox"), for: .normal)
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
@@ -44,8 +53,12 @@ class FindPathViewController: UIViewController {
     }
     let zoomWayButton = MainButton(type: .main).then {
         $0.backgroundColor = .CjYellow
+<<<<<<< HEAD
         $0.cornerRadius = 30
 >>>>>>> 377993d (test)
+=======
+        $0.layer.cornerRadius = 30
+>>>>>>> 36da96d (test)
         $0.layer.borderColor = UIColor.CjYellow.cgColor
         $0.setImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
@@ -166,6 +179,7 @@ class FindPathViewController: UIViewController {
         zoomWayButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         view.addSubviews([mapView, pathButton, zoomWayButton])
         mapView.addSubviews([infoView])
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
@@ -177,6 +191,14 @@ class FindPathViewController: UIViewController {
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
         
 >>>>>>> 377993d (test)
+=======
+
+        view.addSubviews([mapView, pathButton, zoomWayButton])
+        mapView.addSubviews([infoView])
+        infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
+        
+//        self.view.bringSubviewToFront(buttonView)
+>>>>>>> 36da96d (test)
 //        self.mapView.bringSubviewToFront(pathButton)
 //        self.mapView.bringSubviewToFront(zoomWayButton)
         
@@ -262,10 +284,14 @@ class FindPathViewController: UIViewController {
             make.leading.equalTo(self.view)
             make.trailing.equalTo(self.view)
 <<<<<<< HEAD
+<<<<<<< HEAD
             make.bottom.equalTo(self.view).offset(-150)
 =======
             make.bottom.equalTo(self.view)
 >>>>>>> 377993d (test)
+=======
+            make.bottom.equalTo(self.view).offset(-150)
+>>>>>>> 36da96d (test)
             make.top.equalTo(self.view)
         }
         infoView.snp.makeConstraints { make in
@@ -280,14 +306,19 @@ class FindPathViewController: UIViewController {
             make.height.equalTo(60)
             make.trailing.equalTo(self.view).offset(-30)
 <<<<<<< HEAD
+<<<<<<< HEAD
             make.bottom.equalTo(self.view).offset(-40)
 =======
             make.bottom.equalTo(infoView.snp.top).offset(-30)
 >>>>>>> 377993d (test)
+=======
+            make.bottom.equalTo(self.view).offset(-40)
+>>>>>>> 36da96d (test)
         }
         zoomWayButton.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(60)
+<<<<<<< HEAD
 <<<<<<< HEAD
             make.trailing.equalTo(pathButton.snp.leading).offset(-20)
             make.bottom.equalTo(self.view).offset(-40)
@@ -295,6 +326,10 @@ class FindPathViewController: UIViewController {
             make.trailing.equalTo(self.view).offset(-30)
             make.bottom.equalTo(pathButton.snp.top).offset(-10)
 >>>>>>> 377993d (test)
+=======
+            make.trailing.equalTo(pathButton.snp.leading).offset(-20)
+            make.bottom.equalTo(self.view).offset(-40)
+>>>>>>> 36da96d (test)
         }
         
         // UILabel
@@ -419,6 +454,7 @@ class FindPathViewController: UIViewController {
     @objc func showTable() {
         print("show")
 <<<<<<< HEAD
+<<<<<<< HEAD
         bottomSheetVC.distance = distance
         bottomSheetVC.time = time
         bottomSheetVC.delegate = self
@@ -427,6 +463,12 @@ class FindPathViewController: UIViewController {
         
         bottomSheetVC.delegate = self
 >>>>>>> 377993d (test)
+=======
+        bottomSheetVC.distance = distance
+        bottomSheetVC.time = time
+        bottomSheetVC.delegate = self
+        bottomSheetVC.tableDelegate = self
+>>>>>>> 36da96d (test)
         bottomSheetVC.modalPresentationStyle = .overCurrentContext
         self.presentPanModal(bottomSheetVC)
     }
@@ -444,6 +486,9 @@ extension FindPathViewController: ViewDelegate {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 36da96d (test)
 extension FindPathViewController: TableViewDelegate {
     func cellTouched() {
         let nextVC = PackageDetailViewController()
@@ -452,6 +497,7 @@ extension FindPathViewController: TableViewDelegate {
 }
 
 
+<<<<<<< HEAD
 extension FindPathViewController: NMFLocationManagerDelegate {
 }
 
@@ -495,6 +541,8 @@ extension FindPathViewController: FindPathViewControllerDelegate{
     }
     
 =======
+=======
+>>>>>>> 36da96d (test)
 extension FindPathViewController: NMFLocationManagerDelegate {
 }
 
@@ -536,18 +584,29 @@ extension FindPathViewController: ViewControllerDelegate{
 =======
         initPath()
         
+<<<<<<< HEAD
         distanceLabel.text = "\(result.summary.distance / 1000)km"
 >>>>>>> 377993d (test)
+=======
+        distance = "\(result.summary.distance / 1000)km"
+        distanceLabel.text = distance
+        
+>>>>>>> 36da96d (test)
         
         let milliseconds = result.summary.duration
         let hours = ((milliseconds / (1000*60*60)) % 24)
         let mins = ((milliseconds / (1000*60)) % 60)
+<<<<<<< HEAD
 <<<<<<< HEAD
         time = "\(hours)시간 \(mins)분"
         timeLabel.text = time
 =======
         timeLabel.text = "\(hours)시간 \(mins)분"
 >>>>>>> 377993d (test)
+=======
+        time = "\(hours)시간 \(mins)분"
+        timeLabel.text = time
+>>>>>>> 36da96d (test)
         
         let date = Date()
 //        let dateHour = Calendar.current.date(byAdding: .hour, value: hours, to: date)

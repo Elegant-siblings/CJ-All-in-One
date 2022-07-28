@@ -20,7 +20,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         
         window = UIWindow(windowScene: windowScene)
+<<<<<<< HEAD
         window?.rootViewController = UINavigationController(rootViewController: FindPathViewController())
+=======
+<<<<<<< HEAD
+        window?.rootViewController = UINavigationController(rootViewController: ApplyViewController())
+        
+=======
+        window?.rootViewController = UINavigationController(rootViewController: DeliveryCompletedViewController())
+>>>>>>> 4fd152a (Delivery Detail View)
+>>>>>>> 36da96d (test)
         window?.makeKeyAndVisible()
     }
 
