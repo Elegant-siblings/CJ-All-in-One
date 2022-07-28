@@ -209,7 +209,7 @@ class DeliveryCompletedViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
 //        navigationController?.navigationBar.topItem!.title = "배달 요약"
-//        navigationItem.backBarButtonItem?.title = ""
+        navigationItem.backBarButtonItem?.title = ""
 //        navigationItem.backBarButtonItem?.tintColor = .white
 //
 //        self.navigationController?.navigationBar.isHidden = false

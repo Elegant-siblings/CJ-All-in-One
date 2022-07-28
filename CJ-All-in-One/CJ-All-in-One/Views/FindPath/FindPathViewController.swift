@@ -71,6 +71,10 @@ class FindPathViewController: UIViewController {
     //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
 //    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
 //    let destLocation = NMGLatLng(lat: 37.4282975, lng: 127.1837949)
+    var totalPoints = [NMGLatLng]()
+    var loopNum : Int = 0
+    var wayPointsNum : Int!
+    
     var bounds1 : NMGLatLngBounds!
     
     var boundsArray = [NMGLatLngBounds]()
@@ -248,9 +252,41 @@ class FindPathViewController: UIViewController {
         coords.removeAll()
         stringCoords.removeAll()
         
-        print(wayPointsToString)
         self.showIndicator()
-        dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
+        
+        // 경유지 쿼리 스트링 일부 만들기
+        if wayPointsNum < 6 {
+            // 5개 이하이면 바로 wayPoints에서 for문을 돌린다
+            for i in wayPoitns {
+                wayPointsToString += "\(i.lng),\(i.lat)|"
+            }
+            wayPointsToString = String(wayPointsToString.dropLast())
+            
+            print(wayPointsToString)
+            
+            dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
+            
+            wayPointsToString = ""
+            
+        } else {
+            // 6개 이상이면 5번째까지만 받는다
+            for i in wayPoitns[0..<5] {
+                wayPointsToString += "\(i.lng),\(i.lat)|"
+            }
+            wayPointsToString = String(wayPointsToString.dropLast())
+            
+            print(wayPointsToString)
+            
+            dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
+            
+            wayPoitns.removeSubrange(0..<4)
+            
+            
+            wayPointsToString = ""
+        }
+        
+        
+        
     }
     
     func setMarker() {
@@ -344,11 +380,20 @@ extension FindPathViewController: NMFLocationManagerDelegate {
 
 extension FindPathViewController: FindPathViewControllerDelegate{
     func didSuccessReceivedLngLat(_ result: Welcome) {
-        //서버에서 coords 먼저 전부 받는다
-        bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0), northEast: NMGLatLng(lat: Double(result.finish[0]) ?? 0, lng: Double(result.finish[1]) ?? 0))
+        
+        totalPoints.append(NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0))
+        for i in result.waypoint {
+            totalPoints.append(NMGLatLng(lat: Double(i[0]) ?? 0, lng: Double(i[1]) ?? 0))
+        }
+        totalPoints.append(NMGLatLng(lat: Double(result.finish[0]) ?? 0, lng: Double(result.finish[1]) ?? 0))
+        
+        
+        //출발지 & 목적지 위/경도 저장
+        bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: totalPoints[0].lat, lng: totalPoints[0].lng), northEast: NMGLatLng(lat: totalPoints.last!.lat, lng: totalPoints.last!.lng))
         
         print(bounds1)
         
+        wayPointsNum = result.waypoint.count
         for i in 0..<result.waypoint.count{
             wayPoitns.append(NMGLatLng(lat: Double(result.waypoint[i][0]) ?? 0, lng: Double(result.waypoint[i][1]) ?? 0))
             wayPointNames.append("경유지\(i+1)")
@@ -356,29 +401,18 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         
         print(wayPoitns)
         
-        //출발지부터 목적지까지 전부 한 array에 받기
-        wayPointsForBounds.append(bounds1.southWest)
-        if wayPoitns.count > 0 {
-            for i in wayPoitns {
-                wayPointsForBounds.append(i)
-            }
-            
-            for i in wayPoitns {
-                wayPointsToString += "\(i.lng),\(i.lat)|"
-            }
-            wayPointsToString = String(wayPointsToString.dropLast())
-        }
-        wayPointsForBounds.append(bounds1.northEast)
-        
-        for i in 1..<wayPointsForBounds.count {
+        //출발지부터 목적지까지 전부 bound array에 넣기
+        for i in 1..<totalPoints.count {
             boundsArray.append(NMGLatLngBounds(southWest: wayPointsForBounds[i-1], northEast: wayPointsForBounds[i]))
         }
-        
         print(boundsArray)
+        
         
 
         configurePath()
         setMarker()
+        
+        
     }
     
     func didSuccessReturnPath(result: Trafast){

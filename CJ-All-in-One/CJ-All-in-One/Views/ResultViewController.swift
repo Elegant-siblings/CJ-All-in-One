@@ -7,6 +7,7 @@
 
 import UIKit
 import Then
+import NMapsMap
 
 struct Item {
     let id: Int
