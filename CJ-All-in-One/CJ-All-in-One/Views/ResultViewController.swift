@@ -19,6 +19,10 @@ struct Item {
 
 class ResultViewController: UIViewController {
     
+    lazy var navBar = UIView().then {
+        $0.backgroundColor = .deppBlue
+    }
+    
     // -MARK: Constants
     let terminalAddress = "서울특별시 서초구 양재동 225-5"
     let time = "오전 7:00"
@@ -51,7 +55,7 @@ class ResultViewController: UIViewController {
     lazy var labelTermInfoTitle = UILabel().then {
         $0.text = "터미널 정보"
         $0.font = .systemFont(ofSize: 23, weight: .bold)
-        $0.textColor = .primaryFontColor
+        $0.textColor = .CjWhite
     }
     lazy var labelTermAddress = UILabel().then {
         $0.text = terminalAddress
@@ -77,13 +81,12 @@ class ResultViewController: UIViewController {
     }
     
     // -MARK: Others
-    lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .none).then {
+    lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
         $0.dataSource = self
         $0.register(ResultItemsTableViewCell.self, forCellReuseIdentifier: ResultItemsTableViewCell.identifier)
-        $0.alwaysBounceVertical = false
-        $0.bounces = $0.contentOffset.y > 0
     }
-    lazy var buttonArrived = PrimaryButton(title: "터미널 도착").then {
+    lazy var buttonArrived = MainButton(type: .main).then {
+        $0.setTitle("터미널 도착", for: .normal)
         $0.addTarget(self, action: #selector(touchUpArrivedButton), for: .touchUpInside)
     }
     
@@ -93,7 +96,11 @@ class ResultViewController: UIViewController {
         
         view.backgroundColor = .CjWhite
         
+        self.navigationController?.navigationBar.tintColor = .CjWhite
+        
         view.addSubviews([
+            navBar,
+            labelTermInfoTitle,
             viewTerminalInfo,
             labelTotal,
             labelTos,
@@ -102,7 +109,6 @@ class ResultViewController: UIViewController {
         ])
         
         viewTerminalInfo.addSubviews([
-            labelTermInfoTitle,
             viewTermImage,
             labelTermAddress,
             labelTime,
@@ -111,19 +117,23 @@ class ResultViewController: UIViewController {
 //        viewTerminalInfo.backgroundColor = .CjRed
         
         // -MARK: Make Constraints
+        navBar.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(95)
+        }
         viewTerminalInfo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
-            make.top.equalTo(40)
-            make.height.equalTo(370)
+            make.top.equalTo(navBar.snp.bottom).offset(20)
+            make.height.equalTo(308)
         }
         labelTermInfoTitle.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(18)
+            make.bottom.equalTo(navBar).offset(-10)
         }
         viewTermImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(labelTermInfoTitle.snp.bottom).offset(15)
+            make.top.equalToSuperview()
             make.width.equalToSuperview().offset(-40)
             make.height.equalTo(235)
         }
@@ -175,24 +185,15 @@ class ResultViewController: UIViewController {
 
 extension ResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count+1
+        return lists.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ResultItemsTableViewCell.identifier, for: indexPath) as! ResultItemsTableViewCell
-        if indexPath.row == 0 {
-            cell.backgroundColor = .firstRowBackgroundColor
-            cell.labelNum.text = "#"
-            cell.labelCategory.text = "상품종류"
-            cell.labelReceivAddr.text = "배송지"
-        }
-        else {
-            cell.backgroundColor = .CjWhite
-            cell.labelNum.text = "\(indexPath.row)"
-            cell.labelCategory.text = lists[indexPath.row-1].category
-            cell.labelReceivAddr.text = lists[indexPath.row-1].To
-//            cell.labelTo.textAlignment = .left
-        }
+        cell.backgroundColor = .CjWhite
+        cell.labelNum.text = "\(indexPath.row+1)"
+        cell.labelCategory.text = lists[indexPath.row].category
+        cell.labelReceivAddr.text = lists[indexPath.row].To
         cell.selectionStyle = .none
         return cell
     }

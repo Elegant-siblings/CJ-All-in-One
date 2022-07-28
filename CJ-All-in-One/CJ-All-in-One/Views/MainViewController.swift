@@ -20,6 +20,11 @@ class MainViewController: UIViewController {
     
     
     // -MARK: UIViews
+    
+    lazy var navBar = UIView().then {
+        $0.backgroundColor = .deppBlue
+    }
+    
     lazy var uiTableContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .red
@@ -41,15 +46,10 @@ class MainViewController: UIViewController {
     } ()
     
     // -MARK: UIButtons
-    lazy var buttonApply: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .CjYellow
-        button.layer.cornerRadius = 10
-        button.setTitle("모집 신청하기", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
-        return button
-    } ()
+    lazy var buttonApply = MainButton(type: .main).then {
+        $0.setTitle("모집 신청하기", for: .normal)
+        $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
+    }
     
     lazy var buttonSort: UIButton = {
         let button = UIButton()
@@ -103,7 +103,6 @@ class MainViewController: UIViewController {
         let backgroundImage = UIImage()
         let colorView = UIView()
         colorView.backgroundColor = .CjRed
-//        let foregroundImage = colorView.asImage()
         sc.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
 
         sc.selectedSegmentIndex = 0
@@ -144,6 +143,7 @@ class MainViewController: UIViewController {
 //        navigationController?.navigationItem.title = "Main"
         
         self.view.addSubviews([
+            navBar,
             SCDetailType,
             buttonSort,
             distributeBar,
@@ -160,6 +160,10 @@ class MainViewController: UIViewController {
 
     // -MARK: makeConstraints
     private func setConstraints() {
+        navBar.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(90)
+        }
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
             make.top.equalTo(100)

@@ -53,7 +53,6 @@ class ResultItemsTableViewCell: UITableViewCell {
             label.font = .systemFont(ofSize: 12)
             label.textAlignment = .center
         }
-
     }
     
     required init?(coder: NSCoder) {
