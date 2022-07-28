@@ -34,7 +34,7 @@ class FindPathViewController: UIViewController {
     var distance: String!
     var time: String!
     
-    let pathButton = MainButton(type: .main).then {
+    let pathButton = UIButton().then {
         $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 30
 >>>>>>> 36da96d (test)
@@ -44,14 +44,17 @@ class FindPathViewController: UIViewController {
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
     let zoomWayButton = UIButton().then {
         $0.backgroundColor = .CjYellow
         $0.layer.cornerRadius = 30
 =======
         
+=======
+>>>>>>> 9f2b72d (test)
     }
-    let zoomWayButton = MainButton(type: .main).then {
+    let zoomWayButton = UIButton().then {
         $0.backgroundColor = .CjYellow
 <<<<<<< HEAD
         $0.cornerRadius = 30
@@ -65,9 +68,12 @@ class FindPathViewController: UIViewController {
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 9f2b72d (test)
     }
     
     let distanceLabel = UILabel().then {

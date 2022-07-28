@@ -13,6 +13,7 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
     static let identifier = "DeliveryCompletedTableViewCell"
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     let numLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
         $0.textColor = .gray
@@ -43,6 +44,28 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
         $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         $0.textColor = UIColor.gray
 >>>>>>> 377993d (test)
+=======
+    let numLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .gray
+    }
+    let titleLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .gray
+    }
+    let contentLabel = MainLabel(type: .main).then {
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .gray
+    }
+    let confirmLabel = MainLabel(type: .main).then {
+        $0.text = "확인"
+        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
+        $0.textColor = .lightGray
+        
+    }
+    let checkImage = UIImageView().then {
+        $0.image = UIImage(named: "CellCheck")
+>>>>>>> 9f2b72d (test)
     }
     
     override func awakeFromNib() {
@@ -57,10 +80,14 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9f2b72d (test)
     override func prepareForReuse() {
         super.prepareForReuse()
     }
     
+<<<<<<< HEAD
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -68,11 +95,14 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
         
         setConstraints()
 =======
+=======
+>>>>>>> 9f2b72d (test)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubviews([titleLabel,contentLabel])
+        self.contentView.addSubviews([numLabel, titleLabel, contentLabel, checkImage, confirmLabel])
         
+<<<<<<< HEAD
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(15)
@@ -82,12 +112,18 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().offset(75)
         }
 >>>>>>> 377993d (test)
+=======
+        setConstraints()
+>>>>>>> 9f2b72d (test)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9f2b72d (test)
     
     
     func setConstraints() {
@@ -115,7 +151,10 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-20)
         }
     }
+<<<<<<< HEAD
 =======
 >>>>>>> 377993d (test)
+=======
+>>>>>>> 9f2b72d (test)
 }
 

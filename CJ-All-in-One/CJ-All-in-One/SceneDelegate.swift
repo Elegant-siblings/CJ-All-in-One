@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 <<<<<<< HEAD
+<<<<<<< HEAD
         window?.rootViewController = UINavigationController(rootViewController: FindPathViewController())
 =======
 <<<<<<< HEAD
@@ -30,6 +31,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = UINavigationController(rootViewController: DeliveryCompletedViewController())
 >>>>>>> 4fd152a (Delivery Detail View)
 >>>>>>> 36da96d (test)
+=======
+        window?.rootViewController = UINavigationController(rootViewController: FindPathViewController())
+>>>>>>> 9f2b72d (test)
         window?.makeKeyAndVisible()
     }
 

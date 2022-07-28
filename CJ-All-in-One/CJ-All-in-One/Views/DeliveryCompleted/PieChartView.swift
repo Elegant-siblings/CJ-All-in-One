@@ -15,11 +15,7 @@ struct Slice {
 
 class PieChartView: UIView {
     
-<<<<<<< HEAD
     let animation_duration: CGFloat = 1.5 // 전체 애니메이션 시간
-=======
-    let animation_duration: CGFloat = 1 // 전체 애니메이션 시간
->>>>>>> 377993d (test)
     var slices: [Slice]? // 파이 그래프의 요소들(슬라이스들)
     var sliceIndex: Int = 0 // 현재 그리고 있는 슬라이스가 몇번째인지에 대한 정보
     var currentPercent: CGFloat = 0.0
@@ -35,11 +31,7 @@ class PieChartView: UIView {
         if slices != nil && slices!.count > 0 {
             let firstSlice = slices![0]
             addSlice(firstSlice)
-<<<<<<< HEAD
 //            addLabel(firstSlice)
-=======
-            addLabel(firstSlice)
->>>>>>> 377993d (test)
         }
     }
     
@@ -79,14 +71,7 @@ class PieChartView: UIView {
         
         let label = UILabel()
         label.textColor = .black
-<<<<<<< HEAD
-<<<<<<< HEAD
         label.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
-=======
->>>>>>> 377993d (test)
-=======
-        label.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
->>>>>>> 36da96d (test)
         label.numberOfLines = 0
         label.textAlignment = .center
         addSubview(label)
@@ -150,11 +135,7 @@ extension PieChartView: CAAnimationDelegate {
             if sliceIndex < slices!.count {
                 let nextSlice = slices![sliceIndex]
                 addSlice(nextSlice)
-<<<<<<< HEAD
 //                addLabel(nextSlice)
-=======
-                addLabel(nextSlice)
->>>>>>> 377993d (test)
             }
         }
     }
