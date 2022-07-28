@@ -7,9 +7,11 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 public enum CustomButtonType {
     case main
+    case sub
 }
 
 class MainButton: UIButton {
@@ -37,6 +39,20 @@ class MainButton: UIButton {
             self.borderWidth = 1
             self.layer.cornerRadius = 10
             self.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner)
+            self.snp.makeConstraints { make in
+                make.height.equalTo(48)
+            }
+            
+        case .sub:
+            self.setTitleColor(.white, for: .normal)
+            self.titleLabel?.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
+            self.backgroundColor = .CjYellow
+            self.borderWidth = 1
+            self.layer.cornerRadius = 10
+            self.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner)
+            self.snp.makeConstraints { make in
+                make.height.equalTo(37)
+            }
         }
     }
     
@@ -49,8 +65,15 @@ class MainButton: UIButton {
                self.borderWidth = 1
                self.layer.cornerRadius = 10
                self.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner)
+               
+           case .sub:
+               self.setTitleColor(.white, for: .normal)
+               self.titleLabel?.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
+               self.backgroundColor = .CjYellow
+               self.borderWidth = 1
+               self.layer.cornerRadius = 5
+               self.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner)
            }
        }
    }
 }
-
