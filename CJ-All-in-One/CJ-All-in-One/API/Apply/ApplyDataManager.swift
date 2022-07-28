@@ -50,7 +50,7 @@ class ApplyDataManager: ApplyDataManagerDelegate {
 //        let path =
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
-            AF.request(url, method: .get)
+            _ = AF.request(url, method: .get)
         }
     }
 }

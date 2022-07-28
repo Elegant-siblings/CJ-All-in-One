@@ -117,3 +117,39 @@ class ListTableView: UITableView {
         self.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
     }
 }
+
+class CustomNavigationBar : UIView {
+    
+    lazy var labelTitle = UILabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init(title:String) {
+        self.init()
+        
+        self.addSubviews([labelTitle])
+        labelTitle.text = title
+        labelTitle.font = .systemFont(ofSize: 23, weight: .bold)
+        labelTitle.textColor = .CjWhite
+        labelTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-10)
+        }
+        
+    }
+    
+    private func configure() {
+        self.backgroundColor = .deppBlue
+        self.snp.makeConstraints { make in
+            make.height.equalTo(95)
+        }
+    }
+}

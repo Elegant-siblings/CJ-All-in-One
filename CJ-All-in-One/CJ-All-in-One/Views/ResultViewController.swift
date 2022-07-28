@@ -19,10 +19,6 @@ struct Item {
 
 class ResultViewController: UIViewController {
     
-    lazy var navBar = UIView().then {
-        $0.backgroundColor = .deppBlue
-    }
-    
     // -MARK: Constants
     let terminalAddress = "서울특별시 서초구 양재동 225-5"
     let time = "오전 7:00"
@@ -42,6 +38,7 @@ class ResultViewController: UIViewController {
     ]
     
     // -MARK: UIViews
+    lazy var navBar = CustomNavigationBar()
     lazy var viewTerminalInfo = UIView()
     lazy var viewTermImage = UIView().then {
         $0.backgroundColor = .CjBlue
@@ -114,12 +111,10 @@ class ResultViewController: UIViewController {
             labelTime,
             viewDivideLine
         ])
-//        viewTerminalInfo.backgroundColor = .CjRed
         
         // -MARK: Make Constraints
         navBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(95)
         }
         viewTerminalInfo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

@@ -112,7 +112,7 @@ class ApplyViewController: UIViewController {
     }()
     
     lazy var applyButton = MainButton(type: .main).then {
-        $0.isEnabled = false
+        $0.isEnabled = true
         $0.setTitle("업무조회", for: .normal)
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
@@ -323,7 +323,7 @@ class ApplyViewController: UIViewController {
     }
     
     @objc func touchUpApplyButton() {
-//        print("업무조회")
+        print("업무조회")
         if textFieldVehicleType.text == "" || toLists.count==0 {
             return
         }

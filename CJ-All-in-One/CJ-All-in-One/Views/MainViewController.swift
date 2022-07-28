@@ -130,7 +130,7 @@ class MainViewController: UIViewController {
     @objc func touchUpApplyButton() {
         print("모집 신청하기")
         
-//        navigationController?.pushViewController(ApplyViewController(), animated: true)
+        navigationController?.pushViewController(ApplyViewController(), animated: true)
     }
 
 
