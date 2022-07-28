@@ -111,8 +111,9 @@ class ApplyViewController: UIViewController {
         return tb
     }()
     
-    lazy var applyButton = PrimaryButton(title: "업무조회").then {
-        $0.isEnabled = true
+    lazy var applyButton = MainButton(type: .main).then {
+        $0.isEnabled = false
+        $0.setTitle("업무조회", for: .normal)
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
     
@@ -322,7 +323,7 @@ class ApplyViewController: UIViewController {
     }
     
     @objc func touchUpApplyButton() {
-        print("업무조회")
+//        print("업무조회")
         if textFieldVehicleType.text == "" || toLists.count==0 {
             return
         }
@@ -335,7 +336,7 @@ class ApplyViewController: UIViewController {
     }
     
     @objc func touchUpAddButton() {
-        print("click add button")
+//        print("click add button")
         toLists.append(Location(city: city, goo: goo))
         tableTo.beginUpdates()
         tableTo.insertRows(at: [IndexPath(row: toLists.count-1, section: 0)], with: .right)

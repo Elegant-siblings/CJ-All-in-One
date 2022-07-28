@@ -30,8 +30,9 @@ class LoadViewController: UIViewController {
         $0.layer.cornerRadius = 30
     }
     
-    lazy var buttonComplete = PrimaryButton(title: "물품 적재 완료").then {
+    lazy var buttonComplete = MainButton(type: .main).then {
         $0.isEnabled = true
+        $0.setTitle("물품 적재 완료", for: .normal)
         $0.addTarget(self, action: #selector(touchUpCompleteButton), for: .touchUpInside)
     }
     

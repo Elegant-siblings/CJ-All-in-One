@@ -8,9 +8,10 @@
 import Foundation
 import Alamofire
 
-let base_url = "http://34.125.0.122:3000"
+
 
 class ApplyDataManager: ApplyDataManagerDelegate {
+    
     func getAssignedItems(date: String, locations: [Location], _ viewController: AssignViewController) {
         
         let path = "/works?"
@@ -27,7 +28,6 @@ class ApplyDataManager: ApplyDataManagerDelegate {
         print("URL: ", urlString)
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
-            print(url)
             AF.request(url, method: .get)
                 .validate()
                 .responseDecodable(of: AssignedItem.self) {
@@ -40,6 +40,17 @@ class ApplyDataManager: ApplyDataManagerDelegate {
                         print(error)
                     }
                 }
+        }
+    }
+    
+    func applyTask(applyForm: ApplyDataModel) {
+        
+        var urlString = "http://34.125.0.122:3000/works/register?deliveryPK=1,2,3,4&deliveryManID=AABBCCDDEEFFGGHH&deliveryDate=20220515&deliveryType=0&deliveryTime=0&deliveryCar=세단&terminalAddr=서울"
+        
+//        let path =
+        
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
+            AF.request(url, method: .get)
         }
     }
 }
