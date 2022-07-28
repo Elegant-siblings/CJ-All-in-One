@@ -18,4 +18,3 @@ protocol ViewControllerDelegate: AnyObject{
     
     func didSuccessReceivedLngLat(result: Welcome)
 }
-

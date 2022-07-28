@@ -9,35 +9,19 @@ import UIKit
 import SnapKit
 import Then
 
-struct CitiesManager {
-    let cities = [
-        City(name: "서울시", goos: ["종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구","강동구"]),
-        City(name: "부산시", goos: ["중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"]),
-        City(name: "대구시", goos: ["중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"]),
-        City(name: "인천시", goos: ["중구", "동구", "남구", "미추홀구", "연수구", "남동구", "부평구", "계양구", "서구", "강화군", "옹진군"]),
-        City(name: "광주시", goos: ["동구", "서구", "남구", "북구", "광산구"]),
-        City(name: "대전시", goos: ["동구", "중구", "서구", "유성구", "대덕구"]),
-        City(name: "울산시", goos: ["중구", "남구", "동구", "북구", "울주군"])
-    ]
-}
-
-struct City {
-    let name: String
-    let goos: [String]
-}
-
 struct Location {
     let city: String
     let goo: String
 }
 
-struct ApplyManager {
-    let type: String
-    let date: Date
-    let time: String
-    let count: String
-    let city: String
-    let goo: String
+struct ApplyDataModel {
+    let deliveryPK: [Int]
+    let deliveryManID: String
+    let deliveryDate: String
+    let deliveryType: Bool
+    let deliveryTime: Bool
+    let deliveryCar: String
+    let terminalAddr: String
 }
 
 class ApplyViewController: UIViewController {
@@ -45,7 +29,7 @@ class ApplyViewController: UIViewController {
     // -MARK: Constants
     let shippingTypes: [String] = ["일반배송", "집화/반품"]
     let shippingTimes: [String] = ["주간", "새벽"]
-    let avaiables: [String] = ["세단", "쿠페", "왜건", "SUV", "컨버터블", "해치백", "밴", "픽업트럭","기타"]
+    let vehicles: [String] = ["세단", "쿠페", "왜건", "SUV", "컨버터블", "해치백", "밴", "픽업트럭","기타"]
     let sectionInset = CGFloat(30)
     let citiesManager = CitiesManager()
     let pickerRowHeight = CGFloat(35)
@@ -58,10 +42,7 @@ class ApplyViewController: UIViewController {
     var count: String = "세단"
     var city: String = "서울시"
     var goo: String = "종로구"
-    var toLists: [Location] = [
-//        Location.init(city: "부산시", goo: "금정구"),
-//        Location(city: "부산시", goo: "북구")
-    ]
+    var toLists: [Location] = []
     
     //-MARK: UIView
     lazy var navBar = UIView().then{
@@ -143,7 +124,7 @@ class ApplyViewController: UIViewController {
         $0.addTarget(self, action: #selector(self.touchUpAddButton), for: .touchUpInside)
     }
     
-    lazy var tableTo = ListTableView(rowHeight: 35, isScrollEnabled: false)
+    lazy var tableTo = ListTableView(rowHeight: 35, scrollType: .none)
     let pickerAvailCount = UIPickerView()
     let pickerTo = UIPickerView()
     let pickerFrom = UIPickerView()
@@ -163,6 +144,7 @@ class ApplyViewController: UIViewController {
         pickerFrom.dataSource = self
         tableTo.dataSource = self
         tableTo.delegate = self
+        
         tableTo.register(ToListTableViewCell.self, forCellReuseIdentifier: ToListTableViewCell.identifier)
         
         // -MARK: addSubviews
@@ -324,7 +306,7 @@ class ApplyViewController: UIViewController {
     @objc func donePicker() {
         let row = self.pickerAvailCount.selectedRow(inComponent: 0)
         self.pickerAvailCount.selectRow(row, inComponent: 0, animated: false)
-        self.textFieldVehicleType.text = self.avaiables[row]
+        self.textFieldVehicleType.text = self.vehicles[row]
         self.textFieldVehicleType.resignFirstResponder()
         self.count = textFieldVehicleType.text!
         warningLabel.textColor = .white
@@ -338,9 +320,17 @@ class ApplyViewController: UIViewController {
     
     @objc func touchUpApplyButton() {
         print("업무조회")
-        if textFieldVehicleType.text == "" {
-            return
-        }
+        let vc = AssignViewController()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        vc.date = dateFormatter.string(from: self.date)
+        vc.toLists = self.toLists
+
+        navigationController?.pushViewController(vc, animated: true)
+        
+//        if textFieldVehicleType.text == "" {
+//            return
+//        }
 //        let applyInfo = ApplyManager(type: self.type, date: self.date, time: self.time, count: self.count, city: self.city, goo: self.goo)
 //        print(applyInfo)
     }
@@ -362,199 +352,5 @@ class ApplyViewController: UIViewController {
                 tableTo.isScrollEnabled = true
             }
         }
-    }
-}
-
-// -MARK: extensions
-
-extension ApplyViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toLists.count+1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ToListTableViewCell.identifier, for: indexPath) as! ToListTableViewCell
-        print("cellForRowAt \(indexPath.row)")
-        cell.rowIndex = indexPath.row
-        if indexPath.row == 0 {
-            print("indexPa 0")
-            cell.backgroundColor = .firstRowBackgroundColor
-            cell.labelNum.text = "#"
-            cell.labelTo.text = "배송지역"
-            cell.fontSize = CGFloat(15)
-            cell.fontColor = UIColor.tableTitleTextColor
-//            cell.removeButton.isHidden = true
-        }
-        else {
-            cell.backgroundColor = .CjWhite
-            cell.labelNum.text = "\(indexPath.row)"
-            cell.labelTo.text = toLists[indexPath.row-1].city + " " + toLists[indexPath.row-1].goo
-            cell.fontSize = CGFloat(13)
-            cell.fontColor = UIColor.tableContentTextColor
-//            cell.cellDelegate = self
-        }
-        cell.selectionStyle = .none
-        return cell
-    }
-    
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//           let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
-//               self.toLists.remove(at: indexPath.row-1)
-//                   tableView.deleteRows(at: [indexPath], with: .automatic)
-//                completion(true)
-//            }
-//
-////            action.backgroundColor = .white
-////            action.image = #imageLiteral(resourceName: "Delete
-//
-//            let configuration = UISwipeActionsConfiguration(actions: [action])
-//            configuration.performsFirstActionWithFullSwipe = false
-//            return configuration
-//       }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row != 0 && toLists.isEmpty != true {
-            toLists.remove(at: indexPath.row-1)
-            tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .right)
-            tableView.reloadData()
-            tableView.endUpdates()
-            
-            tableView.snp.updateConstraints { make in
-                if tableTo.rowHeight*CGFloat(toLists.count+1) < 180 {
-                    make.height.equalTo(tableTo.rowHeight*CGFloat(toLists.count+1))
-                }
-                else {
-                    make.height.equalTo(180)
-                    tableTo.isScrollEnabled = true
-                }
-            }
-        }
-    }
-}
-
-
-extension ApplyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView == pickerTo {
-            return 2
-        }
-        else {
-            return 1
-        }
-    }
-    // pickerview의 선택지는 데이터의 개수만큼
-    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == pickerAvailCount {
-            return avaiables.count
-        }
-        else if pickerView == pickerTo {
-            if component==0 {
-                return citiesManager.cities.count
-            }
-            else {
-                let selectedCity = pickerTo.selectedRow(inComponent: 0)
-                return citiesManager.cities[selectedCity].goos.count
-            }
-        }
-        else {
-            return citiesManager.cities.count
-        }
-    }
-    // pickerview 내 선택지의 값들을 원하는 데이터로 채워준다.
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        if pickerView == pickerAvailCount {
-//            return avaiables[row]
-//        }
-//        else if pickerView == pickerTo{
-//            if component == 0 {
-//                return citiesManager.cities[row].name
-//            }
-//            else {
-//                let selectedCity = pickerTo.selectedRow(inComponent: 0)
-//                return citiesManager.cities[selectedCity].goos[row]
-//            }
-//        }
-//        else {
-//            return citiesManager.cities[row].name
-//        }
-//    }
-    // textfield의 텍스트에 pickerview에서 선택한 값을 넣어준다.
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == pickerAvailCount {
-            self.textFieldVehicleType.text = self.avaiables[row]
-            warningLabel.textColor = .white
-        }
-        else if pickerView == pickerTo{
-            if component == 0 {
-                pickerTo.selectRow(0, inComponent: 1, animated: false)
-            }
-
-            let cityIdx = pickerTo.selectedRow(inComponent: 0)
-            let selectedCity = citiesManager.cities[cityIdx].name
-            let gooIdx = pickerTo.selectedRow(inComponent: 1)
-            let selectedGoo = citiesManager.cities[cityIdx].goos[gooIdx]
-            self.city = selectedCity
-            self.goo = selectedGoo
-            
-            pickerTo.reloadComponent(1)
-        }
-        else {
-            print(citiesManager.cities[row].name)
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return pickerRowHeight
-    }
-   
-//    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-//
-//        var title: String = ""
-//        if pickerView == pickerAvailCount {
-//            title = avaiables[row]
-//        }
-//        else if pickerView == pickerFrom {
-//            title = citiesManager.cities[row].name
-//        }
-//        if pickerView == pickerTo{
-//            if component == 0 {
-//                title = citiesManager.cities[row].name
-//                pickerTo.reloadComponent(1)
-//            }
-//            else {
-//                let selectedCity = pickerTo.selectedRow(inComponent: 0)
-//                title = citiesManager.cities[selectedCity].goos[row]
-//            }
-//        }
-//        return NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 5, weight: .medium)])
-//    }
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: pickerRowHeight))
-
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: pickerRowHeight))
-        if pickerView == pickerAvailCount {
-            label.text = avaiables[row]
-        }
-        else if pickerView == pickerFrom {
-            label.text = citiesManager.cities[row].name
-        }
-        if pickerView == pickerTo{
-            if component == 0 {
-                label.text = citiesManager.cities[row].name
-                pickerTo.reloadComponent(1)
-            }
-            else {
-                let selectedCity = pickerTo.selectedRow(inComponent: 0)
-                label.text = citiesManager.cities[selectedCity].goos[row]
-            }
-        }
-        label.textAlignment = .center
-        view.addSubview(label)
-        return view
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return 80
     }
 }
