@@ -11,7 +11,7 @@ import SnapKit
 class LoadViewController: UIViewController {
     
     let lists = [
-        Item(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
+        Items(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
 //        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
 //        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
 //        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),

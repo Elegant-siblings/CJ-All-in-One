@@ -150,8 +150,8 @@ class AssignViewController: UIViewController {
 //        print(date, toLists)
         view.backgroundColor = .CjWhite
         
-        
-//        dataManager.getAssignedItems(date: date, locations: toLists, self)
+
+        dataManager.getAssignedItems(date: date, locations: toLists, self)
         
         view.addSubviews([
             navBar,

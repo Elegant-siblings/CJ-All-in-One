@@ -8,10 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol DetailDelegate {
+    func getTaskDetail()
+}
+
 class DeliveryDetailTableViewCell: UITableViewCell {
     
     static let identifier = "DeliveryDetailTableViewCell"
     
+    var detailDelegate: DetailDelegate?
     let year = "2022"
     let date = "7.2"
     let day = "목요일"
@@ -19,95 +24,71 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     let address = "부산 금정구 장전동"
     let delType = "일반 배송"
     let state = "모집확정"
+    var task: Task?
         
     var curColor: UIColor = .CjBlue
     
-    lazy var colorBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = curColor
-        view.layer.cornerRadius = 6
-        view.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
-        return view
-    } ()
+    lazy var colorBar = UIView().then{
+        $0.backgroundColor = curColor
+        $0.layer.cornerRadius = 6
+        $0.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+    }
     
-    let disLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(rgb: 0xDDDDDD)
-        return view
-    } ()
+    lazy var disLine = UIView().then{
+        $0.backgroundColor = UIColor(rgb: 0xDDDDDD)
+    }
     
-    let viewheader: UIView = {
-        let view = UIView()
-//        view.backgroundColor = .red
-        return view
-    }()
+    lazy var viewheader = UIView()
     
-    let labelDate: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .bold)
-        return label
-    } ()
+    lazy var  labelDate = UILabel().then{
+        $0.font = .systemFont(ofSize: 17, weight: .bold)
+    }
     
-    let labelYear: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 9, weight: .bold)
-        return label
-    } ()
+    lazy var labelYear = UILabel().then{
+        $0.font = .systemFont(ofSize: 9, weight: .bold)
+    }
     
-    let labelDay: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 11, weight: .light)
-        return label
-    } ()
+    lazy var labelDay = UILabel().then{
+        $0.font = .systemFont(ofSize: 11, weight: .light)
+    }
     
-    let labelInfo: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 11, weight: .medium)
-        return label
-    } ()
+    lazy var labelInfo = UILabel().then{
+        $0.font = .systemFont(ofSize: 11, weight: .medium)
+    }
     
-    let labelAddress: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 11, weight: .medium)
-        label.textColor = UIColor(rgb: 0xB4B4B4)
-        return label
-    } ()
+    lazy var labelAddress = UILabel().then{
+        $0.font = .systemFont(ofSize: 11, weight: .medium)
+        $0.textColor = UIColor(rgb: 0xB4B4B4)
+    }
     
-    let labeldelType: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 11, weight: .medium)
+    lazy var labeldelType = UILabel().then {
+        $0.font = .systemFont(ofSize: 11, weight: .medium)
 //        label.textColor = .darkGray
-        return label
-    } ()
-    lazy var viewState: UIView = {
-        let view = UIView()
-        view.backgroundColor = curColor
-        view.layer.cornerRadius = 21
-        return view
-    } ()
-    let labelState: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 10, weight: .semibold)
-        label.textColor = .white
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    } ()
+    }
+    lazy var viewState = UIView().then {
+        $0.backgroundColor = curColor
+        $0.layer.cornerRadius = 21
+    }
+    lazy var labelState = UILabel().then{
+        $0.font = .systemFont(ofSize: 10, weight: .semibold)
+        $0.textColor = .white
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
+    }
     
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         deterColor(state: self.state)
-        
         contentView.addSubviews([colorBar])
-        
+
         labelYear.text = year
         labelDate.text = date
         labelDay.text = day
         labelInfo.text = delInfo
         labelAddress.text = address
-        labeldelType.text = delType
+        labeldelType.text = task?.deliveryType
         labelState.text = state
         
         colorBar.snp.makeConstraints { make in
@@ -128,7 +109,11 @@ class DeliveryDetailTableViewCell: UITableViewCell {
 
         viewheader.addSubviews([labelYear, labelDate, labelDay])
         viewState.addSubview(labelState)
-
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchUpContentView))
+        contentView.addGestureRecognizer(tapGesture)
+        
+        // -MARK: Make Constraints
         viewheader.snp.makeConstraints{ make in
             make.leading.equalToSuperview()
             make.width.equalTo(73)
@@ -210,11 +195,16 @@ class DeliveryDetailTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
         contentView.backgroundColor = .CjWhite
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowOpacity = 0.25
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20))
+    }
+    
+    @objc func touchUpContentView() {
+        detailDelegate?.getTaskDetail()
     }
 }

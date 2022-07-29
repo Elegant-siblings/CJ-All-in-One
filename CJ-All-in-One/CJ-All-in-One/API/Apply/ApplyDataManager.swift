@@ -8,8 +8,6 @@
 import Foundation
 import Alamofire
 
-
-
 class ApplyDataManager: ApplyDataManagerDelegate {
     
     func getAssignedItems(date: String, locations: [Location], _ viewController: AssignViewController) {
@@ -35,10 +33,10 @@ class ApplyDataManager: ApplyDataManagerDelegate {
                     response in
                     switch response.result {
                     case .success(let response):
-                        print(response)
+                        print("DEBUG: ",response)
                         viewController.successAssignItems(response.rows)
                     case .failure(let error):
-                        print(error)
+                        print("DEBUG: error", error)
                     }
                 }
         }
@@ -46,16 +44,16 @@ class ApplyDataManager: ApplyDataManagerDelegate {
     
     func applyTask(applyForm: ApplyDataModel) {
         
-        var url = "http://34.125.0.122:3000/works/register?deliveryPK=1,2,3,4&deliveryManID=AABBCCDDEEFFGGHH&deliveryDate=20220515&deliveryType=0&deliveryTime=0&deliveryCar=세단&terminalAddr=서울"
+//        var url = "http://34.125.0.122:3000/works/register?deliveryPK=1,2,3,4&deliveryManID=AABBCCDDEEFFGGHH&deliveryDate=20220515&deliveryType=0&deliveryTime=0&deliveryCar=세단&terminalAddr=서울"
         print(applyForm)
         let path = "/works/register?"
-        var deliveryPKs = applyForm.deliveryPK.map {
-            pk in
-            
-            
+        var deliveryPKs = ""
+        _ = applyForm.deliveryPK.map { pk in
+            deliveryPKs += "\(pk),"
         }
-        var urlString = base_url+path+""
-        
+        _ = deliveryPKs.popLast()
+        let urlString = base_url+path+"deliveryPK=\(deliveryPKs)&deliveryMainID=\(applyForm.deliveryManID)&deliveryDate=\(applyForm.deliveryDate)&deliveryType=\(applyForm.deliveryType)&deliveryTime=\(applyForm.deliveryTime)&deliveryCar=\(applyForm.deliveryCar)&terminalAddr=\(applyForm.terminalAddr)"
+        print("URL: ", urlString)
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
             _ = AF.request(url, method: .get)

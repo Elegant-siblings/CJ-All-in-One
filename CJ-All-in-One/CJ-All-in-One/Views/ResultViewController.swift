@@ -9,7 +9,7 @@ import UIKit
 import Then
 import NMapsMap
 
-struct Item {
+struct Items {
     let id: Int
     let category: String
     let From: String
@@ -28,14 +28,14 @@ class ResultViewController: UIViewController {
     let gae = " 개"
     let locations = ["서울", "경기", "인천"]
     let lists = [
-        Item(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
-        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
-        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
-        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
-        Item(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
-        Item(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
-        Item(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
-        Item(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
+        Items(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
+        Items(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
+        Items(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
+        Items(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
+        Items(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
+        Items(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
+        Items(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
+        Items(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
     ]
     
     // -MARK: UIViews

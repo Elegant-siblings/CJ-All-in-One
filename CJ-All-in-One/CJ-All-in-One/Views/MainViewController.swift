@@ -17,99 +17,75 @@ class MainViewController: UIViewController {
     // -MARK: variables
     var lists = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"]
     let detailTypes = ["모집내역", "배송내역"]
-    
+    let taskDataManager = TaskDataManager()
+    var taskList:[Task] = []
     
     // -MARK: UIViews
-    
-    lazy var navBar = UIView().then {
+    lazy var navBar = CustomNavigationBar().then {
         $0.backgroundColor = .deppBlue
     }
     
-    lazy var uiTableContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
-    }()
+    lazy var uiTableContainer = UIView().then{
+        $0.backgroundColor = .red
+    }
     
-    lazy var uiApplyButtonContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .CjWhite
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.3
-        return view
-    }()
+    lazy var uiApplyButtonContainer = UIView().then{
+        $0.backgroundColor = .CjWhite
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.3
+    }
     
-    lazy var distributeBar: UIView = {
-        let view: UIView = UIView()
-        view.backgroundColor = UIColor(rgb: 0xB4B4B4)
-        return view
-    } ()
+    lazy var distributeBar = UIView().then{
+        $0.backgroundColor = UIColor(rgb: 0xB4B4B4)
+    }
     
     // -MARK: UIButtons
-    lazy var buttonApply = MainButton(type: .main).then {
+    lazy var buttonApply = MainButton(type: .main).then{
         $0.setTitle("모집 신청하기", for: .normal)
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
     
-    lazy var buttonSort: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .CjWhite
-        button.layer.cornerRadius = 3
-        button.layer.borderColor = UIColor(rgb: 0x8B8B8B).cgColor
+    lazy var buttonSort = MainButton(type: .main).then{
+        $0.backgroundColor = .CjWhite
+        $0.layer.cornerRadius = 3
+        $0.layer.borderColor = UIColor(rgb: 0x8B8B8B).cgColor
+        $0.layer.borderWidth = 0.5
         let customButtonLabel = NSMutableAttributedString(
             string: " 정렬",
             attributes: [
                 NSAttributedString.Key.foregroundColor: UIColor(rgb: 0x8B8B8B),
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10,weight: .bold)
             ])
-        button.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
-        button.tintColor = UIColor(rgb: 0x8B8B8B)
-        button.setAttributedTitle(customButtonLabel, for: .normal)
-        button.layer.borderWidth = 0.5
-        return button
-    } ()
-    
-    lazy var buttonMenu: UIBarButtonItem = {
-        let item = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.CjRed], for: .normal)
-        return item
-    } ()
-    
-    lazy var buttonSiljeock: UIBarButtonItem = {
-        let item = UIBarButtonItem(title: "Play", style: .plain, target: self, action: #selector(playTapped))
-        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.CjRed], for: .normal)
-        return item
-    } ()
+        $0.setAttributedTitle(customButtonLabel, for: .normal)
+        $0.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
+        $0.tintColor = UIColor(rgb: 0x8B8B8B)
+    }
     
     // -MARK: Others
-    lazy var tableHistory: UITableView = {
-        let table: UITableView = UITableView()
-        table.dataSource = self
-        table.delegate = self
-        table.separatorStyle = .none
-        table.register(DeliveryDetailTableViewCell.self, forCellReuseIdentifier: DeliveryDetailTableViewCell.identifier)
-        table.rowHeight = 100
-        table.backgroundColor = .CjWhite
-        return table
-    } ()
+    lazy var tableHistory = UITableView().then{
+        $0.dataSource = self
+        $0.delegate = self
+        $0.separatorStyle = .none
+        $0.register(DeliveryDetailTableViewCell.self, forCellReuseIdentifier: DeliveryDetailTableViewCell.identifier)
+        $0.rowHeight = 100
+        $0.backgroundColor = .CjWhite
+    }
     
-    lazy var SCDetailType: UISegmentedControl = {
-        let sc: UISegmentedControl = UISegmentedControl(items: detailTypes)
-        sc.backgroundColor = .CjWhite
-        sc.layer.cornerRadius = 3
-        sc.selectedSegmentTintColor = .CjRed
-        sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium)], for: .normal)
-        sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.CjRed, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .semibold)], for: .selected)
+    lazy var SCDetailType = UISegmentedControl(items: detailTypes).then{
+        $0.backgroundColor = .CjWhite
+        $0.layer.cornerRadius = 3
+        $0.selectedSegmentTintColor = .CjRed
+        $0.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium)], for: .normal)
+        $0.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.CjRed, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .semibold)], for: .selected)
         let backgroundImage = UIImage()
         let colorView = UIView()
         colorView.backgroundColor = .CjRed
-        sc.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
+        $0.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
 
-        sc.selectedSegmentIndex = 0
-        sc.apportionsSegmentWidthsByContent = false
-        sc.addTarget(self, action: #selector(detailTypeChanged(type:)), for: UIControl.Event.valueChanged)
-        return sc
-    }()
+        $0.selectedSegmentIndex = 0
+        $0.apportionsSegmentWidthsByContent = false
+        $0.addTarget(self, action: #selector(detailTypeChanged(type:)), for: UIControl.Event.valueChanged)
+    }
     
     // -MARK: selectors
     @objc
@@ -117,30 +93,16 @@ class MainViewController: UIViewController {
         print(detailTypes[type.selectedSegmentIndex])
     }
     
-    @objc
-    func addTapped(type: UISegmentedControl) {
-        print("add Tapped")
-    }
-    
-    @objc
-    func playTapped(type: UISegmentedControl) {
-        print("play Tapped")
-    }
-    
     @objc func touchUpApplyButton() {
         print("모집 신청하기")
-        
         navigationController?.pushViewController(ApplyViewController(), animated: true)
     }
-
 
     // -MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
-//        navigationController?.navigationBar.isHidden = false
-//        navigationController?.navigationBar.backgroundColor = .deppBlue
-//        navigationController?.navigationItem.title = "Main"
+        taskDataManager.getTasks(self)
         
         self.view.addSubviews([
             navBar,
@@ -153,16 +115,13 @@ class MainViewController: UIViewController {
         ])
         
         self.uiTableContainer.addSubview(tableHistory)
-
         setConstraints()
-
     }
 
     // -MARK: makeConstraints
     private func setConstraints() {
         navBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(90)
         }
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
@@ -214,30 +173,31 @@ class MainViewController: UIViewController {
 // -MARK: Extensions
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return tableLabels.count
-        return lists.count
+        return taskList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DeliveryDetailTableViewCell.identifier, for: indexPath) as! DeliveryDetailTableViewCell
-//        cell.labelDate.text = tableLabels[indexPath.row]
-//        cell.labelName.text = names[indexPath.row]
-//        cell.labelNumber.text = numbers[indexPath.row]
-//        cell.labelFrom.text = details[indexPath.row].from + " >> " + details[indexPath.row].to
-//        cell.labelState.text = states[indexPath.row]
-        let background = UIView()
-        background.backgroundColor = .clear
+        let background = UIView().then{
+            $0.backgroundColor = .clear
+        }
+        cell.detailDelegate = self
         cell.selectedBackgroundView = background
         cell.backgroundColor = .CjWhite
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("click: \(indexPath.row)")
-        
+}
+
+extension MainViewController: DetailDelegate {
+    func getTaskDetail() {
         let vc = ResultViewController()
-        
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
+extension MainViewController {
+    func successGetTasks(result: [Task]) {
+        taskList = result
+        tableHistory.reloadData()
+    }
+}
