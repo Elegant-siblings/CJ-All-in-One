@@ -143,7 +143,6 @@ class CustomNavigationBar : UIView {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-10)
         }
-        
     }
     
     private func configure() {

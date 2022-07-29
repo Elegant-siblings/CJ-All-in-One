@@ -47,7 +47,7 @@ class MainViewController: UIViewController {
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
     
-    lazy var buttonSort = MainButton(type: .main).then{
+    lazy var buttonSort = UIButton().then{
         $0.backgroundColor = .CjWhite
         $0.layer.cornerRadius = 3
         $0.layer.borderColor = UIColor(rgb: 0x8B8B8B).cgColor

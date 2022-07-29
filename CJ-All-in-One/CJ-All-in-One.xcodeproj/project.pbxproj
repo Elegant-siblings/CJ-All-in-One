@@ -40,6 +40,7 @@
 		782688602893E85900B16A55 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885F2893E85900B16A55 /* TaskProtocol.swift */; };
 		782688622893E86200B16A55 /* TaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782688612893E86200B16A55 /* TaskResponse.swift */; };
 		785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */; };
+		78A3EB5F289478CF00F3380A /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A3EB5E289478CF00F3380A /* UIButton.swift */; };
 		78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABB2A32891462E0072C41E /* BarcodeViewController.swift */; };
 		78ABB2A6289147500072C41E /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABB2A5289147500072C41E /* ReaderView.swift */; };
 		78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABB2A728914A2C0072C41E /* LoadViewController.swift */; };
@@ -105,6 +106,7 @@
 		7826885F2893E85900B16A55 /* TaskProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskProtocol.swift; sourceTree = "<group>"; };
 		782688612893E86200B16A55 /* TaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResponse.swift; sourceTree = "<group>"; };
 		785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDetailTableViewCell.swift; sourceTree = "<group>"; };
+		78A3EB5E289478CF00F3380A /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		78ABB2A32891462E0072C41E /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
 		78ABB2A5289147500072C41E /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
 		78ABB2A728914A2C0072C41E /* LoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				32A2C56A288FE09E0000CCB6 /* UIView.swift */,
 				32A2C56C288FE0BD0000CCB6 /* CALayer.swift */,
 				32A2C56E288FE0C80000CCB6 /* UIFont.swift */,
+				78A3EB5E289478CF00F3380A /* UIButton.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				78ABB2AD289162640072C41E /* ItemListProtocol.swift in Sources */,
 				32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */,
 				78ABB2B4289162C30072C41E /* ApplyProtocol.swift in Sources */,
+				78A3EB5F289478CF00F3380A /* UIButton.swift in Sources */,
 				32A2C571288FE15D0000CCB6 /* IndicatorView.swift in Sources */,
 				3207A93F2892BA0C00F0E740 /* PieChartView.swift in Sources */,
 				78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */,
