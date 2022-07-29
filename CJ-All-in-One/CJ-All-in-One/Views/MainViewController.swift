@@ -70,6 +70,8 @@ class MainViewController: UIViewController {
         $0.register(DeliveryDetailTableViewCell.self, forCellReuseIdentifier: DeliveryDetailTableViewCell.identifier)
         $0.rowHeight = 100
         $0.backgroundColor = .CjWhite
+        $0.refreshControl = UIRefreshControl()
+        $0.refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
     }
     
     lazy var tableCompleteTask = UITableView().then{
@@ -78,6 +80,8 @@ class MainViewController: UIViewController {
         $0.register(DeliveryDetailTableViewCell.self, forCellReuseIdentifier: DeliveryDetailTableViewCell.identifier)
         $0.rowHeight = 100
         $0.backgroundColor = .CjWhite
+        $0.refreshControl = UIRefreshControl()
+        $0.refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
     }
     
     lazy var SCDetailType = UISegmentedControl(items: detailTypes).then{
@@ -114,6 +118,11 @@ class MainViewController: UIViewController {
     @objc func touchUpApplyButton() {
         print("모집 신청하기")
         navigationController?.pushViewController(ApplyViewController(), animated: true)
+    }
+    
+    @objc func refreshTable(_ sender: UIRefreshControl) {
+        taskDataManager.getTasks(self, id: ManId)
+        sender.endRefreshing()
     }
 
     // -MARK: viewDidLoad
@@ -199,9 +208,7 @@ class MainViewController: UIViewController {
 // -MARK: Extensions
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableView==tableAssignedTask
-                ? taskList.count
-                : completedTasks.count
+        return tableView==tableAssignedTask ? taskList.count : completedTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -225,10 +232,16 @@ extension MainViewController: DetailDelegate {
         vc.task = whatTask
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func getCompleteDetail(whatTask: Task) {
+        print("배송완료상세내역")
+    }
 }
 
 extension MainViewController {
     func successGetTasks(result: [Task]) {
+        completedTasks.removeAll()
+        taskList.removeAll()
         for task in result {
             if task.workState == 2 {
                 completedTasks.append(task)
@@ -238,5 +251,6 @@ extension MainViewController {
             }
         }
         tableAssignedTask.reloadData()
+        tableCompleteTask.reloadData()
     }
 }
