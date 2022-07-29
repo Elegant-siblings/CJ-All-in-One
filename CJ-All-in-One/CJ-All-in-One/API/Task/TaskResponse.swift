@@ -18,4 +18,6 @@ struct Task: Codable {
     let deliveryTime: String
     let deliveryCar: String
     let terminalAddr: String
+    let workState: Int
+    let comment: String?
 }

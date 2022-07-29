@@ -24,7 +24,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     let address = "부산 금정구 장전동"
     let delType = "일반 배송"
     let state = "모집확정"
-    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "")
+    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
         
     var curColor: UIColor = .CjBlue
     
@@ -80,7 +80,6 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        deterColor(state: self.state)
         contentView.addSubviews([colorBar])
 
 
@@ -156,18 +155,14 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         }
     }
     
-    private func deterColor(state: String) {
+    private func deterColor(state: Int) {
         var color: UIColor = .CjBlue
         
         switch state {
-        case "모집확정":
+        case 0:
             color = .CjBlue
-        case "모집실패":
+        case 1:
             color = .CjRed
-        case "모집취소":
-            color = .CjOrange
-        case "모집신청":
-            color = .CjYellow
         default: return
         }
         curColor = color
@@ -205,7 +200,8 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         labelAddress.text = task.terminalAddr
         labeldelType.text = task.deliveryType
         labelState.text = state
-
+        deterColor(state: task.workState)
+        
         contentView.backgroundColor = .CjWhite
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.black.cgColor

@@ -22,7 +22,7 @@ class ResultViewController: UIViewController {
     
     // -MARK: Constants
     let itemListDataManager = ItemListDataManager()
-    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "")
+    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
     var itemList: [Item] = []
     let terminalAddress = "서울특별시 서초구 양재동 225-5"
     let time = "오전 7:00"
@@ -98,15 +98,10 @@ class ResultViewController: UIViewController {
         view.backgroundColor = .CjWhite
         self.navigationController?.navigationBar.tintColor = .CjWhite
         
-        itemListDataManager.getItemList(self, pk: task.workPK)
-        
         view.addSubviews([
             navBar,
             labelTermInfoTitle,
             viewTerminalInfo,
-            labelTotal,
-            labelTos,
-            tableItem,
             buttonArrived
         ])
         
@@ -116,6 +111,44 @@ class ResultViewController: UIViewController {
             labelTime,
             viewDivideLine
         ])
+        
+        if task.workState == 0 {
+            itemListDataManager.getItemList(self, pk: task.workPK)
+            view.addSubviews([
+                labelTotal,
+                labelTos,
+                tableItem,
+            ])
+            labelTotal.snp.makeConstraints { make in
+                make.top.equalTo(viewDivideLine).offset(11)
+                make.trailing.equalTo(labelTermAddress)
+            }
+            labelTos.snp.makeConstraints { make in
+                make.top.equalTo(labelTotal.snp.bottom).offset(8)
+                make.trailing.equalTo(labelTotal)
+            }
+            tableItem.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().offset(-50)
+                make.height.equalTo(210)
+                make.top.equalTo(labelTos.snp.bottom).offset(15)
+            }
+        }
+        else {
+            let labelComment = UILabel().then {
+                $0.text = task.comment
+                $0.textColor = .primaryFontColor
+                $0.font = .systemFont(ofSize: 20, weight: .bold)
+                $0.numberOfLines = 0
+            }
+            
+            view.addSubviews([labelComment])
+            labelComment.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(viewDivideLine).offset(39)
+                make.width.equalTo(viewTerminalInfo).offset(-10)
+            }
+        }
         
         switch task.deliveryTime {
         case "주간":
@@ -161,20 +194,7 @@ class ResultViewController: UIViewController {
             make.width.equalToSuperview().offset(-60)
         }
         
-        labelTotal.snp.makeConstraints { make in
-            make.top.equalTo(viewDivideLine).offset(11)
-            make.trailing.equalTo(labelTermAddress)
-        }
-        labelTos.snp.makeConstraints { make in
-            make.top.equalTo(labelTotal.snp.bottom).offset(8)
-            make.trailing.equalTo(labelTotal)
-        }
-        tableItem.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-50)
-            make.height.equalTo(210)
-            make.top.equalTo(labelTos.snp.bottom).offset(15)
-        }
+        
         
         buttonArrived.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()

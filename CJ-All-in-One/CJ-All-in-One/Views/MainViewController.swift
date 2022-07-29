@@ -19,6 +19,8 @@ class MainViewController: UIViewController {
     let detailTypes = ["모집내역", "배송내역"]
     let taskDataManager = TaskDataManager()
     var taskList:[Task] = []
+    var allTasks: [Task] = []
+    var completedTasks:[Task] = []
     
     // -MARK: UIViews
     lazy var navBar = CustomNavigationBar().then {
@@ -199,7 +201,14 @@ extension MainViewController: DetailDelegate {
 
 extension MainViewController {
     func successGetTasks(result: [Task]) {
-        taskList = result
+        for task in result {
+            if task.workState == 2 {
+                completedTasks.append(task)
+            }
+            else {
+                taskList.append(task)
+            }
+        }
         tableHistory.reloadData()
     }
 }
