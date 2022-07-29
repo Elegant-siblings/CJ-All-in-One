@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 //let url = "http://34.125.0.122:3000/"
-let base_url = "http://34.125.0.122:3000/"
+let base_url = "http://34.125.0.122:3000"
 //let urlString = "http://34.125.0.122:3000/works?deliveryDate=20220501&receiverAdd1=서울&receiverAdd2=마포구"
 
 class ApplyDataManager: ApplyDataManagerDelegate {
@@ -26,6 +26,7 @@ class ApplyDataManager: ApplyDataManagerDelegate {
         _ = addr1.popLast()
         _ = addr2.popLast()
         urlString += "deliveryDate=\(date)&receiverAdd1="+addr1+"&receiverAdd2="+addr2
+        print(urlString)
         
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {

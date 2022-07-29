@@ -79,7 +79,7 @@ class ApplyViewController: UIViewController {
     lazy var datePicker = UIDatePicker().then{
         $0.preferredDatePickerStyle = .automatic
         $0.datePickerMode = .date
-        $0.minimumDate = Date()
+//        $0.minimumDate = Date()
         $0.locale = Locale(identifier: "ko-KR")
         $0.timeZone = .autoupdatingCurrent
         $0.addTarget(self, action: #selector(handleDatePicker(_:)), for: .valueChanged)

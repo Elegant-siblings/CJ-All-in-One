@@ -57,6 +57,7 @@
 		1D546E77288D1DDD00160E82 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1D546E7C288D1DDF00160E82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D546E7F288D1DDF00160E82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1D7415B42892BDF400C17FE4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32A2C55A288FDE710000CCB6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDelegate.swift; sourceTree = "<group>"; };
 		32A2C560288FDFF70000CCB6 /* LabelClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelClass.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		1D546E72288D1DDD00160E82 /* CJ-All-in-One */ = {
 			isa = PBXGroup;
 			children = (
+				1D7415B42892BDF400C17FE4 /* Info.plist */,
 				78B4940628928EF00073CB0B /* Struct */,
 				32A2C55D288FDE970000CCB6 /* Protocol  */,
 				32A2C55C288FDE790000CCB6 /* Resource */,
