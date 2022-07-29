@@ -16,6 +16,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     
     static let identifier = "DeliveryDetailTableViewCell"
     
+    // -MARK: Constants
     var detailDelegate: DetailDelegate?
     let year = "2022"
     let date = "7.2"
@@ -24,50 +25,43 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     let address = "부산 금정구 장전동"
     let delType = "일반 배송"
     let state = "모집확정"
-    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
-        
     var curColor: UIColor = .CjBlue
+    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
     
+    // -MARK: UIView
     lazy var colorBar = UIView().then{
         $0.backgroundColor = curColor
         $0.layer.cornerRadius = 6
         $0.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
     }
-    
     lazy var disLine = UIView().then{
         $0.backgroundColor = UIColor(rgb: 0xDDDDDD)
     }
-    
     lazy var viewheader = UIView()
+    lazy var viewState = UIView().then {
+        $0.backgroundColor = curColor
+        $0.layer.cornerRadius = 21
+    }
     
+    // -MARK: UILabel
     lazy var  labelDate = UILabel().then{
         $0.font = .systemFont(ofSize: 17, weight: .bold)
     }
-    
     lazy var labelYear = UILabel().then{
         $0.font = .systemFont(ofSize: 9, weight: .bold)
     }
-    
     lazy var labelDay = UILabel().then{
         $0.font = .systemFont(ofSize: 11, weight: .light)
     }
-    
     lazy var labelInfo = UILabel().then{
         $0.font = .systemFont(ofSize: 12, weight: .medium)
     }
-    
     lazy var labelAddress = UILabel().then{
         $0.font = .systemFont(ofSize: 12, weight: .medium)
         $0.textColor = UIColor(rgb: 0xB4B4B4)
     }
-    
     lazy var labeldelType = UILabel().then {
         $0.font = .systemFont(ofSize: 12, weight: .medium)
-//        label.textColor = .darkGray
-    }
-    lazy var viewState = UIView().then {
-        $0.backgroundColor = curColor
-        $0.layer.cornerRadius = 21
     }
     lazy var labelState = UILabel().then{
         $0.font = .systemFont(ofSize: 10, weight: .semibold)
@@ -82,8 +76,6 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         
         contentView.addSubviews([colorBar])
 
-
-        
         colorBar.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
@@ -156,16 +148,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     }
     
     private func deterColor(state: Int) {
-        var color: UIColor = .CjBlue
-        
-        switch state {
-        case 0:
-            color = .CjBlue
-        case 1:
-            color = .CjRed
-        default: return
-        }
-        curColor = color
+        curColor = state == 0 ? .CjBlue : .CjRed
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -200,7 +183,11 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         labelAddress.text = task.terminalAddr
         labeldelType.text = task.deliveryType
         labelState.text = state
+        
         deterColor(state: task.workState)
+        viewState.backgroundColor = curColor
+        colorBar.backgroundColor = curColor
+        labelState.text = task.workState == 0 ? "모집 확정" : "모집 취소"
         
         contentView.backgroundColor = .CjWhite
         contentView.layer.cornerRadius = 10

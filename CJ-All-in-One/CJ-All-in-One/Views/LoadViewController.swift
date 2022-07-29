@@ -10,18 +10,8 @@ import SnapKit
 
 class LoadViewController: UIViewController {
     
-    let lists = [
-        Items(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
-//        Item(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
-//        Item(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
-//        Item(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
-//        Item(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
-//        Item(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
-//        Item(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
-//        Item(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
-    ]
-    
     let nums = [1,1,2,2,3,3,1,2]
+    let lists:[Item] = []
     
     lazy var viewVehicleImageContainer = UIImageView(image: UIImage(named: "imageVehicle.png")).then {
 //        $0.backgroundColor = .CjBlue

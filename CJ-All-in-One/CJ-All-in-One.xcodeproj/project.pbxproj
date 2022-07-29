@@ -61,6 +61,9 @@
 		78D942B92890174700C8B224 /* UiViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B82890174700C8B224 /* UiViews.swift */; };
 		78D942BB28901B6F00C8B224 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942BA28901B6F00C8B224 /* ResultViewController.swift */; };
 		78D942BD2890497800C8B224 /* ResultItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942BC2890497800C8B224 /* ResultItemsTableViewCell.swift */; };
+		78FC36AF28944F39007B48BD /* UpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FC36AE28944F39007B48BD /* UpdateProtocol.swift */; };
+		78FC36B128944F41007B48BD /* UpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FC36B028944F41007B48BD /* UpdateResponse.swift */; };
+		78FC36B328944F4A007B48BD /* UpdateDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FC36B228944F4A007B48BD /* UpdateDataManager.swift */; };
 		FC497AD73DCC33F91F5BC6D1 /* Pods_CJ_All_in_One.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +125,9 @@
 		78D942B82890174700C8B224 /* UiViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViews.swift; sourceTree = "<group>"; };
 		78D942BA28901B6F00C8B224 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		78D942BC2890497800C8B224 /* ResultItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultItemsTableViewCell.swift; sourceTree = "<group>"; };
+		78FC36AE28944F39007B48BD /* UpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProtocol.swift; sourceTree = "<group>"; };
+		78FC36B028944F41007B48BD /* UpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateResponse.swift; sourceTree = "<group>"; };
+		78FC36B228944F4A007B48BD /* UpdateDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDataManager.swift; sourceTree = "<group>"; };
 		87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CJ_All_in_One.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3663B58E2E919FA9495BE9 /* Pods-CJ-All-in-One.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.debug.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -240,6 +246,7 @@
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				78FC36AD28944F16007B48BD /* Update */,
 				7826885C2893E81500B16A55 /* Task */,
 				78ABB2B2289162B10072C41E /* Apply */,
 				78ABB2AB289162450072C41E /* ItemList */,
@@ -353,6 +360,16 @@
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		78FC36AD28944F16007B48BD /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				78FC36AE28944F39007B48BD /* UpdateProtocol.swift */,
+				78FC36B028944F41007B48BD /* UpdateResponse.swift */,
+				78FC36B228944F4A007B48BD /* UpdateDataManager.swift */,
+			);
+			path = Update;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,6 +491,7 @@
 				78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */,
 				78BA59762892C9B40000A5AD /* MapDelegate.swift in Sources */,
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
+				78FC36AF28944F39007B48BD /* UpdateProtocol.swift in Sources */,
 				1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */,
 				7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */,
 				78ABB2AD289162640072C41E /* ItemListProtocol.swift in Sources */,
@@ -488,6 +506,7 @@
 				3207A9452892BA7800F0E740 /* FindPathBottomTableViewCell.swift in Sources */,
 				32A2C56B288FE09E0000CCB6 /* UIView.swift in Sources */,
 				32A2C573288FE16E0000CCB6 /* Device.swift in Sources */,
+				78FC36B328944F4A007B48BD /* UpdateDataManager.swift in Sources */,
 				32A2C567288FE0930000CCB6 /* UIViewController.swift in Sources */,
 				78D942BB28901B6F00C8B224 /* ResultViewController.swift in Sources */,
 				78ABB2AF2891626B0072C41E /* ItemListResponse.swift in Sources */,
@@ -499,6 +518,7 @@
 				78ABB2B1289162750072C41E /* ItemListDataManager.swift in Sources */,
 				78B4940828928F090073CB0B /* CityModel.swift in Sources */,
 				78D942B92890174700C8B224 /* UiViews.swift in Sources */,
+				78FC36B128944F41007B48BD /* UpdateResponse.swift in Sources */,
 				78B494012891708D0073CB0B /* AssignViewController.swift in Sources */,
 				1D546E76288D1DDD00160E82 /* SceneDelegate.swift in Sources */,
 				32A2C569288FE0990000CCB6 /* UIColor.swift in Sources */,

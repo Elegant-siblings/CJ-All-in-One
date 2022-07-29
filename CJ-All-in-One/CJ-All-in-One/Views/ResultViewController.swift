@@ -9,15 +9,6 @@ import UIKit
 import Then
 import NMapsMap
 
-struct Items {
-    let id: Int
-    let category: String
-    let From: String
-    let To: String
-}
-
-
-
 class ResultViewController: UIViewController {
     
     // -MARK: Constants
@@ -30,16 +21,6 @@ class ResultViewController: UIViewController {
     let cnt = 0
     let gae = " 개"
     let locations = ["서울", "경기", "인천"]
-    let lists = [
-        Items(id: 1, category: "식품", From: "부산시 금정구", To: "부산시 북구 화명신도시로"),
-        Items(id: 2, category: "식품", From: "부산시 금정구", To: "부산시 금정구 장전대로"),
-        Items(id: 3, category: "식품", From: "부산시 금정구", To: "부산시 사상구 낙동대로"),
-        Items(id: 4, category: "식품", From: "부산시 금정구", To: "부산시 부산진구 금융사거리로"),
-        Items(id: 5, category: "식품", From: "부산시 금정구", To: "부산시 해운대구 신세계백화점로"),
-        Items(id: 6, category: "식품", From: "부산시 금정구", To: "부산시 동래구 자고싶다로"),
-        Items(id: 7, category: "식품", From: "부산시 금정구", To: "부산시 북구 강강술래"),
-        Items(id: 8, category: "잡화", From: "부산시 금정구", To: "부산시 기장군 소고기사묵겠지로")
-    ]
     
     // -MARK: UIViews
     lazy var navBar = CustomNavigationBar()
@@ -51,6 +32,7 @@ class ResultViewController: UIViewController {
     lazy var viewDivideLine = UIView().then {
         $0.backgroundColor = .borderColor
     }
+    lazy var viewButtonsContainer = UIView()
     
     // -MARK: UILabels
     lazy var labelTermInfoTitle = UILabel().then {
@@ -80,6 +62,22 @@ class ResultViewController: UIViewController {
         }
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
+    lazy var labelCommentTitle = UILabel().then {
+        $0.text = "취소 사유"
+        $0.textColor = .CjRed
+        $0.font = .systemFont(ofSize: 30, weight: .bold)
+        $0.textAlignment = .center
+    }
+    lazy var labelComment = UILabel().then {
+        $0.text = task.comment
+//        $0.text = "2022.07.29. 오후 4:06:32에 모집 취소하였음."
+        $0.textColor = .primaryFontColor
+        $0.font = .systemFont(ofSize: 20, weight: .bold)
+//        $0.backgroundColor = .red
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
+        $0.lineBreakMode = .byCharWrapping
+    }
     
     // -MARK: Others
     lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
@@ -89,6 +87,11 @@ class ResultViewController: UIViewController {
     lazy var buttonArrived = MainButton(type: .main).then {
         $0.setTitle("터미널 도착", for: .normal)
         $0.addTarget(self, action: #selector(touchUpArrivedButton), for: .touchUpInside)
+    }
+    lazy var buttonCancel = MainButton(type: .main).then {
+        $0.setTitle("취소", for: .normal)
+        $0.backgroundColor = .CjRed
+        $0.addTarget(self, action: #selector(touchUpCancelButton), for: .touchUpInside)
     }
     
     // -MARK: viewDidLoad
@@ -102,7 +105,7 @@ class ResultViewController: UIViewController {
             navBar,
             labelTermInfoTitle,
             viewTerminalInfo,
-            buttonArrived
+            viewButtonsContainer
         ])
         
         viewTerminalInfo.addSubviews([
@@ -111,44 +114,12 @@ class ResultViewController: UIViewController {
             labelTime,
             viewDivideLine
         ])
+        viewButtonsContainer.addSubviews([
+            buttonArrived,
+            buttonCancel
+        ])
         
-        if task.workState == 0 {
-            itemListDataManager.getItemList(self, pk: task.workPK)
-            view.addSubviews([
-                labelTotal,
-                labelTos,
-                tableItem,
-            ])
-            labelTotal.snp.makeConstraints { make in
-                make.top.equalTo(viewDivideLine).offset(11)
-                make.trailing.equalTo(labelTermAddress)
-            }
-            labelTos.snp.makeConstraints { make in
-                make.top.equalTo(labelTotal.snp.bottom).offset(8)
-                make.trailing.equalTo(labelTotal)
-            }
-            tableItem.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.width.equalToSuperview().offset(-50)
-                make.height.equalTo(210)
-                make.top.equalTo(labelTos.snp.bottom).offset(15)
-            }
-        }
-        else {
-            let labelComment = UILabel().then {
-                $0.text = task.comment
-                $0.textColor = .primaryFontColor
-                $0.font = .systemFont(ofSize: 20, weight: .bold)
-                $0.numberOfLines = 0
-            }
-            
-            view.addSubviews([labelComment])
-            labelComment.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(viewDivideLine).offset(39)
-                make.width.equalTo(viewTerminalInfo).offset(-10)
-            }
-        }
+        
         
         switch task.deliveryTime {
         case "주간":
@@ -194,21 +165,69 @@ class ResultViewController: UIViewController {
             make.width.equalToSuperview().offset(-60)
         }
         
-        
-        
-        buttonArrived.snp.makeConstraints{ make in
+        viewButtonsContainer.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
             make.width.equalTo(mainButtonWidth)
             make.height.equalTo(mainButtonHeight)
             make.top.equalTo(self.view.snp.top).offset(mainButtonTopOffset)
         }
-
+        buttonArrived.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.width.equalTo(mainButtonWidth-80)
+        }
+        buttonCancel.snp.makeConstraints { make in
+            make.top.bottom.trailing.equalToSuperview()
+            make.leading.equalTo(buttonArrived.snp.trailing).offset(5)
+        }
+        
+        if task.workState == 0 {
+            itemListDataManager.getItemList(self, pk: task.workPK)
+            view.addSubviews([
+                labelTotal,
+                labelTos,
+                tableItem,
+            ])
+            labelTotal.snp.makeConstraints { make in
+                make.top.equalTo(viewDivideLine).offset(11)
+                make.trailing.equalTo(labelTermAddress)
+            }
+            labelTos.snp.makeConstraints { make in
+                make.top.equalTo(labelTotal.snp.bottom).offset(8)
+                make.trailing.equalTo(labelTotal)
+            }
+            tableItem.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().offset(-50)
+                make.height.equalTo(210)
+                make.top.equalTo(labelTos.snp.bottom).offset(15)
+            }
+        }
+        else {
+            view.addSubviews([labelCommentTitle,labelComment])
+            labelCommentTitle.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(viewDivideLine).offset(30)
+            }
+            labelComment.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(labelCommentTitle.snp.bottom).offset(10)
+                make.width.equalTo(viewTermImage).offset(-70)
+            }
+            buttonArrived.isEnabled = false
+            buttonCancel.isEnabled = false
+        }
     }
     // -MARK: selectors
     @objc func touchUpArrivedButton() {
         print("터미널 도착")
         let vc = LoadViewController()
         navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func touchUpCancelButton() {
+        print("취소")
+        let updateDataManager = UpdateDataManager()
+        updateDataManager.updateWorkState(workPK: task.workPK, workState: 1)
     }
     
     func successGetItemList(result: [Item]) {
@@ -227,7 +246,6 @@ class ResultViewController: UIViewController {
         _ = cityText.popLast()
         labelTos.text = cityText
         tableItem.reloadData()
-        print(result)
     }
 }
 
