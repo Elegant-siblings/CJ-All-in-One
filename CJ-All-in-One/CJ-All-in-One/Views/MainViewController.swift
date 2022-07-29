@@ -62,6 +62,7 @@ class MainViewController: UIViewController {
         $0.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
         $0.tintColor = UIColor(rgb: 0x8B8B8B)
     }
+
     
     // -MARK: Others
     lazy var tableAssignedTask = UITableView().then{
@@ -84,6 +85,38 @@ class MainViewController: UIViewController {
         $0.refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
     }
     
+    let vcAssigned = UIViewController().then {
+        $0.view.backgroundColor = .CjWhite
+    }
+    let vcComplete = UIViewController().then {
+        $0.view.backgroundColor = .CjBlue
+    }
+    
+    var dataViewControllers: [UIViewController] {
+        [vcAssigned,vcComplete]
+    }
+    
+    var currentPage: Int = 0 {
+        didSet {
+          // from segmentedControl -> pageViewController 업데이트
+//          print(oldValue, self.currentPage)
+          let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
+          self.pageViewController.setViewControllers(
+            [dataViewControllers[self.currentPage]],
+            direction: direction,
+            animated: true,
+            completion: nil
+          )
+        }
+      }
+    
+    lazy var pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil).then {
+        $0.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)
+        $0.dataSource = self
+        $0.view.backgroundColor = .CjWhite
+        $0.delegate = self
+    }
+    
     lazy var SCDetailType = UISegmentedControl(items: detailTypes).then{
         $0.backgroundColor = .CjWhite
         $0.layer.cornerRadius = 3
@@ -103,16 +136,7 @@ class MainViewController: UIViewController {
     // -MARK: selectors
     @objc
     func detailTypeChanged(type: UISegmentedControl) {
-        switch type.selectedSegmentIndex {
-        case 0:
-            tableAssignedTask.isHidden = false
-            tableCompleteTask.isHidden = true
-        case 1:
-            tableAssignedTask.isHidden = true
-            tableCompleteTask.isHidden = false
-        default:
-            break
-        }
+        self.currentPage = type.selectedSegmentIndex
     }
     
     @objc func touchUpApplyButton() {
@@ -143,13 +167,14 @@ class MainViewController: UIViewController {
         ])
         
         self.uiTableContainer.addSubviews([
-            tableAssignedTask,
-            tableCompleteTask
+            pageViewController.view,
         ])
+        vcComplete.view.addSubviews([tableCompleteTask])
+        vcAssigned.view.addSubviews([tableAssignedTask])
         setConstraints()
-        tableCompleteTask.isHidden = true
+        detailTypeChanged(type: self.SCDetailType)
     }
-
+    
     // -MARK: makeConstraints
     private func setConstraints() {
         navBar.snp.makeConstraints { make in
@@ -180,6 +205,10 @@ class MainViewController: UIViewController {
             make.top.equalToSuperview().offset(141)
             make.width.equalToSuperview()
             make.bottom.equalTo(uiApplyButtonContainer.snp.top)
+        }
+        
+        pageViewController.view.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
         
         uiApplyButtonContainer.snp.makeConstraints { make in
@@ -252,5 +281,23 @@ extension MainViewController {
         }
         tableAssignedTask.reloadData()
         tableCompleteTask.reloadData()
+    }
+}
+
+extension MainViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = self.dataViewControllers.firstIndex(of: viewController), index - 1 >= 0 else { return nil }
+        return self.dataViewControllers[index - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = self.dataViewControllers.firstIndex(of: viewController), index + 1 < self.dataViewControllers.count else { return nil }
+        return self.dataViewControllers[index + 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard let viewController = pageViewController.viewControllers?[0], let index = self.dataViewControllers.firstIndex(of: viewController) else { return }
+        self.currentPage = index
+        self.SCDetailType.selectedSegmentIndex = index
     }
 }
