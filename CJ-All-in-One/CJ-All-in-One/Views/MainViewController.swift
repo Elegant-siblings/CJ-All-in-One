@@ -64,9 +64,16 @@ class MainViewController: UIViewController {
     }
     
     // -MARK: Others
-    lazy var tableHistory = UITableView().then{
+    lazy var tableAssignedTask = UITableView().then{
         $0.dataSource = self
-        $0.delegate = self
+        $0.separatorStyle = .none
+        $0.register(DeliveryDetailTableViewCell.self, forCellReuseIdentifier: DeliveryDetailTableViewCell.identifier)
+        $0.rowHeight = 100
+        $0.backgroundColor = .CjWhite
+    }
+    
+    lazy var tableCompleteTask = UITableView().then{
+        $0.dataSource = self
         $0.separatorStyle = .none
         $0.register(DeliveryDetailTableViewCell.self, forCellReuseIdentifier: DeliveryDetailTableViewCell.identifier)
         $0.rowHeight = 100
@@ -92,7 +99,16 @@ class MainViewController: UIViewController {
     // -MARK: selectors
     @objc
     func detailTypeChanged(type: UISegmentedControl) {
-        print(detailTypes[type.selectedSegmentIndex])
+        switch type.selectedSegmentIndex {
+        case 0:
+            tableAssignedTask.isHidden = false
+            tableCompleteTask.isHidden = true
+        case 1:
+            tableAssignedTask.isHidden = true
+            tableCompleteTask.isHidden = false
+        default:
+            break
+        }
     }
     
     @objc func touchUpApplyButton() {
@@ -104,6 +120,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
+        
         taskDataManager.getTasks(self, id: ManId)
         
         self.view.addSubviews([
@@ -116,8 +133,12 @@ class MainViewController: UIViewController {
             buttonApply
         ])
         
-        self.uiTableContainer.addSubview(tableHistory)
+        self.uiTableContainer.addSubviews([
+            tableAssignedTask,
+            tableCompleteTask
+        ])
         setConstraints()
+        tableCompleteTask.isHidden = true
     }
 
     // -MARK: makeConstraints
@@ -164,7 +185,10 @@ class MainViewController: UIViewController {
             make.width.equalTo(mainButtonWidth)
             make.height.equalTo(mainButtonHeight)
         }
-        tableHistory.snp.makeConstraints { make in
+        tableAssignedTask.snp.makeConstraints { make in
+            make.width.height.equalToSuperview()
+        }
+        tableCompleteTask.snp.makeConstraints { make in
             make.width.height.equalToSuperview()
         }
     }
@@ -175,7 +199,9 @@ class MainViewController: UIViewController {
 // -MARK: Extensions
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskList.count
+        return tableView==tableAssignedTask
+                ? taskList.count
+                : completedTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -184,7 +210,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             $0.backgroundColor = .clear
         }
         cell.detailDelegate = self
-        cell.task = taskList[indexPath.row]
+        cell.task = tableView==tableAssignedTask
+                                ? taskList[indexPath.row]
+                                : completedTasks[indexPath.row]
         cell.selectedBackgroundView = background
         cell.backgroundColor = .CjWhite
         return cell
@@ -209,6 +237,6 @@ extension MainViewController {
                 taskList.append(task)
             }
         }
-        tableHistory.reloadData()
+        tableAssignedTask.reloadData()
     }
 }

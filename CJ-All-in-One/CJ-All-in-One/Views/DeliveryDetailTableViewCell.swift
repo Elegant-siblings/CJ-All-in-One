@@ -25,12 +25,13 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     let address = "부산 금정구 장전동"
     let delType = "일반 배송"
     let state = "모집확정"
-    var curColor: UIColor = .CjBlue
+    let stateText = ["모집 확정", "모집 취소", "배송 완료"]
+    let stateColor = [UIColor.CjBlue,UIColor.CjRed,UIColor.CjGreen]
     var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
     
     // -MARK: UIView
     lazy var colorBar = UIView().then{
-        $0.backgroundColor = curColor
+        $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 6
         $0.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
     }
@@ -39,7 +40,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     }
     lazy var viewheader = UIView()
     lazy var viewState = UIView().then {
-        $0.backgroundColor = curColor
+        $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 21
     }
     
@@ -147,10 +148,6 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         }
     }
     
-    private func deterColor(state: Int) {
-        curColor = state == 0 ? .CjBlue : .CjRed
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -164,7 +161,6 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -184,10 +180,9 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         labeldelType.text = task.deliveryType
         labelState.text = state
         
-        deterColor(state: task.workState)
-        viewState.backgroundColor = curColor
-        colorBar.backgroundColor = curColor
-        labelState.text = task.workState == 0 ? "모집 확정" : "모집 취소"
+        viewState.backgroundColor = stateColor[task.workState]
+        colorBar.backgroundColor = stateColor[task.workState]
+        labelState.text = stateText[task.workState]
         
         contentView.backgroundColor = .CjWhite
         contentView.layer.cornerRadius = 10
