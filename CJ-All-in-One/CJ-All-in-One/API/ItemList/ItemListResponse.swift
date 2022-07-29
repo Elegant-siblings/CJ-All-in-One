@@ -8,7 +8,6 @@
 import Foundation
 
 struct ItemListModel: Codable {
-    let success: Bool
     let rows: [Item]
 }
 

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol TaskDataManagerDelegate {
-    func getTasks(_ vc: MainViewController)
+    func getTasks(_ vc: MainViewController, id: String)
 }

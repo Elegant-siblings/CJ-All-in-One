@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol DetailDelegate {
-    func getTaskDetail()
+    func getTaskDetail(whatTask: Task)
 }
 
 class DeliveryDetailTableViewCell: UITableViewCell {
@@ -24,7 +24,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     let address = "부산 금정구 장전동"
     let delType = "일반 배송"
     let state = "모집확정"
-    var task: Task?
+    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "")
         
     var curColor: UIColor = .CjBlue
     
@@ -53,16 +53,16 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     }
     
     lazy var labelInfo = UILabel().then{
-        $0.font = .systemFont(ofSize: 11, weight: .medium)
+        $0.font = .systemFont(ofSize: 12, weight: .medium)
     }
     
     lazy var labelAddress = UILabel().then{
-        $0.font = .systemFont(ofSize: 11, weight: .medium)
+        $0.font = .systemFont(ofSize: 12, weight: .medium)
         $0.textColor = UIColor(rgb: 0xB4B4B4)
     }
     
     lazy var labeldelType = UILabel().then {
-        $0.font = .systemFont(ofSize: 11, weight: .medium)
+        $0.font = .systemFont(ofSize: 12, weight: .medium)
 //        label.textColor = .darkGray
     }
     lazy var viewState = UIView().then {
@@ -83,13 +83,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         deterColor(state: self.state)
         contentView.addSubviews([colorBar])
 
-        labelYear.text = year
-        labelDate.text = date
-        labelDay.text = day
-        labelInfo.text = delInfo
-        labelAddress.text = address
-        labeldelType.text = task?.deliveryType
-        labelState.text = state
+
         
         colorBar.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -195,6 +189,22 @@ class DeliveryDetailTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        let convertedDate = dateFormatter.date(from: task.deliveryDate)
+        dateFormatter.dateFormat = "yyyy"
+        labelYear.text = dateFormatter.string(from: convertedDate!)
+        dateFormatter.dateFormat = "M.d"
+        labelDate.text = dateFormatter.string(from: convertedDate!)
+        dateFormatter.dateFormat = "EEEE"
+        labelDay.text = dateFormatter.string(from: convertedDate!)
+        labelInfo.text = task.deliveryTime + " / " + task.deliveryCar
+        labelAddress.text = task.terminalAddr
+        labeldelType.text = task.deliveryType
+        labelState.text = state
 
         contentView.backgroundColor = .CjWhite
         contentView.layer.cornerRadius = 10
@@ -205,6 +215,6 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     }
     
     @objc func touchUpContentView() {
-        detailDelegate?.getTaskDetail()
+        detailDelegate?.getTaskDetail(whatTask: self.task)
     }
 }

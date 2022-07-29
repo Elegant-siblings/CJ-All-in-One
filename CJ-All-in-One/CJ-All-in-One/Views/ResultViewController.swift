@@ -21,10 +21,13 @@ struct Items {
 class ResultViewController: UIViewController {
     
     // -MARK: Constants
+    let itemListDataManager = ItemListDataManager()
+    var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "")
+    var itemList: [Item] = []
     let terminalAddress = "서울특별시 서초구 양재동 225-5"
     let time = "오전 7:00"
     let fontsizeTerminalLabel = CGFloat(15)
-    let cnt = 20
+    let cnt = 0
     let gae = " 개"
     let locations = ["서울", "경기", "인천"]
     let lists = [
@@ -56,7 +59,7 @@ class ResultViewController: UIViewController {
         $0.textColor = .CjWhite
     }
     lazy var labelTermAddress = UILabel().then {
-        $0.text = terminalAddress
+        $0.text = task.terminalAddr
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
     lazy var labelTime = UILabel().then {
@@ -93,8 +96,9 @@ class ResultViewController: UIViewController {
     super.viewDidLoad()
         
         view.backgroundColor = .CjWhite
-        
         self.navigationController?.navigationBar.tintColor = .CjWhite
+        
+        itemListDataManager.getItemList(self, pk: task.workPK)
         
         view.addSubviews([
             navBar,
@@ -112,6 +116,15 @@ class ResultViewController: UIViewController {
             labelTime,
             viewDivideLine
         ])
+        
+        switch task.deliveryTime {
+        case "주간":
+            labelTime.text = "오전 9:00"
+        case "새벽":
+            labelTime.text = "오전 1:00"
+        default:
+            labelTime.text = ""
+        }
         
         // -MARK: Make Constraints
         navBar.snp.makeConstraints { make in
@@ -177,22 +190,39 @@ class ResultViewController: UIViewController {
         let vc = LoadViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func successGetItemList(result: [Item]) {
+        itemList = result
+        labelTotal.text = "총 \(result.count)개"
+        var cities: [String] = []
+        _ = result.map { item in
+            cities.append(item.receiverAddr.components(separatedBy: " ")[0])
+        }
+        let set = Set(cities)
+        let city = Array(set)
+        var cityText = ""
+        for i in city {
+            cityText += i+","
+        }
+        _ = cityText.popLast()
+        labelTos.text = cityText
+        tableItem.reloadData()
+        print(result)
+    }
 }
 
 extension ResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return itemList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ResultItemsTableViewCell.identifier, for: indexPath) as! ResultItemsTableViewCell
         cell.backgroundColor = .CjWhite
         cell.labelNum.text = "\(indexPath.row+1)"
-        cell.labelCategory.text = lists[indexPath.row].category
-        cell.labelReceivAddr.text = lists[indexPath.row].To
+        cell.labelCategory.text = itemList[indexPath.row].itemCategory
+        cell.labelReceivAddr.text = itemList[indexPath.row].receiverAddr
         cell.selectionStyle = .none
         return cell
     }
-    
-    
 }

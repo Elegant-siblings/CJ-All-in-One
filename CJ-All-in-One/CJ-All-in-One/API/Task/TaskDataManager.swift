@@ -9,10 +9,11 @@ import Foundation
 import Alamofire
 
 class TaskDataManager: TaskDataManagerDelegate {
-    func getTasks(_ vc: MainViewController) {
+    func getTasks(_ vc: MainViewController, id: String) {
         let path = "/works/check?"
         
-        let urlString = "http://34.125.0.122:3000/works/check?deliveryManID=AABBCCDDEEFFGGHH"
+        let urlString = base_url+path+"deliveryManID="+id
+//        let urlString = "http://34.125.0.122:3000/works/check?deliveryManID=AABBCCDDEEFFGGHH"
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
             _ = AF.request(url, method: .get)

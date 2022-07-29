@@ -102,7 +102,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
-        taskDataManager.getTasks(self)
+        taskDataManager.getTasks(self, id: ManId)
         
         self.view.addSubviews([
             navBar,
@@ -125,7 +125,7 @@ class MainViewController: UIViewController {
         }
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
-            make.top.equalTo(100)
+            make.top.equalTo(navBar.snp.bottom).offset(10)
             make.height.equalTo(23)
             make.width.equalTo(130)
         }
@@ -138,7 +138,7 @@ class MainViewController: UIViewController {
         }
         
         distributeBar.snp.makeConstraints { make in
-            make.top.equalTo(132)
+            make.top.equalTo(SCDetailType.snp.bottom).offset(8)
             make.leading.equalTo(21)
             make.height.equalTo(1)
             make.width.equalTo(345)
@@ -182,6 +182,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             $0.backgroundColor = .clear
         }
         cell.detailDelegate = self
+        cell.task = taskList[indexPath.row]
         cell.selectedBackgroundView = background
         cell.backgroundColor = .CjWhite
         return cell
@@ -189,8 +190,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MainViewController: DetailDelegate {
-    func getTaskDetail() {
+    func getTaskDetail(whatTask: Task) {
         let vc = ResultViewController()
+        vc.task = whatTask
         navigationController?.pushViewController(vc, animated: true)
     }
 }
