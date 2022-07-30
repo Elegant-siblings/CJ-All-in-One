@@ -268,7 +268,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 // -MARK: CellDelegate Extension
 extension MainViewController: DetailDelegate {
     func getTaskDetail(whatTask: Task) {
-        let vc = ResultViewController()
+        let vc = WorkViewController()
         vc.task = whatTask
         navigationController?.pushViewController(vc, animated: true)
     }

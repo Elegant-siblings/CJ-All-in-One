@@ -1,31 +1,29 @@
 //
-//  LoadItemTableViewCell.swift
+//  ScanItemTableViewCell.swift
 //  CJ-All-in-One
 //
-//  Created by 안현주 on 2022/07/27.
+//  Created by 안현주 on 2022/07/30.
 //
 
 import UIKit
 
-class LoadItemTableViewCell: UITableViewCell {
+class ScanItemTableViewCell: UITableViewCell {
     
-    static let identifier = "LoadItemTableViewCell"
+    static let identifier = "ScanItemTableViewCell"
     
     lazy var labelNum = MainLabel(type: .table).then {
         $0.textAlignment = .center
     }
     lazy var labelCategory = MainLabel(type: .table)
     lazy var labelReceivAddr = MainLabel(type: .table).then {
-        $0.textAlignment = .center 
+        $0.textAlignment = .center
     }
-    lazy var labelSeat = MainLabel(type: .table).then {
-        $0.font = .systemFont(ofSize: 12, weight: .bold)
-    }
-    
+    lazy var imageState = UIImageView()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubviews([labelNum,labelCategory,labelReceivAddr,labelSeat])
+        contentView.addSubviews([labelNum,labelCategory,labelReceivAddr,imageState])
         
         labelNum.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -34,14 +32,14 @@ class LoadItemTableViewCell: UITableViewCell {
         }
         labelCategory.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(70)
+            make.leading.equalToSuperview().offset(80)
         }
         labelReceivAddr.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(130)
             make.width.equalTo(160)
         }
-        labelSeat.snp.makeConstraints { make in
+        imageState.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(-20)
         }
@@ -61,5 +59,4 @@ class LoadItemTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

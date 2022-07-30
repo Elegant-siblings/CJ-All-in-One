@@ -9,7 +9,7 @@ import UIKit
 import Then
 import NMapsMap
 
-class ResultViewController: UIViewController {
+class WorkViewController: UIViewController {
     
     // -MARK: Constants
     let itemListDataManager = ItemListDataManager()
@@ -77,7 +77,7 @@ class ResultViewController: UIViewController {
     // -MARK: Others
     lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
         $0.dataSource = self
-        $0.register(ResultItemsTableViewCell.self, forCellReuseIdentifier: ResultItemsTableViewCell.identifier)
+        $0.register(WorkItemsTableViewCell.self, forCellReuseIdentifier: WorkItemsTableViewCell.identifier)
     }
     lazy var buttonArrived = MainButton(type: .main).then {
         $0.setTitle("터미널 도착", for: .normal)
@@ -240,13 +240,21 @@ class ResultViewController: UIViewController {
     // -MARK: selectors
     @objc func touchUpArrivedButton() {
         print("터미널 도착")
-        let vc = LoadViewController()
+        let vc = BarcodeViewController()
+        vc.lists = itemList
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func touchUpCancelButton() {
-        print("취소")
-        let updateDataManager = UpdateDataManager()
-        updateDataManager.updateWorkState(workPK: task.workPK, workState: 1)
+        let alert = UIAlertController(title: "모집 취소", message: "업무를 취소하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
+            let updateDataManager = UpdateDataManager()
+            updateDataManager.updateWorkState(workPK: self.task.workPK, workState: 1)
+            navigationController?.popToRootViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func successGetItemList(result: [Item]) {
@@ -268,13 +276,13 @@ class ResultViewController: UIViewController {
     }
 }
 
-extension ResultViewController: UITableViewDataSource {
+extension WorkViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ResultItemsTableViewCell.identifier, for: indexPath) as! ResultItemsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: WorkItemsTableViewCell.identifier, for: indexPath) as! WorkItemsTableViewCell
         cell.backgroundColor = .CjWhite
         cell.labelNum.text = "\(indexPath.row+1)"
         cell.labelCategory.text = itemList[indexPath.row].itemCategory
