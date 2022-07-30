@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ResultItemsTableViewCell: UITableViewCell {
+class WorkItemsTableViewCell: UITableViewCell {
     
-    static let identifier = "ResultItemsTableViewCell"
+    static let identifier = "WorkItemsTableViewCell"
     
     lazy var viewNum = UIView()
     lazy var viewCategory = UIView()
@@ -21,10 +21,7 @@ class ResultItemsTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-//        viewNum.backgroundColor = .red
-//        viewCategory.backgroundColor = .blue
-//        viewReceivAddr.backgroundColor = .CjYellow
+
         contentView.addSubviews([viewNum,viewCategory,viewReceivAddr])
         viewNum.addSubviews([labelNum])
         viewCategory.addSubviews([labelCategory])

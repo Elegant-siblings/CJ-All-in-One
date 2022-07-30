@@ -19,3 +19,7 @@ struct Row: Codable, Equatable {
     let itemCategory: String
     let receiverAddr: String
 }
+
+struct ApplySuccess: Codable {
+    let success: Bool
+}

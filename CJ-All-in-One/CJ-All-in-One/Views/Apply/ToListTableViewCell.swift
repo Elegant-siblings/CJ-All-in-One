@@ -9,16 +9,26 @@ import UIKit
 
 let removeButtonRadius = CGFloat(10)
 
+protocol ToListDelegate {
+    func removeTo(index: Int)
+}
+
 class ToListTableViewCell: UITableViewCell {
     
     static let identifier = "ToListTableViewCell"
-    
-    var fontSize = CGFloat(13)
-    var fontColor = UIColor.tableContentTextColor
+    let buttonRadius = CGFloat(23)
+    var listDelegate : ToListDelegate?
     var rowIndex = 0
     
-    lazy var labelNum = UILabel()
-    lazy var labelTo = UILabel()
+    lazy var labelNum = MainLabel(type: .table)
+    lazy var labelTo = MainLabel(type: .table)
+    lazy var buttonRemove = UIButton().then {
+        $0.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+        $0.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
+        $0.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
+        $0.tintColor = .CjRed
+        $0.addTarget(self, action: #selector(touchUpRemoveButton), for: .touchUpInside)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,7 +38,7 @@ class ToListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubviews([labelNum,labelTo])
+        contentView.addSubviews([labelNum,labelTo,buttonRemove])
         
         labelNum.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -37,6 +47,15 @@ class ToListTableViewCell: UITableViewCell {
         labelTo.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        buttonRemove.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(buttonRadius)
+            make.trailing.equalToSuperview().offset(-10)
+        }
+    }
+    
+    @objc func touchUpRemoveButton() {
+            listDelegate?.removeTo(index: self.rowIndex)
     }
     
     required init?(coder: NSCoder) {
@@ -48,13 +67,5 @@ class ToListTableViewCell: UITableViewCell {
         
 
         // Configure the view for the selected state
-    }
-    
-    override func layoutSubviews() {
-        
-        _ = [labelNum,labelTo].map {
-            $0.font = .systemFont(ofSize: fontSize, weight: .bold)
-            $0.textColor = fontColor
-        }
     }
 }
