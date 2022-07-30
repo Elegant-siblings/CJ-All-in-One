@@ -163,10 +163,15 @@ class LoadViewController: UIViewController {
         let alert = UIAlertController(title: "배송을 시작하시겠습니까?", message: "", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
+<<<<<<< HEAD
             print("배송시작!")
             let vc = FindPathViewController()
             vc.terminalAddr = self.terminalAddr
             vc.deliveryPK = self.lists
+=======
+            print("배송시작!", self.terminalAddr)
+            let vc = FindPathViewController()
+>>>>>>> 3427a59 (try to connect)
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -298,7 +303,7 @@ class LoadViewController: UIViewController {
     }
     
     private func getSeatNum(pk: Int) -> Int{
-        return pk*13%4
+        return pk*pk%4
     }
 }
 
