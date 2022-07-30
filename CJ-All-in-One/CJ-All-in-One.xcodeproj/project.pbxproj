@@ -227,13 +227,21 @@
 			path = Package;
 			sourceTree = "<group>";
 		};
+		32796B2D28952AE5001DCDB6 /* NaverMap */ = {
+			isa = PBXGroup;
+			children = (
+				32A2C576288FE1B60000CCB6 /* MapResponse.swift */,
+				32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */,
+			);
+			path = NaverMap;
+			sourceTree = "<group>";
+		};
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				32796B2D28952AE5001DCDB6 /* NaverMap */,
 				78ABB2B2289162B10072C41E /* Apply */,
 				78ABB2AB289162450072C41E /* Result */,
-				32A2C576288FE1B60000CCB6 /* MapResponse.swift */,
-				32A2C578288FE1BF0000CCB6 /* MapDataManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";

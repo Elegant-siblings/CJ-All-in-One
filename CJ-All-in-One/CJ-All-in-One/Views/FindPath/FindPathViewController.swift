@@ -255,8 +255,8 @@ class FindPathViewController: UIViewController {
         self.showIndicator()
         
         //경유지 쿼리 스트링 일부 만들기
-        if totalPointsNum < 8 {
-            if totalPointsNum > 2 { //경유지가 존재할 경우
+        if totalPoints.count < 8 {
+            if totalPoints.count > 2 { //경유지가 존재할 경우
                 for i in 1..<totalPoints.count - 1 {
                     wayPointsToString += "\(totalPoints[i].lng),\(totalPoints[i].lat)|"
                 }
@@ -266,7 +266,9 @@ class FindPathViewController: UIViewController {
             }
             onGoing = false
             
-            dataManager.shortestPath(depLng: totalPoints[0].lng, depLat: totalPoints[0].lat, destLng: totalPoints[totalPoints.endIndex].lng, destLat: totalPoints[totalPoints.endIndex].lat, wayPoints: wayPointsToString ?? nil, option: "trafast")
+            print(totalPoints.endIndex)
+            
+            dataManager.shortestPath(depLng: totalPoints[0].lng, depLat: totalPoints[0].lat, destLng: totalPoints[totalPoints.endIndex - 1].lng, destLat: totalPoints[totalPoints.endIndex - 1].lat, wayPoints: wayPointsToString ?? nil, option: "trafast")
             
             
             
@@ -398,7 +400,7 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         
         //출발지부터 목적지까지 전부 bound array에 넣기
         for i in 1..<totalPoints.count {
-            boundsArray.append(NMGLatLngBounds(southWest: wayPointsForBounds[i-1], northEast: wayPointsForBounds[i]))
+            boundsArray.append(NMGLatLngBounds(southWest: totalPoints[i-1], northEast: totalPoints[i]))
         }
         print(boundsArray)
         

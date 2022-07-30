@@ -53,7 +53,7 @@ class MapDataManager: MapDataManagerDelegate {
     }
     
     func dockerExample(delegate: FindPathViewControllerDelegate) {
-        let urlString = "http://34.125.0.122:3000/map/position?terminalAddr=서울특별시%20서초구%20양재동%20222-5&deliveryPK=1,2,3,4,5"
+        let urlString = "http://34.125.0.122:3000/map/position?terminalAddr=서울&deliveryPK=1,2,3,4,5,9,91,98"
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let url = URL(string: encoded) {
             print(url)
