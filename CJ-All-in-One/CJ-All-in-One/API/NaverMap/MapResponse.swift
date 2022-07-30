@@ -73,7 +73,7 @@ struct Start: Decodable {
 //DockerExample
 
 // MARK: - Welcome
-struct Welcome: Decodable {
+struct LocationResponse: Decodable {
     let start: [String]
     let waypoint: [[String]]
     let finish: [String]

@@ -9,12 +9,12 @@ import Foundation
 
 protocol MapDataManagerDelegate{
     func shortestPath(depLng: Double, depLat: Double, destLng: Double, destLat: Double, wayPoints: String?, option: String)
-    func dockerExample(delegate: FindPathViewControllerDelegate)
+    func getLocation()
 }
 
 protocol FindPathViewControllerDelegate: AnyObject{
     func didSuccessReturnPath(result: Trafast)
     func failedToRequest(message: String)
     
-    func didSuccessReceivedLngLat(_ result: Welcome)
+    func didSuccessReceivedLngLat(_ result: LocationResponse)
 }

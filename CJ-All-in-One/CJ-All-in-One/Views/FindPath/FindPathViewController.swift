@@ -20,47 +20,6 @@ class FindPathViewController: UIViewController {
     var time: String!
     
     
-    let pathButton = UIButton().then {
-        $0.backgroundColor = .CjBlue
-        $0.layer.cornerRadius = 30
-        $0.layer.borderColor = UIColor.CjBlue.cgColor
-        $0.setImage(UIImage(systemName: "shippingbox"), for: .normal)
-        $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
-        $0.adjustsImageWhenHighlighted = false
-        $0.tintColor = .CjWhite
-    }
-    let zoomWayButton = UIButton().then {
-        $0.backgroundColor = .CjYellow
-        $0.layer.cornerRadius = 30
-        $0.layer.borderColor = UIColor.CjYellow.cgColor
-        $0.setImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
-        $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
-        $0.adjustsImageWhenHighlighted = false
-        $0.tintColor = .CjWhite
-    }
-    
-    let distanceLabel = UILabel().then {
-        $0.textColor = .black
-        $0.text = "km"
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 13)
-    }
-    
-    let timeLabel = UILabel().then {
-        $0.textColor = .black
-        $0.text = "시간"
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 13)
-    }
-    let timeAssumptionLabel = UILabel().then {
-        $0.textColor = .black
-        $0.text = "도착 예정"
-        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 13)
-    }
-    
-    let infoView = UIView().then  {
-        $0.backgroundColor = .white
-        $0.alpha = 1
-    }
-    
     let bottomSheetVC = FindPathBottomViewController()
     
     private let locationManager = NMFLocationManager.sharedInstance()
@@ -112,6 +71,49 @@ class FindPathViewController: UIViewController {
     
     var mapImage = UIImage()
     
+    
+    let pathButton = UIButton().then {
+        $0.backgroundColor = .CjBlue
+        $0.layer.cornerRadius = 30
+        $0.layer.borderColor = UIColor.CjBlue.cgColor
+        $0.setImage(UIImage(systemName: "shippingbox"), for: .normal)
+        $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        $0.adjustsImageWhenHighlighted = false
+        $0.tintColor = .CjWhite
+    }
+    let zoomWayButton = UIButton().then {
+        $0.backgroundColor = .CjYellow
+        $0.layer.cornerRadius = 30
+        $0.layer.borderColor = UIColor.CjYellow.cgColor
+        $0.setImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
+        $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        $0.adjustsImageWhenHighlighted = false
+        $0.tintColor = .CjWhite
+    }
+    
+    let distanceLabel = UILabel().then {
+        $0.textColor = .black
+        $0.text = "km"
+        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 13)
+    }
+    
+    let timeLabel = UILabel().then {
+        $0.textColor = .black
+        $0.text = "시간"
+        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 13)
+    }
+    let timeAssumptionLabel = UILabel().then {
+        $0.textColor = .black
+        $0.text = "도착 예정"
+        $0.font = UIFont.AppleSDGothicNeo(.bold, size: 13)
+    }
+    
+    let infoView = UIView().then  {
+        $0.backgroundColor = .white
+        $0.alpha = 1
+    }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,7 +158,7 @@ class FindPathViewController: UIViewController {
 //        pathButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         setConstraints()
         
-        dataManager.dockerExample(delegate: self)
+        dataManager.getLocation()
         
         
     }
@@ -376,7 +378,7 @@ extension FindPathViewController: NMFLocationManagerDelegate {
 }
 
 extension FindPathViewController: FindPathViewControllerDelegate{
-    func didSuccessReceivedLngLat(_ result: Welcome) {
+    func didSuccessReceivedLngLat(_ result: LocationResponse) {
         
         totalPoints.append(NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0))
         for i in result.waypoint {

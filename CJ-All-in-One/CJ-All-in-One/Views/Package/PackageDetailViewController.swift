@@ -12,13 +12,12 @@ import Then
 
 class PackageDetailViewController: UIViewController {
     
-//    let containerView = UIView().then {
-//        $0.backgroundColor = .clear
-//    }
-//
+    lazy var dataManager: PackageDetailDataManager = PackageDetailDataManager(delegate: self)
+    
     // Table 정보
+    var packageItemInfo : [PackageRow]?
     let tableRowHeight = CGFloat(40)
-    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "사진"]
+    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청 사항"]
     let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "아아아아아"]
     
     
@@ -116,14 +115,9 @@ class PackageDetailViewController: UIViewController {
         
         
         setConstraints()
-//        containerView.snp.makeConstraints { make in
-//            make.leading.equalTo(self.view)
-//            make.trailing.equalTo(self.view)
-//            make.top.equalTo(self.view)
-//            make.height.equalTo(200)
-//        }
-    
-//        presentCircleView()
+        
+        dataManager.getPackageList(workPK: 1)
+
         
     }
     
@@ -290,6 +284,17 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
         return 40
     }
 }
+
+extension PackageDetailViewController: PackageDetailViewControllerDelegate {
+    func didSuccessGetPackageDetail(_ result: PackageResponse) {
+        packageItemInfo = result.rows
+    }
+    func failedToRequest(_ message: String) {
+        print(message)
+    }
+}
+
+
 
 extension PackageDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
