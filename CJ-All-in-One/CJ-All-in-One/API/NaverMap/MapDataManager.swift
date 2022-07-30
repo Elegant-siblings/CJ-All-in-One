@@ -10,7 +10,7 @@ import Alamofire
 
 class MapDataManager: MapDataManagerDelegate {
     
-    weak var delegate: FindPathViewControllerDelegate?
+    weak var delegate: FindPathViewControllerDelegate!
     
     init(delegate: FindPathViewControllerDelegate) {
         self.delegate = delegate
@@ -52,16 +52,23 @@ class MapDataManager: MapDataManagerDelegate {
         
     }
     
-    func dockerExample(delegate: FindPathViewControllerDelegate) {
-        AF.request("http://34.125.0.122:3000/test/", method: .get)
-            .validate()
-            .responseDecodable(of: Welcome.self) { response in
-                switch response.result {
-                case .success(let response):
-                    delegate.didSuccessReceivedLngLat(response)
-                case .failure(let error):
-                    delegate.failedToRequest(message: "서버와의 연동이 불안정합니다.")
+    func getLocation() {
+        let urlString = "http://34.125.0.122:3000/map/position?terminalAddr=서울&deliveryPK=1,2,3,4,5,9,91,98"
+        
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let url = URL(string: encoded) {
+            print(url)
+        
+            AF.request(url, method: .get)
+                .validate()
+                .responseDecodable(of: LocationResponse.self) { [self] response in
+                    switch response.result {
+                    case .success(let response):
+                        self.delegate.didSuccessReceivedLngLat(response)
+                    case .failure(let error):
+                        print(error)
+                        self.delegate.failedToRequest(message: "서버와의 연동이 불안정합니다.")
+                    }
                 }
-            }
+        }
     }
 }

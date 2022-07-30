@@ -12,13 +12,12 @@ import Then
 
 class PackageDetailViewController: UIViewController {
     
-//    let containerView = UIView().then {
-//        $0.backgroundColor = .clear
-//    }
-//
+    lazy var dataManager: PackageDetailDataManager = PackageDetailDataManager(delegate: self)
+    
     // Table 정보
+    var packageItemInfo : [PackageRow]?
     let tableRowHeight = CGFloat(40)
-    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "사진"]
+    let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청 사항"]
     let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "아아아아아"]
     
     
@@ -42,19 +41,9 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = UITableView().then {
-//        let table = ListTableView(
-//            rowHeight: tableRowHeight,
-//            isScrollEnabled: false)
-        $0.layer.borderWidth = 0.2
-        $0.layer.cornerRadius = 5
-        $0.layer.borderColor = UIColor.borderColor.cgColor
-        $0.separatorStyle = .singleLine
-        $0.allowsSelection = false
-        $0.separatorColor = UIColor.customLightGray
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.layer.addShadow(location: [.top, .bottom])
-        $0.isScrollEnabled = true
+        $0.allowsSelection = false
         $0.register(PackageBasicTableViewCell.self, forCellReuseIdentifier: PackageBasicTableViewCell.identifier)
     }
     
@@ -65,19 +54,9 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = UITableView().then {
-//        let table = ListTableView(
-//            rowHeight: tableRowHeight,
-//            isScrollEnabled: false)
-        $0.layer.borderWidth = 0.2
-        $0.layer.cornerRadius = 5
-        $0.layer.borderColor = UIColor.borderColor.cgColor
-        $0.separatorStyle = .singleLine
-        $0.allowsSelection = false
-        $0.separatorColor = UIColor.customLightGray
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.layer.addShadow(location: [.top, .bottom])
-        $0.isScrollEnabled = true
+        $0.allowsSelection = false
         $0.register(PackageDeliveryTableViewCell.self, forCellReuseIdentifier: PackageDeliveryTableViewCell.identifier)
     }
     
@@ -136,14 +115,9 @@ class PackageDetailViewController: UIViewController {
         
         
         setConstraints()
-//        containerView.snp.makeConstraints { make in
-//            make.leading.equalTo(self.view)
-//            make.trailing.equalTo(self.view)
-//            make.top.equalTo(self.view)
-//            make.height.equalTo(200)
-//        }
-    
-//        presentCircleView()
+        
+        dataManager.getPackageList(workPK: 1)
+
         
     }
     
@@ -310,6 +284,17 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
         return 40
     }
 }
+
+extension PackageDetailViewController: PackageDetailViewControllerDelegate {
+    func didSuccessGetPackageDetail(_ result: PackageResponse) {
+        packageItemInfo = result.rows
+    }
+    func failedToRequest(_ message: String) {
+        print(message)
+    }
+}
+
+
 
 extension PackageDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

@@ -175,20 +175,9 @@ class DeliveryCompletedViewController: UIViewController {
 
     }
     
-    let tableView = UITableView().then {
-//        let table = ListTableView(
-//            rowHeight: tableRowHeight,
-//            isScrollEnabled: false)
-        $0.layer.borderWidth = 0.2
-        $0.layer.cornerRadius = 10
-        $0.layer.borderColor = UIColor.borderColor.cgColor
-        $0.separatorStyle = .singleLine
-        $0.allowsSelection = false
-        $0.clipsToBounds = true
-        $0.separatorColor = UIColor.customLightGray
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
-        $0.isScrollEnabled = true
+        $0.allowsSelection = false
         $0.register(DeliveryCompletedTableViewCell.self, forCellReuseIdentifier: DeliveryCompletedTableViewCell.identifier)
     }
     let separateLine3 = UIView().then {

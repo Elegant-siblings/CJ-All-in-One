@@ -20,6 +20,58 @@ class FindPathViewController: UIViewController {
     var time: String!
     
     
+    let bottomSheetVC = FindPathBottomViewController()
+    
+    private let locationManager = NMFLocationManager.sharedInstance()
+    
+    var longitude: CLLocationDegrees!
+    var latitude: CLLocationDegrees!
+
+    //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
+//    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
+//    let destLocation = NMGLatLng(lat: 37.4282975, lng: 127.1837949)
+    var totalPoints = [NMGLatLng]()
+    var totalPointsNum : Int!
+    var firstOne: Bool = true
+    var onGoing: Bool = false
+    var bounds1 : NMGLatLngBounds!
+    
+    var boundsArray = [NMGLatLngBounds]()
+    var boundsIdx = 0
+    
+    // 경유지 정보
+    var wayPoitns = [NMGLatLng]()
+    
+    var wayPointsForBounds = [NMGLatLng]()
+    var wayPointsToString : String = ""
+    var wayPointNames : [String] = []
+
+    
+    //경로
+    var progressPathOverlay: NMFPath?
+    var progressMultipartPath: NMFMultipartPath?
+    var coords = [NMGLatLng]()
+    var stringCoords = [NMGLineString<NMGLatLng>]()
+    var wayPointIdx : [Int] = []
+    
+    lazy var dataManager = MapDataManager(delegate: self)
+
+    
+    let mapView = NMFMapView().then{
+        $0.allowsZooming = true
+        $0.layer.addShadow(location: [.bottom])
+    }
+    
+    //    init(dep_lng: Double, dep_lat: Double, dest_lng: Double, dest_lat: Double) {
+    //        self.bounds1.southWestLng = dep_lng
+    //        self.bounds1.southWestLat = dep_lat
+    //        self.bounds1.northEastLng = dest_lng
+    //        self.bounds1.northEastLat= dest_lat
+    //    }
+    
+    var mapImage = UIImage()
+    
+    
     let pathButton = UIButton().then {
         $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 30
@@ -61,56 +113,6 @@ class FindPathViewController: UIViewController {
         $0.alpha = 1
     }
     
-    let bottomSheetVC = FindPathBottomViewController()
-    
-    private let locationManager = NMFLocationManager.sharedInstance()
-    
-    var longitude: CLLocationDegrees!
-    var latitude: CLLocationDegrees!
-
-    //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
-//    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
-//    let destLocation = NMGLatLng(lat: 37.4282975, lng: 127.1837949)
-    var totalPoints = [NMGLatLng]()
-    var loopNum : Int = 0
-    var wayPointsNum : Int!
-    
-    var bounds1 : NMGLatLngBounds!
-    
-    var boundsArray = [NMGLatLngBounds]()
-    var boundsIdx = 0
-    
-    // 경유지 정보
-    var wayPoitns = [NMGLatLng]()
-    
-    var wayPointsForBounds = [NMGLatLng]()
-    var wayPointsToString : String = ""
-    var wayPointNames : [String] = []
-
-    
-    //경로
-    var progressPathOverlay: NMFPath?
-    var progressMultipartPath: NMFMultipartPath?
-    var coords = [NMGLatLng]()
-    var stringCoords = [NMGLineString<NMGLatLng>]()
-    var wayPointIdx : [Int] = []
-    
-    lazy var dataManager = MapDataManager(delegate: self)
-
-    
-    let mapView = NMFMapView().then{
-        $0.allowsZooming = true
-        $0.layer.addShadow(location: [.bottom])
-    }
-    
-    //    init(dep_lng: Double, dep_lat: Double, dest_lng: Double, dest_lat: Double) {
-    //        self.bounds1.southWestLng = dep_lng
-    //        self.bounds1.southWestLat = dep_lat
-    //        self.bounds1.northEastLng = dest_lng
-    //        self.bounds1.northEastLat= dest_lat
-    //    }
-    
-    var mapImage = UIImage()
     
 
     override func viewDidLoad() {
@@ -156,7 +158,7 @@ class FindPathViewController: UIViewController {
 //        pathButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         setConstraints()
         
-        dataManager.dockerExample(delegate: self)
+        dataManager.getLocation()
         
         
     }
@@ -229,9 +231,9 @@ class FindPathViewController: UIViewController {
                 pathOverlay.outlineWidth = outlineWidth
                 pathOverlay.color = .systemPink
                 pathOverlay.outlineColor = UIColor.white
-                pathOverlay.passedColor = UIColor.gray
-                pathOverlay.passedOutlineColor = UIColor.white
-                pathOverlay.progress = 0.3
+//                pathOverlay.passedColor = UIColor.gray
+//                pathOverlay.passedOutlineColor = UIColor.white
+//                pathOverlay.progress = 0.3
                 pathOverlay.mapView = mapView
                 progressPathOverlay = pathOverlay
             }
@@ -254,43 +256,40 @@ class FindPathViewController: UIViewController {
         
         self.showIndicator()
         
-        // 경유지 쿼리 스트링 일부 만들기
-        if wayPointsNum < 6 {
-            // 5개 이하이면 바로 wayPoints에서 for문을 돌린다
-            for i in wayPoitns {
-                wayPointsToString += "\(i.lng),\(i.lat)|"
+        //경유지 쿼리 스트링 일부 만들기
+        if totalPoints.count < 8 {
+            if totalPoints.count > 2 { //경유지가 존재할 경우
+                for i in 1..<totalPoints.count - 1 {
+                    wayPointsToString += "\(totalPoints[i].lng),\(totalPoints[i].lat)|"
+                }
+                wayPointsToString = String(wayPointsToString.dropLast())
+                
+                print(wayPointsToString)
             }
-            wayPointsToString = String(wayPointsToString.dropLast())
+            onGoing = false
             
-            print(wayPointsToString)
+            print(totalPoints.endIndex)
             
-            dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
+            dataManager.shortestPath(depLng: totalPoints[0].lng, depLat: totalPoints[0].lat, destLng: totalPoints[totalPoints.endIndex - 1].lng, destLat: totalPoints[totalPoints.endIndex - 1].lat, wayPoints: wayPointsToString ?? nil, option: "trafast")
             
-            wayPointsToString = ""
+            
             
         } else {
             // 6개 이상이면 5번째까지만 받는다
-            for i in wayPoitns[0..<5] {
+            for i in totalPoints[1..<6] {
                 wayPointsToString += "\(i.lng),\(i.lat)|"
             }
             wayPointsToString = String(wayPointsToString.dropLast())
             
             print(wayPointsToString)
+            onGoing = true
             
-            dataManager.shortestPath(depLng: bounds1.southWestLng, depLat: bounds1.southWestLat, destLng: bounds1.northEastLng, destLat: bounds1.northEastLat, wayPoints: wayPointsToString ?? nil, option: "trafast")
-            
-            wayPoitns.removeSubrange(0..<4)
-            
-            
-            wayPointsToString = ""
+            dataManager.shortestPath(depLng: totalPoints[0].lng, depLat: totalPoints[0].lat, destLng: totalPoints[6].lng, destLat: totalPoints[6].lat, wayPoints: wayPointsToString ?? nil, option: "trafast")
         }
-        
-        
-        
     }
     
     func setMarker() {
-        // 출발 & 도착 위치 마커 찍기
+        // 출발지 & 도착지 위치 마커 찍기
         let departMark = NMFMarker(position: bounds1.southWest)
         departMark.mapView = mapView
         departMark.iconImage = NMF_MARKER_IMAGE_BLACK
@@ -303,13 +302,13 @@ class FindPathViewController: UIViewController {
         destMark.captionTextSize = 20
         destMark.captionAligns = [NMFAlignType.top]
         destMark.captionText = "목적지"
-        
+    
         // 경유지 마커 찍기
         var markList = [NMFMarker]()
         let markImages = [NMF_MARKER_IMAGE_RED, NMF_MARKER_IMAGE_YELLOW, NMF_MARKER_IMAGE_PINK, NMF_MARKER_IMAGE_GREEN, NMF_MARKER_IMAGE_BLUE ]
         for i in 0..<wayPoitns.count{
             let mark = NMFMarker(position: NMGLatLng(lat: wayPoitns[i].lat, lng: wayPoitns[i].lng))
-            mark.iconImage = markImages[i]
+            mark.iconImage = markImages[i % 5]
             mark.captionTextSize = 20
             mark.captionAligns = [NMFAlignType.top]
             mark.captionText = wayPointNames[i]
@@ -379,21 +378,21 @@ extension FindPathViewController: NMFLocationManagerDelegate {
 }
 
 extension FindPathViewController: FindPathViewControllerDelegate{
-    func didSuccessReceivedLngLat(_ result: Welcome) {
+    func didSuccessReceivedLngLat(_ result: LocationResponse) {
         
         totalPoints.append(NMGLatLng(lat: Double(result.start[0]) ?? 0, lng: Double(result.start[1]) ?? 0))
         for i in result.waypoint {
             totalPoints.append(NMGLatLng(lat: Double(i[0]) ?? 0, lng: Double(i[1]) ?? 0))
         }
         totalPoints.append(NMGLatLng(lat: Double(result.finish[0]) ?? 0, lng: Double(result.finish[1]) ?? 0))
-        
+        totalPointsNum = totalPoints.count
         
         //출발지 & 목적지 위/경도 저장
         bounds1 = NMGLatLngBounds(southWest: NMGLatLng(lat: totalPoints[0].lat, lng: totalPoints[0].lng), northEast: NMGLatLng(lat: totalPoints.last!.lat, lng: totalPoints.last!.lng))
         
         print(bounds1)
         
-        wayPointsNum = result.waypoint.count
+        
         for i in 0..<result.waypoint.count{
             wayPoitns.append(NMGLatLng(lat: Double(result.waypoint[i][0]) ?? 0, lng: Double(result.waypoint[i][1]) ?? 0))
             wayPointNames.append("경유지\(i+1)")
@@ -403,19 +402,24 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         
         //출발지부터 목적지까지 전부 bound array에 넣기
         for i in 1..<totalPoints.count {
-            boundsArray.append(NMGLatLngBounds(southWest: wayPointsForBounds[i-1], northEast: wayPointsForBounds[i]))
+            boundsArray.append(NMGLatLngBounds(southWest: totalPoints[i-1], northEast: totalPoints[i]))
         }
         print(boundsArray)
         
-        
-
         configurePath()
-        setMarker()
         
+        //재귀랑 전혀 상관 없음
+        setMarker()
         
     }
     
     func didSuccessReturnPath(result: Trafast){
+        
+//        if onGoing {
+//
+//        } else {
+//
+//        }
         
         // 경유지 인덱스 반환
         for i in result.guide {
@@ -444,30 +448,46 @@ extension FindPathViewController: FindPathViewControllerDelegate{
         // Path 그리기
         initPath()
         
-        distance = "\(result.summary.distance / 1000)km"
-        distanceLabel.text = distance
         
+        // 처음 불러 올때만 실행
+        if firstOne {
+            distance = "\(result.summary.distance / 1000)km"
+            distanceLabel.text = distance
+            
+            
+            let milliseconds = result.summary.duration
+            let hours = ((milliseconds / (1000*60*60)) % 24)
+            let mins = ((milliseconds / (1000*60)) % 60)
+            time = "\(hours)시간 \(mins)분"
+            timeLabel.text = time
+            
+            let date = Date()
+    //        let dateHour = Calendar.current.date(byAdding: .hour, value: hours, to: date)
+    //        let dateMin = Calendar.current.date(byAdding: .minute, value: mins, to: dateHour)
+            
+            
+            let camUpdate = NMFCameraUpdate(fit: bounds1, padding: 40)
+            camUpdate.animation = .fly
+            camUpdate.animationDuration = 1
+            mapView.moveCamera(camUpdate)
+            
+            mapImage = mapView.asImage()
+            
+            firstOne = false
+        }
         
-        let milliseconds = result.summary.duration
-        let hours = ((milliseconds / (1000*60*60)) % 24)
-        let mins = ((milliseconds / (1000*60)) % 60)
-        time = "\(hours)시간 \(mins)분"
-        timeLabel.text = time
-        
-        let date = Date()
-//        let dateHour = Calendar.current.date(byAdding: .hour, value: hours, to: date)
-//        let dateMin = Calendar.current.date(byAdding: .minute, value: mins, to: dateHour)
-        
-        
-        let camUpdate = NMFCameraUpdate(fit: bounds1, padding: 40)
-        camUpdate.animation = .fly
-        camUpdate.animationDuration = 1
-        mapView.moveCamera(camUpdate)
-        
-        mapImage = mapView.asImage()
-        
-        self.dismissIndicator()
-        
+        if !onGoing {
+            wayPointsToString = ""
+            totalPoints = totalPoints.dropLast()
+            
+            self.dismissIndicator()
+            return
+        } else {
+            wayPointsToString = ""
+            totalPoints.removeSubrange(0..<6)
+            
+            configurePath()
+        }
     }
     
     
