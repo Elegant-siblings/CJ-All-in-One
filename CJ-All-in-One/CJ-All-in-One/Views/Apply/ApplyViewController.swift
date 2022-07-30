@@ -87,30 +87,24 @@ class ApplyViewController: UIViewController {
         $0.addTarget(self, action: #selector(handleDatePicker(_:)), for: .valueChanged)
     }
     
-    lazy var textFieldVehicleType: UITextField = {
-        let tf: UITextField = UITextField()
-        tf.placeholder = "차량 종류를 입력하세요."
-        tf.inputView = pickerVehicle
-        tf.inputAccessoryView = toolbar
-        tf.borderStyle = .roundedRect
-        return tf
-    }()
+    lazy var textFieldVehicleType = UITextField().then {
+        $0.placeholder = "차량 종류를 입력하세요."
+        $0.inputView = pickerVehicle
+        $0.inputAccessoryView = toolbar
+        $0.borderStyle = .roundedRect
+    }
     
-    lazy var toolbar: UIToolbar = {
-        let tb: UIToolbar = UIToolbar()
-        tb.barStyle = UIBarStyle.default
-        tb.isTranslucent = true
-        tb.sizeToFit()
+    lazy var toolbar = UIToolbar().then {
+        $0.barStyle = UIBarStyle.default
+        $0.isTranslucent = true
         
         let doneBT = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.donePicker))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelBT = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(self.cancelPicker))
         
-        tb.setItems([cancelBT,flexibleSpace,doneBT], animated: false)
-        tb.isUserInteractionEnabled = true
-    
-        return tb
-    }()
+        $0.setItems([cancelBT,flexibleSpace,doneBT], animated: false)
+        $0.isUserInteractionEnabled = true
+    }
     
     // -MARK: UIButton
     lazy var applyButton = MainButton(type: .main).then {
@@ -186,15 +180,15 @@ class ApplyViewController: UIViewController {
     
 //    override func viewWillLayoutSubviews() {
 //        super.viewWillLayoutSubviews()
-//        
+//
 //        pickerFrom.subviews[1].backgroundColor = .clear
-//        
+//
 //        let upLine = UIView(frame: CGRect(x: 15, y: 0, width: 150, height: 1))
 //        let underLine = UIView(frame: CGRect(x: 15, y: pickerRowHeight, width: 150, height: 1))
-//        
+//
 //        upLine.backgroundColor = .CjBlue
 //        underLine.backgroundColor = .CjBlue
-//        
+//
 //        pickerFrom.subviews[1].addSubview(upLine)
 //        pickerFrom.subviews[1].addSubview(underLine)
 //    }
@@ -240,10 +234,10 @@ class ApplyViewController: UIViewController {
             make.centerY.equalTo(labelVehicle)
             make.leading.equalTo(self.view.frame.width/2)
             make.width.equalTo(self.view.frame.width/2-8)
-            make.height.equalTo(40)
+            make.height.equalTo(35)
         }
         warningLabel.snp.makeConstraints{ make in
-            make.leading.equalTo(textFieldVehicleType).offset(1)
+            make.leading.equalTo(textFieldVehicleType).offset(2)
             make.top.equalTo(textFieldVehicleType.snp.bottom).offset(2)
         }
         

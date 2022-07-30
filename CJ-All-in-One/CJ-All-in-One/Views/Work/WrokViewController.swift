@@ -9,7 +9,7 @@ import UIKit
 import Then
 import NMapsMap
 
-class ResultViewController: UIViewController {
+class WorkViewController: UIViewController {
     
     // -MARK: Constants
     let itemListDataManager = ItemListDataManager()
@@ -23,7 +23,7 @@ class ResultViewController: UIViewController {
     let locations = ["서울", "경기", "인천"]
     
     // -MARK: UIViews
-    lazy var navBar = CustomNavigationBar()
+    lazy var navBar = CustomNavigationBar(title: "터미널 정보")
     lazy var viewTerminalInfo = UIView()
     lazy var viewTermImage = UIView().then {
         $0.backgroundColor = .CjBlue
@@ -35,11 +35,6 @@ class ResultViewController: UIViewController {
     lazy var viewButtonsContainer = UIView()
     
     // -MARK: UILabels
-    lazy var labelTermInfoTitle = UILabel().then {
-        $0.text = "터미널 정보"
-        $0.font = .systemFont(ofSize: 23, weight: .bold)
-        $0.textColor = .CjWhite
-    }
     lazy var labelTermAddress = UILabel().then {
         $0.text = task.terminalAddr
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
@@ -82,7 +77,7 @@ class ResultViewController: UIViewController {
     // -MARK: Others
     lazy var tableItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
         $0.dataSource = self
-        $0.register(ResultItemsTableViewCell.self, forCellReuseIdentifier: ResultItemsTableViewCell.identifier)
+        $0.register(WorkItemsTableViewCell.self, forCellReuseIdentifier: WorkItemsTableViewCell.identifier)
     }
     lazy var buttonArrived = MainButton(type: .main).then {
         $0.setTitle("터미널 도착", for: .normal)
@@ -103,7 +98,6 @@ class ResultViewController: UIViewController {
         
         view.addSubviews([
             navBar,
-            labelTermInfoTitle,
             viewTerminalInfo,
             viewButtonsContainer
         ])
@@ -119,8 +113,6 @@ class ResultViewController: UIViewController {
             buttonCancel
         ])
         
-        
-        
         switch task.deliveryTime {
         case "주간":
             labelTime.text = "오전 9:00"
@@ -128,6 +120,37 @@ class ResultViewController: UIViewController {
             labelTime.text = "오전 1:00"
         default:
             labelTime.text = ""
+        }
+        
+        let labelNum = MainLabel(type: .table).then {
+            $0.text = "#"
+            $0.textAlignment = .center
+        }
+        let labelCategory = MainLabel(type: .table).then {
+            $0.text = "상품종류"
+            $0.textAlignment = .center
+        }
+        let labelReceivAddr = MainLabel(type: .table).then {
+            $0.text = "배송지"
+            $0.textAlignment = .center
+        }
+        tableItem.tableHeaderView?.addSubviews([
+            labelNum,labelCategory,labelReceivAddr
+        ])
+        labelNum.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(6)
+            make.width.equalTo(35)
+        }
+        labelCategory.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(labelNum.snp.trailing).offset(3)
+            make.width.equalTo(60)
+        }
+        labelReceivAddr.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(labelCategory.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().offset(-15)
         }
         
         // -MARK: Make Constraints
@@ -139,10 +162,6 @@ class ResultViewController: UIViewController {
             make.width.equalToSuperview()
             make.top.equalTo(navBar.snp.bottom).offset(20)
             make.height.equalTo(308)
-        }
-        labelTermInfoTitle.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(navBar).offset(-10)
         }
         viewTermImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -221,13 +240,21 @@ class ResultViewController: UIViewController {
     // -MARK: selectors
     @objc func touchUpArrivedButton() {
         print("터미널 도착")
-        let vc = LoadViewController()
+        let vc = BarcodeViewController()
+        vc.lists = itemList
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func touchUpCancelButton() {
-        print("취소")
-        let updateDataManager = UpdateDataManager()
-        updateDataManager.updateWorkState(workPK: task.workPK, workState: 1)
+        let alert = UIAlertController(title: "모집 취소", message: "업무를 취소하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
+            let updateDataManager = UpdateDataManager()
+            updateDataManager.updateWorkState(workPK: self.task.workPK, workState: 1)
+            navigationController?.popToRootViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func successGetItemList(result: [Item]) {
@@ -249,13 +276,13 @@ class ResultViewController: UIViewController {
     }
 }
 
-extension ResultViewController: UITableViewDataSource {
+extension WorkViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ResultItemsTableViewCell.identifier, for: indexPath) as! ResultItemsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: WorkItemsTableViewCell.identifier, for: indexPath) as! WorkItemsTableViewCell
         cell.backgroundColor = .CjWhite
         cell.labelNum.text = "\(indexPath.row+1)"
         cell.labelCategory.text = itemList[indexPath.row].itemCategory

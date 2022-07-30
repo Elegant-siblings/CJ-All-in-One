@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ItemListDataManagerDelegate {
-    func getItemList(_ vc: ResultViewController, pk: Int)
+    func getItemList(_ vc: WorkViewController, pk: Int)
 }

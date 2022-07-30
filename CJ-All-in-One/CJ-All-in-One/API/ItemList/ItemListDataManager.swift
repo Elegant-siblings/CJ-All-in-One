@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class ItemListDataManager: ItemListDataManagerDelegate {
-    func getItemList(_ vc: ResultViewController, pk: Int) {
+    func getItemList(_ vc: WorkViewController, pk: Int) {
         
         let path = "/works/itemlist?"
         let urlString = base_url+path+"workPK=\(pk)"

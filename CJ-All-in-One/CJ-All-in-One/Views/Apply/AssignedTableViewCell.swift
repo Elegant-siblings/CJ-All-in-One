@@ -104,7 +104,6 @@ class AssignedTableViewCell: UITableViewCell {
             button.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
             button.addTarget(self, action: #selector(touchUpRemoveButton(sender:)), for: .touchUpInside)
             button.tintColor = .CjRed
-            
         }
     }
     
@@ -120,4 +119,3 @@ class AssignedTableViewCell: UITableViewCell {
     }
 
 }
-
