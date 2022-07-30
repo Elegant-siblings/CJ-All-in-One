@@ -112,7 +112,7 @@ class FindPathViewController: UIViewController {
         $0.backgroundColor = .white
         $0.alpha = 1
     }
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
