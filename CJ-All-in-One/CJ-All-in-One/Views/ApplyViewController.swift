@@ -184,20 +184,20 @@ class ApplyViewController: UIViewController {
 
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        pickerFrom.subviews[1].backgroundColor = .clear
-        
-        let upLine = UIView(frame: CGRect(x: 15, y: 0, width: 150, height: 1))
-        let underLine = UIView(frame: CGRect(x: 15, y: pickerRowHeight, width: 150, height: 1))
-        
-        upLine.backgroundColor = .CjBlue
-        underLine.backgroundColor = .CjBlue
-        
-        pickerFrom.subviews[1].addSubview(upLine)
-        pickerFrom.subviews[1].addSubview(underLine)
-    }
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        
+//        pickerFrom.subviews[1].backgroundColor = .clear
+//        
+//        let upLine = UIView(frame: CGRect(x: 15, y: 0, width: 150, height: 1))
+//        let underLine = UIView(frame: CGRect(x: 15, y: pickerRowHeight, width: 150, height: 1))
+//        
+//        upLine.backgroundColor = .CjBlue
+//        underLine.backgroundColor = .CjBlue
+//        
+//        pickerFrom.subviews[1].addSubview(upLine)
+//        pickerFrom.subviews[1].addSubview(underLine)
+//    }
     
     // -MARK: makeConstraints
     private func setConstraints() {
@@ -248,18 +248,18 @@ class ApplyViewController: UIViewController {
         }
         
         labelFrom.snp.makeConstraints { make in
-            make.top.equalTo(labelVehicle.snp.bottom).offset(40)
+            make.top.equalTo(labelVehicle.snp.bottom).offset(54)
             make.leading.equalToSuperview().offset(20)
         }
         pickerFrom.snp.makeConstraints { make in
             make.centerY.equalTo(labelFrom)
             make.leading.equalTo(self.view.frame.width/2)
-            make.width.equalTo(self.view.frame.width/2-8)
-            make.height.equalTo(pickerRowHeight+20)
+            make.width.equalTo(self.view.frame.width/2-16)
+            make.height.equalTo(pickerRowHeight+50)
         }
 
         labelTo.snp.makeConstraints{ make in
-            make.top.equalTo(labelFrom.snp.bottom).offset(35)
+            make.top.equalTo(labelFrom.snp.bottom).offset(45)
             make.leading.equalTo(self.view).offset(20)
         }
         pickerTo.snp.makeConstraints{ make in
@@ -276,15 +276,16 @@ class ApplyViewController: UIViewController {
         }
         tableTo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.top.equalTo(pickerTo.snp.bottom).offset(10)
             make.width.equalToSuperview().offset(-36*2)
             make.height.equalTo(tableTo.rowHeight*CGFloat(toLists.count+1))
 //            make.height.equalTo(180)
-            make.top.equalTo(pickerTo.snp.bottom).offset(20)
+            
         }
         
         applyButton.snp.makeConstraints{ make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(755)
+            make.top.equalToSuperview().offset(mainButtonTopOffset)
             make.width.equalTo(mainButtonWidth)
             make.height.equalTo(mainButtonHeight)
         }
@@ -333,9 +334,8 @@ class ApplyViewController: UIViewController {
         let vc = AssignViewController()
         vc.date = self.date
         vc.toLists = self.toLists
-        vc.applyForm = ApplyDataModel(deliveryPK: [], deliveryManID: "AABBCCDDEEFFGGHH", deliveryDate: self.date, deliveryType: self.type, deliveryTime: self.time, deliveryCar: self.vehicle, terminalAddr: self.receivAddr)
+        vc.applyForm = ApplyDataModel(deliveryPK: [], deliveryManID: ManId, deliveryDate: self.date, deliveryType: self.type, deliveryTime: self.time, deliveryCar: self.vehicle, terminalAddr: self.receivAddr)
         navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     @objc func touchUpAddButton() {
@@ -354,6 +354,7 @@ class ApplyViewController: UIViewController {
             }
         }
     }
+    
     private func isEnableButton() {
         if textFieldVehicleType.text != "" && toLists.count > 0 {
             applyButton.isEnabled = true

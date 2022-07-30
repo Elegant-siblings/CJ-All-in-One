@@ -28,100 +28,68 @@ class AssignViewController: UIViewController {
         $0.font = .systemFont(ofSize: 18, weight: .bold)
         $0.textColor = .primaryFontColor
     }
-    
     lazy var labelSelectedTitle = UILabel().then {
         $0.text = "선택된 업무"
         $0.font = .systemFont(ofSize: 18, weight: .bold)
         $0.textColor = .primaryFontColor
     }
-    
     lazy var labelSelectedCount = UILabel().then {
         $0.text = "0"
         $0.font = .systemFont(ofSize: 14, weight: .regular)
         $0.textColor = .primaryFontColor
     }
-    
     lazy var labelViewedCount = UILabel().then {
         $0.text = "0"
         $0.font = .systemFont(ofSize: 14, weight: .regular)
         $0.textColor = .primaryFontColor
     }
-    
+    lazy var labelAgreement = UILabel().then {
+        $0.text = "위탁 계약서"
+        $0.textColor = UIColor(hex: 0x888585)
+        $0.font = .systemFont(ofSize: 25, weight: .bold)
+    }
     // -MARK: UITableViews
     lazy var tableViewedItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
         $0.dataSource = self
         $0.register(AssignedTableViewCell.self, forCellReuseIdentifier: AssignedTableViewCell.identifier)
         
-        let labelNum = UILabel().then {
-            $0.text = "#"
-        }
-        let labelCategory = UILabel().then {
-            $0.text = "상품종류"
-        }
-        let labelReceivAddr = UILabel().then {
-            $0.text = "배송지"
-        }
-        $0.tableHeaderView?.addSubviews([
-            labelNum,labelCategory,labelReceivAddr
-        ])
-        _ = [labelNum, labelCategory, labelReceivAddr].map {
-            $0.font = .systemFont(ofSize: 12)
-            $0.textAlignment = .center
-        }
-        
-        labelNum.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(6)
-            make.width.equalTo(35)
-        }
-        labelCategory.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(labelNum.snp.trailing).offset(3)
-            make.width.equalTo(60)
-        }
-        labelReceivAddr.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(labelCategory.snp.trailing).offset(10)
-            make.trailing.equalToSuperview().offset(-15)
-        }
+//        let labelNum = UILabel().then {
+//            $0.text = "#"
+//        }
+//        let labelCategory = UILabel().then {
+//            $0.text = "상품종류"
+//        }
+//        let labelReceivAddr = UILabel().then {
+//            $0.text = "배송지"
+//        }
+//        $0.tableHeaderView?.addSubviews([
+//            labelNum,labelCategory,labelReceivAddr
+//        ])
+//        _ = [labelNum, labelCategory, labelReceivAddr].map {
+//            $0.font = .systemFont(ofSize: 12)
+//            $0.textAlignment = .center
+//        }
+//
+//        labelNum.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.leading.equalToSuperview().offset(6)
+//            make.width.equalTo(35)
+//        }
+//        labelCategory.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.leading.equalTo(labelNum.snp.trailing).offset(3)
+//            make.width.equalTo(60)
+//        }
+//        labelReceivAddr.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.leading.equalTo(labelCategory.snp.trailing).offset(10)
+//            make.trailing.equalToSuperview().offset(-15)
+//        }
     }
     
     lazy var tableSelectedItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
         $0.dataSource = self
         $0.register(AssignedTableViewCell.self, forCellReuseIdentifier: AssignedTableViewCell.identifier)
-        
-        let labelNum = UILabel().then {
-            $0.text = "#"
-        }
-        let labelCategory = UILabel().then {
-            $0.text = "상품종류"
-        }
-        let labelReceivAddr = UILabel().then {
-            $0.text = "배송지"
-        }
-        $0.tableHeaderView?.addSubviews([
-            labelNum,labelCategory,labelReceivAddr
-        ])
-        _ = [labelNum, labelCategory, labelReceivAddr].map {
-            $0.font = .systemFont(ofSize: 12)
-            $0.textAlignment = .center
-        }
-        
-        labelNum.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(6)
-            make.width.equalTo(35)
-        }
-        labelCategory.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(labelNum.snp.trailing).offset(3)
-            make.width.equalTo(60)
-        }
-        labelReceivAddr.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(labelCategory.snp.trailing).offset(10)
-            make.trailing.equalToSuperview().offset(-15)
-        }
     }
     
     // -MARK: UIBUtton
@@ -161,9 +129,43 @@ class AssignViewController: UIViewController {
             labelSelectedCount,
             tableViewedItem,
             tableSelectedItem,
+            labelAgreement,
             buttonAgree,
             buttonApply
         ])
+        
+        _ = [tableViewedItem, tableSelectedItem].map { table in
+            let labelNum = MainLabel(type: .table).then {
+                $0.text = "#"
+                $0.textAlignment = .center
+            }
+            let labelCategory = MainLabel(type: .table).then {
+                $0.text = "상품종류"
+                $0.textAlignment = .center
+            }
+            let labelReceivAddr = MainLabel(type: .table).then {
+                $0.text = "배송지"
+                $0.textAlignment = .center
+            }
+            table.tableHeaderView?.addSubviews([
+                labelNum,labelCategory,labelReceivAddr
+            ])
+            labelNum.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.leading.equalToSuperview().offset(6)
+                make.width.equalTo(35)
+            }
+            labelCategory.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.leading.equalTo(labelNum.snp.trailing).offset(3)
+                make.width.equalTo(60)
+            }
+            labelReceivAddr.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.leading.equalTo(labelCategory.snp.trailing).offset(10)
+                make.trailing.equalToSuperview().offset(-15)
+            }
+        }
         
         // -MARK: makeConstraints
         navBar.snp.makeConstraints { make in
@@ -201,9 +203,13 @@ class AssignViewController: UIViewController {
 //            make.height.equalTo(tableSelectedItem.rowHeight)
             make.height.equalTo(240)
         }
+        labelAgreement.snp.makeConstraints { make in
+            make.bottom.equalTo(buttonAgree)
+            make.trailing.equalTo(labelAgreement.snp.leading).offset(-5)
+        }
         buttonAgree.snp.makeConstraints { make in
             make.trailing.equalTo(buttonApply).offset(-10)
-            make.width.equalTo(70   )
+            make.width.equalTo(70)
             make.height.equalTo(30)
             make.bottom.equalTo(buttonApply.snp.top).offset(-10)
         }
@@ -244,11 +250,11 @@ extension AssignViewController {
         addButtonEnabled = [Int](repeating: 1, count: result.count)
         labelViewedCount.text = "\(result.count)"
         tableViewedItem.reloadData()
-        tableViewedItem.snp.updateConstraints { make in
-            _ = tableViewedItem.contentSize.height > 250
-            ? make.height.equalTo(250)
-            : make.height.equalTo(tableViewedItem.contentSize.height)
-        }
+//        tableViewedItem.snp.updateConstraints { make in
+//            _ = tableViewedItem.contentSize.height > 250
+//            ? make.height.equalTo(250)
+//            : make.height.equalTo(tableViewedItem.contentSize.height)
+//        }
     }
 }
 
