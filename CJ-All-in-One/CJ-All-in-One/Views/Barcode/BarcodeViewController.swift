@@ -14,15 +14,10 @@ class BarcodeViewController: UIViewController {
     let fontSizeAgree = CGFloat(14)
     var isAgree = 0
     var terminalAddr = ""
+    var workPK: Int?
     var checklist: [Bool] = []
     var lists:[Item] = [
-        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 1, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 4, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 6, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 7, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 17, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 21, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+//        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
     ]
 
     
@@ -231,12 +226,12 @@ class BarcodeViewController: UIViewController {
     }
     
     @objc func touchUpCompleteButton() {
-        
         let alert = UIAlertController(title: "바코드 스캔을 완료하시겠습니까?", message: "넘어가면 누락된 물품 다시 등록 못 함 ㅅㄱ", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
             let vc = LoadViewController()
             vc.lists = self.lists
             vc.terminalAddr = self.terminalAddr
+            vc.workPK = self.workPK
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
