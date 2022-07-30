@@ -30,6 +30,7 @@ class ApplyViewController: UIViewController {
     let shippingTypes: [String] = ["일반배송", "집화/반품"]
     let shippingTimes: [String] = ["주간", "새벽"]
     let vehicles: [String] = ["세단", "쿠페", "왜건", "SUV", "컨버터블", "해치백", "밴", "픽업트럭","기타"]
+    
     let sectionInset = CGFloat(30)
     let citiesManager = CitiesManager()
     let pickerRowHeight = CGFloat(35)
@@ -47,7 +48,6 @@ class ApplyViewController: UIViewController {
     
     //-MARK: UIView
     lazy var navBar = CustomNavigationBar(title: "모집 신청")
-    
     lazy var labelShippingType = ApplySectionTitleLabel(title: "배송타입")
     lazy var labelDate = ApplySectionTitleLabel(title: "날짜")
     lazy var labelTime = ApplySectionTitleLabel(title: "배송시간")
@@ -55,12 +55,14 @@ class ApplyViewController: UIViewController {
     lazy var labelTo = ApplySectionTitleLabel(title: "배송지역")
     lazy var labelFrom = ApplySectionTitleLabel(title: "출발지역")
     
+    // -MARK: UILabels
     lazy var warningLabel = UILabel().then{
         $0.text = "배송차량을 선택해주세요."
         $0.font = .systemFont(ofSize: 15, weight: .light)
         $0.textColor = .red
     }
     
+    // -MARK: SegmentedControl
     lazy var SCShippingType: UISegmentedControl = {
         let sc: UISegmentedControl = UISegmentedControl(items: shippingTypes)
         sc.selectedSegmentIndex = 0
@@ -75,6 +77,7 @@ class ApplyViewController: UIViewController {
         return sc
     }()
     
+    // -MARK: PickerView
     lazy var datePicker = UIDatePicker().then{
         $0.preferredDatePickerStyle = .automatic
         $0.datePickerMode = .date
@@ -87,7 +90,7 @@ class ApplyViewController: UIViewController {
     lazy var textFieldVehicleType: UITextField = {
         let tf: UITextField = UITextField()
         tf.placeholder = "차량 종류를 입력하세요."
-        tf.inputView = pickerAvailCount
+        tf.inputView = pickerVehicle
         tf.inputAccessoryView = toolbar
         tf.borderStyle = .roundedRect
         return tf
@@ -109,8 +112,9 @@ class ApplyViewController: UIViewController {
         return tb
     }()
     
+    // -MARK: UIButton
     lazy var applyButton = MainButton(type: .main).then {
-        $0.isEnabled = true
+        $0.isEnabled = false
         $0.setTitle("업무조회", for: .normal)
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
@@ -124,8 +128,24 @@ class ApplyViewController: UIViewController {
         $0.addTarget(self, action: #selector(self.touchUpAddButton), for: .touchUpInside)
     }
     
-    lazy var tableTo = ListTableView(rowHeight: 35, scrollType: .none)
-    let pickerAvailCount = UIPickerView()
+    lazy var tableTo = ListTableView(rowHeight: 35, scrollType: .vertical).then {
+        var labelNum = MainLabel(type: .table).then {
+            $0.text = "#"
+        }
+        var labelAddr = MainLabel(type: .table).then {
+            $0.text = "배송지"
+        }
+        $0.tableHeaderView?.addSubviews([labelNum,labelAddr])
+        labelNum.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(30)
+        }
+        labelAddr.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+    }
+    
+    let pickerVehicle = UIPickerView()
     let pickerTo = UIPickerView()
     let pickerFrom = UIPickerView()
     
@@ -137,8 +157,8 @@ class ApplyViewController: UIViewController {
         self.view.backgroundColor = .CjWhite
         navigationController?.navigationBar.tintColor = .CjWhite
         
-        pickerAvailCount.delegate = self
-        pickerAvailCount.dataSource = self
+        pickerVehicle.delegate = self
+        pickerVehicle.dataSource = self
         pickerTo.delegate = self
         pickerTo.dataSource = self
         pickerFrom.delegate = self
@@ -273,28 +293,12 @@ class ApplyViewController: UIViewController {
     //-MARK: #Selector
     @objc
     func shippingTypeChanged(type: UISegmentedControl) {
-        var bool = false
-        switch type.selectedSegmentIndex {
-        case 0:
-            bool = false
-        case 1:
-            bool = true
-        default: return
-        }
-        self.type = bool
+        self.type = type.selectedSegmentIndex == 0 ? false : true
     }
     
     @objc
     func shippingTimeChanged(time: UISegmentedControl) {
-        var bool = false
-        switch time.selectedSegmentIndex {
-        case 0:
-            bool = false
-        case 1:
-            bool = true
-        default: return
-        }
-        self.time = bool
+        self.time = time.selectedSegmentIndex == 0 ? false : true
     }
     
     @objc
@@ -305,18 +309,20 @@ class ApplyViewController: UIViewController {
     }
     
     @objc func donePicker() {
-        let row = self.pickerAvailCount.selectedRow(inComponent: 0)
-        self.pickerAvailCount.selectRow(row, inComponent: 0, animated: false)
+        let row = self.pickerVehicle.selectedRow(inComponent: 0)
+        self.pickerVehicle.selectRow(row, inComponent: 0, animated: false)
         self.textFieldVehicleType.text = self.vehicles[row]
         self.textFieldVehicleType.resignFirstResponder()
         self.vehicle = textFieldVehicleType.text!
         warningLabel.textColor = .white
+        isEnableButton()
     }
     
     @objc func cancelPicker() {
         self.textFieldVehicleType.text = nil
         self.textFieldVehicleType.resignFirstResponder()
         warningLabel.textColor = .red
+        isEnableButton()
     }
     
     @objc func touchUpApplyButton() {
@@ -333,20 +339,27 @@ class ApplyViewController: UIViewController {
     }
     
     @objc func touchUpAddButton() {
-//        print("click add button")
         toLists.append(Location(city: city, goo: goo))
         tableTo.beginUpdates()
         tableTo.insertRows(at: [IndexPath(row: toLists.count-1, section: 0)], with: .right)
         tableTo.endUpdates()
         
+        isEnableButton()
         tableTo.snp.updateConstraints { make in
             if tableTo.rowHeight*CGFloat(toLists.count+1) < 180 {
                 make.height.equalTo(tableTo.rowHeight*CGFloat(toLists.count+1))
             }
             else {
                 make.height.equalTo(180)
-                tableTo.isScrollEnabled = true
             }
+        }
+    }
+    private func isEnableButton() {
+        if textFieldVehicleType.text != "" && toLists.count > 0 {
+            applyButton.isEnabled = true
+        }
+        else {
+            applyButton.isEnabled = false
         }
     }
 }

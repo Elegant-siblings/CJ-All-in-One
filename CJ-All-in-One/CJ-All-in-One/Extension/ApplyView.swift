@@ -20,7 +20,7 @@ extension ApplyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     // pickerview의 선택지는 데이터의 개수만큼
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == pickerAvailCount {
+        if pickerView == pickerVehicle {
             return vehicles.count
         }
         else if pickerView == pickerTo {
@@ -56,7 +56,7 @@ extension ApplyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 //    }
     // textfield의 텍스트에 pickerview에서 선택한 값을 넣어준다.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == pickerAvailCount {
+        if pickerView == pickerVehicle {
             self.textFieldVehicleType.text = self.vehicles[row]
             warningLabel.textColor = .white
         }
@@ -89,7 +89,7 @@ extension ApplyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: pickerRowHeight))
 
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: pickerRowHeight))
-        if pickerView == pickerAvailCount {
+        if pickerView == pickerVehicle {
             label.text = vehicles[row]
         }
         else if pickerView == pickerFrom {
@@ -123,12 +123,11 @@ extension ApplyViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToListTableViewCell.identifier, for: indexPath) as! ToListTableViewCell
-        cell.rowIndex = indexPath.row
         cell.backgroundColor = .CjWhite
+        cell.listDelegate = self
+        cell.rowIndex = indexPath.row
         cell.labelNum.text = "\(indexPath.row+1)"
         cell.labelTo.text = toLists[indexPath.row].city + " " + toLists[indexPath.row].goo
-        cell.fontSize = CGFloat(13)
-        cell.fontColor = UIColor.tableContentTextColor
         cell.selectionStyle = .none
         return cell
     }
@@ -151,5 +150,15 @@ extension ApplyViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+    }
+}
+
+extension ApplyViewController: ToListDelegate {
+    func removeTo(index: Int) {
+        toLists.remove(at: index)
+        tableTo.beginUpdates()
+        tableTo.deleteRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        tableTo.reloadData()
+        tableTo.endUpdates()
     }
 }

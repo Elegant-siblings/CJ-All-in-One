@@ -90,7 +90,7 @@ class ResultViewController: UIViewController {
     }
     lazy var buttonCancel = MainButton(type: .main).then {
         $0.setTitle("취소", for: .normal)
-        $0.backgroundColor = .CjRed
+        $0.setBackgroundColor(.CjRed, for: .normal)
         $0.addTarget(self, action: #selector(touchUpCancelButton), for: .touchUpInside)
     }
     

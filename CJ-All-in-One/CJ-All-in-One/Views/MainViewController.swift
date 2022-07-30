@@ -15,7 +15,6 @@ import PanModal
 class MainViewController: UIViewController {
     
     // -MARK: variables
-    var lists = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"]
     let detailTypes = ["모집내역", "배송내역"]
     let taskDataManager = TaskDataManager()
     var taskList:[Task] = []
@@ -27,11 +26,11 @@ class MainViewController: UIViewController {
         $0.backgroundColor = .deppBlue
     }
     
-    lazy var uiTableContainer = UIView().then{
+    lazy var viewTableContainer = UIView().then{
         $0.backgroundColor = .red
     }
     
-    lazy var uiApplyButtonContainer = UIView().then{
+    lazy var viewApplyButtonContainer = UIView().then{
         $0.backgroundColor = .CjWhite
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.3
@@ -63,7 +62,6 @@ class MainViewController: UIViewController {
         $0.tintColor = UIColor(rgb: 0x8B8B8B)
     }
 
-    
     // -MARK: Others
     lazy var tableAssignedTask = UITableView().then{
         $0.dataSource = self
@@ -99,7 +97,6 @@ class MainViewController: UIViewController {
     var currentPage: Int = 0 {
         didSet {
           // from segmentedControl -> pageViewController 업데이트
-//          print(oldValue, self.currentPage)
           let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
           self.pageViewController.setViewControllers(
             [dataViewControllers[self.currentPage]],
@@ -161,12 +158,12 @@ class MainViewController: UIViewController {
             SCDetailType,
             buttonSort,
             distributeBar,
-            uiTableContainer,
-            uiApplyButtonContainer,
+            viewTableContainer,
+            viewApplyButtonContainer,
             buttonApply
         ])
         
-        self.uiTableContainer.addSubviews([
+        self.viewTableContainer.addSubviews([
             pageViewController.view,
         ])
         vcComplete.view.addSubviews([tableCompleteTask])
@@ -201,17 +198,17 @@ class MainViewController: UIViewController {
             make.width.equalTo(345)
         }
         
-        uiTableContainer.snp.makeConstraints { make in
+        viewTableContainer.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(141)
             make.width.equalToSuperview()
-            make.bottom.equalTo(uiApplyButtonContainer.snp.top)
+            make.bottom.equalTo(viewApplyButtonContainer.snp.top)
         }
         
         pageViewController.view.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         
-        uiApplyButtonContainer.snp.makeConstraints { make in
+        viewApplyButtonContainer.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
             make.height.equalTo(116)
@@ -230,11 +227,24 @@ class MainViewController: UIViewController {
             make.width.height.equalToSuperview()
         }
     }
+    
+    func successGetTasks(result: [Task]) {
+        completedTasks.removeAll()
+        taskList.removeAll()
+        for task in result {
+            if task.workState == 2 {
+                completedTasks.append(task)
+            }
+            else {
+                taskList.append(task)
+            }
+        }
+        tableAssignedTask.reloadData()
+        tableCompleteTask.reloadData()
+    }
 }
 
-
-
-// -MARK: Extensions
+// -MARK: TableView Extension
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableView==tableAssignedTask ? taskList.count : completedTasks.count
@@ -255,6 +265,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// -MARK: CellDelegate Extension
 extension MainViewController: DetailDelegate {
     func getTaskDetail(whatTask: Task) {
         let vc = ResultViewController()
@@ -267,23 +278,7 @@ extension MainViewController: DetailDelegate {
     }
 }
 
-extension MainViewController {
-    func successGetTasks(result: [Task]) {
-        completedTasks.removeAll()
-        taskList.removeAll()
-        for task in result {
-            if task.workState == 2 {
-                completedTasks.append(task)
-            }
-            else {
-                taskList.append(task)
-            }
-        }
-        tableAssignedTask.reloadData()
-        tableCompleteTask.reloadData()
-    }
-}
-
+// -MARK: PageView Extension
 extension MainViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = self.dataViewControllers.firstIndex(of: viewController), index - 1 >= 0 else { return nil }

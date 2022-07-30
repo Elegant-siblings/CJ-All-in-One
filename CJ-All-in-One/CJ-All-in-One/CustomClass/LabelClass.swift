@@ -11,6 +11,7 @@ import Then
 
 public enum LabelType {
     case main
+    case table
 }
 
 class MainLabel: UILabel {
@@ -34,6 +35,9 @@ class MainLabel: UILabel {
         case .main:
             self.textColor = .black
             self.font = UIFont.AppleSDGothicNeo(.bold, size: 16)
+        case .table:
+            self.textColor = .darkGray
+            self.font = .systemFont(ofSize: 12)
         }
     }
     
@@ -43,6 +47,9 @@ class MainLabel: UILabel {
            case .main:
                self.textColor = .black
                self.font = UIFont.AppleSDGothicNeo(.bold, size: 16)
+           case .table:
+               self.textColor = .darkGray
+               self.font = .systemFont(ofSize: 12)
            }
        }
    }
