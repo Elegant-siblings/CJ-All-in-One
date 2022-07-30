@@ -33,9 +33,9 @@ class AssignedTableViewCell: UITableViewCell {
     lazy var viewCategory = UIView()
     lazy var viewReceivAddr = UIView()
     
-    lazy var labelNum = UILabel()
-    lazy var labelCategory = UILabel()
-    lazy var labelReceivAddr = UILabel()
+    lazy var labelNum = MainLabel(type: .table)
+    lazy var labelCategory = MainLabel(type: .table)
+    lazy var labelReceivAddr = MainLabel(type: .table)
     
     lazy var button = UIButton().then {
         $0.layer.cornerRadius = buttonRadius
@@ -72,7 +72,6 @@ class AssignedTableViewCell: UITableViewCell {
                 make.centerY.equalToSuperview()
                 make.leading.trailing.equalToSuperview()
             }
-            label.font = .systemFont(ofSize: 12)
             label.textAlignment = .center
         }
         button.snp.makeConstraints { make in
