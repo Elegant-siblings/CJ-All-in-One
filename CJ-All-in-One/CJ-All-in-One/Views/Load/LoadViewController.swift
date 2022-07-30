@@ -13,6 +13,7 @@ class LoadViewController: UIViewController {
     let seatRadius = CGFloat(10)
     let seatButtonOffset = CGFloat(3)
     let fontSizeAgree = CGFloat(14)
+    var terminalAddr = ""
     var isAgree = 0
     var isSeat: [Bool] = []
     var lists:[Item] = [
@@ -162,7 +163,7 @@ class LoadViewController: UIViewController {
         let alert = UIAlertController(title: "배송을 시작하시겠습니까?", message: "", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
-            print("배송시작!")
+            print("배송시작!", self.terminalAddr)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(cancelAction)

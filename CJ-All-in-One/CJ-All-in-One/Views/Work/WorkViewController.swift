@@ -242,6 +242,7 @@ class WorkViewController: UIViewController {
         print("터미널 도착")
         let vc = BarcodeViewController()
         vc.lists = itemList
+        vc.terminalAddr = task.terminalAddr
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func touchUpCancelButton() {
