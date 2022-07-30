@@ -275,6 +275,10 @@ extension MainViewController: DetailDelegate {
     
     func getCompleteDetail(whatTask: Task) {
         print("배송완료상세내역")
+        
+        //whatTask 넘겨줘야 함
+        let vc = DeliveryCompletedViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

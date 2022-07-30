@@ -163,7 +163,11 @@ class LoadViewController: UIViewController {
         let alert = UIAlertController(title: "배송을 시작하시겠습니까?", message: "", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
-            print("배송시작!", self.terminalAddr)
+            print("배송시작!")
+            
+            let vc = FindPathViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+>>>>>>> f3c2960 (push)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
