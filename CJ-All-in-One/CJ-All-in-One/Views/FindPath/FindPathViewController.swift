@@ -113,7 +113,6 @@ class FindPathViewController: UIViewController {
         $0.alpha = 1
     }
     
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -267,11 +266,11 @@ class FindPathViewController: UIViewController {
                 print(wayPointsToString)
             }
             onGoing = false
-            
+
             print(totalPoints.endIndex)
             
             dataManager.shortestPath(depLng: totalPoints[0].lng, depLat: totalPoints[0].lat, destLng: totalPoints[totalPoints.endIndex - 1].lng, destLat: totalPoints[totalPoints.endIndex - 1].lat, wayPoints: wayPointsToString ?? nil, option: "trafast")
-            
+           
             
             
         } else {

@@ -54,7 +54,7 @@ class MapDataManager: MapDataManagerDelegate {
     
     func getLocation() {
         let urlString = "http://34.125.0.122:3000/map/position?terminalAddr=서울&deliveryPK=1,2,3,4,5,9,91,98"
-        
+
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let url = URL(string: encoded) {
             print(url)
         
