@@ -14,6 +14,7 @@ class LoadViewController: UIViewController {
     let seatButtonOffset = CGFloat(3)
     let fontSizeAgree = CGFloat(14)
     var isAgree = 0
+    var isSeat: [Bool] = []
     let lists:[Item] = [
         Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
         Item(deliveryPK: 1, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
@@ -132,8 +133,11 @@ class LoadViewController: UIViewController {
         viewSeatsContainer.addSubview(buttonDriver)
         viewSeatsContainer.addSubviews(buttonSeats)
         
+        isSeat = Array(repeatElement(false, count: lists.count))
+        
         buttonSeats.enumerated().forEach {
             $1.backgroundColor = .white
+            $1.setTitle("\($0+1)", for: .normal)
             $1.layer.borderColor = colors[$0].cgColor
             $1.layer.borderWidth = 1
             $1.layer.cornerRadius = seatRadius
@@ -157,14 +161,29 @@ class LoadViewController: UIViewController {
     }
     
     @objc func touchUpSeatButton(_ button: UIButton) {
-        buttonSeats.forEach {
-            switch $0 {
+        buttonSeats.enumerated().forEach {
+            switch $1 {
             case button:
-                $0.layer.borderWidth = 3
+                $1.layer.borderWidth = 3
             default:
-                $0.layer.borderWidth = 1
+                $1.layer.borderWidth = 1
             }
         }
+        if button.currentTitle != nil {
+            lists.enumerated().forEach {
+                let num = getSeatNum(pk: $1.deliveryPK)
+                if num+1 == Int(button.currentTitle!) {
+                    isSeat[$0] = true
+                }
+                else {
+                    isSeat[$0] = false
+                }
+            }
+        }
+        else {
+            isSeat = Array(repeating: false, count: lists.count)
+        }
+        tableItem.reloadData()
     }
     
     @objc func touchUpAgreeButton(_ button: UIButton) {
@@ -282,6 +301,13 @@ extension LoadViewController: UITableViewDataSource {
         let seat = getSeatNum(pk: lists[indexPath.row].deliveryPK)
         cell.labelSeat.text = "\(seat+1)"
         cell.labelSeat.textColor = colors[seat]
+        switch isSeat[indexPath.row] {
+        case true:
+            cell.layer.borderWidth = 3
+            cell.layer.borderColor = colors[seat].cgColor
+        default:
+            cell.layer.borderWidth = 0
+        }
         cell.selectionStyle = .none
         return cell
     }
