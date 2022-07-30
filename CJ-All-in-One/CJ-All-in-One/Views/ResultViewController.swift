@@ -23,7 +23,7 @@ class ResultViewController: UIViewController {
     let locations = ["서울", "경기", "인천"]
     
     // -MARK: UIViews
-    lazy var navBar = CustomNavigationBar()
+    lazy var navBar = CustomNavigationBar(title: "터미널 정보")
     lazy var viewTerminalInfo = UIView()
     lazy var viewTermImage = UIView().then {
         $0.backgroundColor = .CjBlue
@@ -35,11 +35,6 @@ class ResultViewController: UIViewController {
     lazy var viewButtonsContainer = UIView()
     
     // -MARK: UILabels
-    lazy var labelTermInfoTitle = UILabel().then {
-        $0.text = "터미널 정보"
-        $0.font = .systemFont(ofSize: 23, weight: .bold)
-        $0.textColor = .CjWhite
-    }
     lazy var labelTermAddress = UILabel().then {
         $0.text = task.terminalAddr
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
@@ -103,7 +98,6 @@ class ResultViewController: UIViewController {
         
         view.addSubviews([
             navBar,
-            labelTermInfoTitle,
             viewTerminalInfo,
             viewButtonsContainer
         ])
@@ -119,8 +113,6 @@ class ResultViewController: UIViewController {
             buttonCancel
         ])
         
-        
-        
         switch task.deliveryTime {
         case "주간":
             labelTime.text = "오전 9:00"
@@ -128,6 +120,37 @@ class ResultViewController: UIViewController {
             labelTime.text = "오전 1:00"
         default:
             labelTime.text = ""
+        }
+        
+        let labelNum = MainLabel(type: .table).then {
+            $0.text = "#"
+            $0.textAlignment = .center
+        }
+        let labelCategory = MainLabel(type: .table).then {
+            $0.text = "상품종류"
+            $0.textAlignment = .center
+        }
+        let labelReceivAddr = MainLabel(type: .table).then {
+            $0.text = "배송지"
+            $0.textAlignment = .center
+        }
+        tableItem.tableHeaderView?.addSubviews([
+            labelNum,labelCategory,labelReceivAddr
+        ])
+        labelNum.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(6)
+            make.width.equalTo(35)
+        }
+        labelCategory.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(labelNum.snp.trailing).offset(3)
+            make.width.equalTo(60)
+        }
+        labelReceivAddr.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(labelCategory.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().offset(-15)
         }
         
         // -MARK: Make Constraints
@@ -139,10 +162,6 @@ class ResultViewController: UIViewController {
             make.width.equalToSuperview()
             make.top.equalTo(navBar.snp.bottom).offset(20)
             make.height.equalTo(308)
-        }
-        labelTermInfoTitle.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(navBar).offset(-10)
         }
         viewTermImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

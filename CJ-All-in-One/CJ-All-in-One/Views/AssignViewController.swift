@@ -46,45 +46,12 @@ class AssignViewController: UIViewController {
     lazy var labelAgreement = UILabel().then {
         $0.text = "위탁 계약서"
         $0.textColor = UIColor(hex: 0x888585)
-        $0.font = .systemFont(ofSize: 25, weight: .bold)
+        $0.font = .systemFont(ofSize: 20, weight: .bold)
     }
     // -MARK: UITableViews
     lazy var tableViewedItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
         $0.dataSource = self
         $0.register(AssignedTableViewCell.self, forCellReuseIdentifier: AssignedTableViewCell.identifier)
-        
-//        let labelNum = UILabel().then {
-//            $0.text = "#"
-//        }
-//        let labelCategory = UILabel().then {
-//            $0.text = "상품종류"
-//        }
-//        let labelReceivAddr = UILabel().then {
-//            $0.text = "배송지"
-//        }
-//        $0.tableHeaderView?.addSubviews([
-//            labelNum,labelCategory,labelReceivAddr
-//        ])
-//        _ = [labelNum, labelCategory, labelReceivAddr].map {
-//            $0.font = .systemFont(ofSize: 12)
-//            $0.textAlignment = .center
-//        }
-//
-//        labelNum.snp.makeConstraints { make in
-//            make.centerY.equalToSuperview()
-//            make.leading.equalToSuperview().offset(6)
-//            make.width.equalTo(35)
-//        }
-//        labelCategory.snp.makeConstraints { make in
-//            make.centerY.equalToSuperview()
-//            make.leading.equalTo(labelNum.snp.trailing).offset(3)
-//            make.width.equalTo(60)
-//        }
-//        labelReceivAddr.snp.makeConstraints { make in
-//            make.centerY.equalToSuperview()
-//            make.leading.equalTo(labelCategory.snp.trailing).offset(10)
-//            make.trailing.equalToSuperview().offset(-15)
-//        }
     }
     
     lazy var tableSelectedItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
@@ -106,6 +73,7 @@ class AssignViewController: UIViewController {
     }
     lazy var buttonApply = MainButton(type: .main).then {
         $0.setTitle("업무 신청하기", for: .normal)
+        $0.isEnabled = false
         $0.addTarget(self, action: #selector(touchUpApplyButton), for: .touchUpInside)
     }
     
@@ -188,7 +156,6 @@ class AssignViewController: UIViewController {
         }
         
         labelSelectedTitle.snp.makeConstraints { make in
-//            make.top.equalTo(tableViewedItem.snp.bottom).offset(20)
             make.top.equalTo(view.snp.centerY)
             make.leading.equalTo(labelViewedTitle)
         }
@@ -204,8 +171,8 @@ class AssignViewController: UIViewController {
             make.height.equalTo(240)
         }
         labelAgreement.snp.makeConstraints { make in
-            make.bottom.equalTo(buttonAgree)
-            make.trailing.equalTo(labelAgreement.snp.leading).offset(-5)
+            make.centerY.equalTo(buttonAgree)
+            make.trailing.equalTo(buttonAgree.snp.leading).offset(-10)
         }
         buttonAgree.snp.makeConstraints { make in
             make.trailing.equalTo(buttonApply).offset(-10)
@@ -223,15 +190,12 @@ class AssignViewController: UIViewController {
     
     // -MARK: Selector
     @objc func touchUpApplyButton() {
-//        if selectedItems.count == 0 {
-//            return
-//        }
         _ = selectedItems.map { item in
             applyForm?.deliveryPK.append(item.deliveryPK)
         }
         dataManager.applyTask(applyForm: applyForm!)
+        navigationController?.popToRootViewController(animated: true)
         print("업무 신청하기")
-        
     }
     @objc func touchUpAgreeButton() {
         let vc = AgreementViewController()
@@ -250,11 +214,6 @@ extension AssignViewController {
         addButtonEnabled = [Int](repeating: 1, count: result.count)
         labelViewedCount.text = "\(result.count)"
         tableViewedItem.reloadData()
-//        tableViewedItem.snp.updateConstraints { make in
-//            _ = tableViewedItem.contentSize.height > 250
-//            ? make.height.equalTo(250)
-//            : make.height.equalTo(tableViewedItem.contentSize.height)
-//        }
     }
 }
 
@@ -297,7 +256,6 @@ extension AssignViewController: UITableViewDataSource {
 }
 
 extension AssignViewController: AssignCellDelegate {
-    
     func addItems(sender: UIButton, index: Int) {
         addButtonEnabled[index] = 0
         tableViewedItem.reloadData()
@@ -306,11 +264,7 @@ extension AssignViewController: AssignCellDelegate {
         tableSelectedItem.beginUpdates()
         tableSelectedItem.insertRows(at: [IndexPath(row: selectedItems.count-1, section: 0)], with: .top)
         tableSelectedItem.endUpdates()
-        tableSelectedItem.snp.updateConstraints { make in
-            _ = tableSelectedItem.contentSize.height > 200
-            ? make.height.equalTo(200)
-            : make.height.equalTo(tableSelectedItem.contentSize.height)
-        }
+        isEnableButton()
     }
     
     func removeItems(sender: UIButton, index: Int) {
@@ -325,11 +279,15 @@ extension AssignViewController: AssignCellDelegate {
         tableSelectedItem.deleteRows(at: [IndexPath(row: index, section: 0)], with: .none)
         tableSelectedItem.reloadData()
         tableSelectedItem.endUpdates()
-        
-        if tableSelectedItem.contentSize.height < 200 {
-            tableSelectedItem.snp.updateConstraints { make in
-                make.height.equalTo(tableSelectedItem.contentSize.height)
-            }
+        isEnableButton()
+    }
+    
+    private func isEnableButton() {
+        if self.isAgree == 1 && selectedItems.count != 0 {
+            buttonApply.isEnabled = true
+        }
+        else {
+            buttonApply.isEnabled = false
         }
     }
 }
@@ -352,6 +310,7 @@ extension AssignViewController: AgreementDelegate {
         default:
             break
         }
+        isEnableButton()
         print("agree here")
     }
 }
