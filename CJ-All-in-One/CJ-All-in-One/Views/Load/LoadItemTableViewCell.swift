@@ -20,7 +20,7 @@ class LoadItemTableViewCell: UITableViewCell {
     }
     lazy var labelCategory = MainLabel(type: .table)
     lazy var labelReceivAddr = MainLabel(type: .table).then {
-        $0.textAlignment = .center
+        $0.textAlignment = .center 
     }
     lazy var labelSeat = MainLabel(type: .table).then {
         $0.font = .systemFont(ofSize: 12, weight: .bold)

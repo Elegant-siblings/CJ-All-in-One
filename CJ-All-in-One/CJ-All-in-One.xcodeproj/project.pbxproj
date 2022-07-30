@@ -189,19 +189,11 @@
 				3207A9392892B94700F0E740 /* Package */,
 				3207A9382892B93600F0E740 /* FindPath */,
 				3207A9372892B92A00F0E740 /* DeliveryCompleted */,
-				1D546E77288D1DDD00160E82 /* MainViewController.swift */,
-				785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */,
-				78D942B42890169300C8B224 /* ApplyViewController.swift */,
-				7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */,
-				78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */,
-				78D942BA28901B6F00C8B224 /* ResultViewController.swift */,
-				78D942BC2890497800C8B224 /* ResultItemsTableViewCell.swift */,
-				78ABB2A32891462E0072C41E /* BarcodeViewController.swift */,
-				78ABB2A5289147500072C41E /* ReaderView.swift */,
-				78ABB2A728914A2C0072C41E /* LoadViewController.swift */,
-				78ABB2A9289152350072C41E /* LoadItemTableViewCell.swift */,
-				78B494002891708D0073CB0B /* AssignViewController.swift */,
-				78B494022891980A0073CB0B /* AssignedTableViewCell.swift */,
+				78A3EB6028956B6E00F3380A /* Main */,
+				78A3EB6128956B8400F3380A /* Apply */,
+				78A3EB6228956B9400F3380A /* ItemList */,
+				78A3EB6528956BBC00F3380A /* Barcode */,
+				78A3EB6328956BA900F3380A /* Load */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,6 +320,54 @@
 				782688612893E86200B16A55 /* TaskResponse.swift */,
 			);
 			path = Task;
+			sourceTree = "<group>";
+		};
+		78A3EB6028956B6E00F3380A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1D546E77288D1DDD00160E82 /* MainViewController.swift */,
+				785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		78A3EB6128956B8400F3380A /* Apply */ = {
+			isa = PBXGroup;
+			children = (
+				78D942B42890169300C8B224 /* ApplyViewController.swift */,
+				7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */,
+				78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */,
+				78B494002891708D0073CB0B /* AssignViewController.swift */,
+				78B494022891980A0073CB0B /* AssignedTableViewCell.swift */,
+			);
+			path = Apply;
+			sourceTree = "<group>";
+		};
+		78A3EB6228956B9400F3380A /* ItemList */ = {
+			isa = PBXGroup;
+			children = (
+				78D942BA28901B6F00C8B224 /* ResultViewController.swift */,
+				78D942BC2890497800C8B224 /* ResultItemsTableViewCell.swift */,
+			);
+			path = ItemList;
+			sourceTree = "<group>";
+		};
+		78A3EB6328956BA900F3380A /* Load */ = {
+			isa = PBXGroup;
+			children = (
+				78ABB2A728914A2C0072C41E /* LoadViewController.swift */,
+				78ABB2A9289152350072C41E /* LoadItemTableViewCell.swift */,
+			);
+			path = Load;
+			sourceTree = "<group>";
+		};
+		78A3EB6528956BBC00F3380A /* Barcode */ = {
+			isa = PBXGroup;
+			children = (
+				78ABB2A32891462E0072C41E /* BarcodeViewController.swift */,
+				78ABB2A5289147500072C41E /* ReaderView.swift */,
+			);
+			path = Barcode;
 			sourceTree = "<group>";
 		};
 		78ABB2AB289162450072C41E /* ItemList */ = {
