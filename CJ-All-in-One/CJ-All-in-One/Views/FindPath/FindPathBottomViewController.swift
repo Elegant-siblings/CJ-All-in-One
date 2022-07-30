@@ -32,16 +32,6 @@ class FindPathBottomViewController: UIViewController {
     //MARK: - 컴포넌트 정의
     
     let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-//        let table = ListTableView(
-//            rowHeight: tableRowHeight,
-//            isScrollEnabled: false)
-//        $0.layer.borderWidth = 0.2
-//        $0.layer.cornerRadius = 5
-//        $0.layer.borderColor = UIColor.borderColor.cgColor
-//        $0.separatorStyle = .singleLine
-//        $0.allowsSelection = true
-//        $0.separatorColor = UIColor.customLightGray
-//        $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         $0.layer.addShadow(location: [.top, .bottom])
         $0.register(FindPathBottomTableViewCell.self, forCellReuseIdentifier: FindPathBottomTableViewCell.identifier)
     }

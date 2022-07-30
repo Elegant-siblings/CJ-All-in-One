@@ -21,7 +21,7 @@
 		3207A9472892BAA000F0E740 /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3207A9462892BAA000F0E740 /* PackageDetailViewController.swift */; };
 		3207A9492892BADD00F0E740 /* PackageBasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3207A9482892BADD00F0E740 /* PackageBasicTableViewCell.swift */; };
 		3207A94B2892BAFF00F0E740 /* PackageDeliveryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3207A94A2892BAFF00F0E740 /* PackageDeliveryTableViewCell.swift */; };
-		3207A94D2892BB8E00F0E740 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3207A94C2892BB8E00F0E740 /* MapDelegate.swift */; };
+		32796B3128956E1D001DCDB6 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32796B3028956E1D001DCDB6 /* MapDelegate.swift */; };
 		32A2C55B288FDE710000CCB6 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C55A288FDE710000CCB6 /* Constant.swift */; };
 		32A2C55F288FDF8E0000CCB6 /* ViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */; };
 		32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2C560288FDFF70000CCB6 /* LabelClass.swift */; };
@@ -51,7 +51,6 @@
 		78B494032891980A0073CB0B /* AssignedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B494022891980A0073CB0B /* AssignedTableViewCell.swift */; };
 		78B4940528928A9B0073CB0B /* ApplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B4940428928A9A0073CB0B /* ApplyView.swift */; };
 		78B4940828928F090073CB0B /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B4940728928F090073CB0B /* CityModel.swift */; };
-		78BA59762892C9B40000A5AD /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA59752892C9B40000A5AD /* MapDelegate.swift */; };
 		78D942B52890169300C8B224 /* ApplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B42890169300C8B224 /* ApplyViewController.swift */; };
 		78D942B7289016CA00C8B224 /* ToListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */; };
 		78D942B92890174700C8B224 /* UiViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D942B82890174700C8B224 /* UiViews.swift */; };
@@ -76,8 +75,8 @@
 		3207A9462892BAA000F0E740 /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
 		3207A9482892BADD00F0E740 /* PackageBasicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBasicTableViewCell.swift; sourceTree = "<group>"; };
 		3207A94A2892BAFF00F0E740 /* PackageDeliveryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDeliveryTableViewCell.swift; sourceTree = "<group>"; };
-		3207A94C2892BB8E00F0E740 /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		3207A9502892BFB800F0E740 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32796B3028956E1D001DCDB6 /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		32A2C55A288FDE710000CCB6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDelegate.swift; sourceTree = "<group>"; };
 		32A2C560288FDFF70000CCB6 /* LabelClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelClass.swift; sourceTree = "<group>"; };
@@ -108,7 +107,6 @@
 		78B494022891980A0073CB0B /* AssignedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedTableViewCell.swift; sourceTree = "<group>"; };
 		78B4940428928A9A0073CB0B /* ApplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyView.swift; sourceTree = "<group>"; };
 		78B4940728928F090073CB0B /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
-		78BA59752892C9B40000A5AD /* MapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		78D942B42890169300C8B224 /* ApplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyViewController.swift; sourceTree = "<group>"; };
 		78D942B6289016CA00C8B224 /* ToListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToListTableViewCell.swift; sourceTree = "<group>"; };
 		78D942B82890174700C8B224 /* UiViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViews.swift; sourceTree = "<group>"; };
@@ -236,9 +234,25 @@
 			path = NaverMap;
 			sourceTree = "<group>";
 		};
+		32796B2E28956D9C001DCDB6 /* DeliveryCompleted */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeliveryCompleted;
+			sourceTree = "<group>";
+		};
+		32796B2F28956DA7001DCDB6 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				32796B2F28956DA7001DCDB6 /* New Group */,
+				32796B2E28956D9C001DCDB6 /* DeliveryCompleted */,
 				32796B2D28952AE5001DCDB6 /* NaverMap */,
 				78ABB2B2289162B10072C41E /* Apply */,
 				78ABB2AB289162450072C41E /* Result */,
@@ -292,9 +306,8 @@
 		32A2C55D288FDE970000CCB6 /* Protocol  */ = {
 			isa = PBXGroup;
 			children = (
-				78BA59752892C9B40000A5AD /* MapDelegate.swift */,
 				32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */,
-				3207A94C2892BB8E00F0E740 /* MapDelegate.swift */,
+				32796B3028956E1D001DCDB6 /* MapDelegate.swift */,
 			);
 			path = "Protocol ";
 			sourceTree = "<group>";
@@ -451,8 +464,8 @@
 			files = (
 				78ABB2AA289152350072C41E /* LoadItemTableViewCell.swift in Sources */,
 				78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */,
-				78BA59762892C9B40000A5AD /* MapDelegate.swift in Sources */,
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
+				32796B3128956E1D001DCDB6 /* MapDelegate.swift in Sources */,
 				1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */,
 				78ABB2AD289162640072C41E /* ResultProtocol.swift in Sources */,
 				32A2C561288FDFF70000CCB6 /* LabelClass.swift in Sources */,
@@ -470,7 +483,6 @@
 				78D942BB28901B6F00C8B224 /* ResultViewController.swift in Sources */,
 				78ABB2AF2891626B0072C41E /* ResultResponse.swift in Sources */,
 				1D546E74288D1DDD00160E82 /* AppDelegate.swift in Sources */,
-				3207A94D2892BB8E00F0E740 /* MapDelegate.swift in Sources */,
 				3207A9472892BAA000F0E740 /* PackageDetailViewController.swift in Sources */,
 				78ABB2B8289162D40072C41E /* ApplyDataManager.swift in Sources */,
 				78ABB2B1289162750072C41E /* ResultDataManager.swift in Sources */,

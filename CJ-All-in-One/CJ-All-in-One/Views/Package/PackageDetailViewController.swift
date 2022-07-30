@@ -42,19 +42,9 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = UITableView().then {
-//        let table = ListTableView(
-//            rowHeight: tableRowHeight,
-//            isScrollEnabled: false)
-        $0.layer.borderWidth = 0.2
-        $0.layer.cornerRadius = 5
-        $0.layer.borderColor = UIColor.borderColor.cgColor
-        $0.separatorStyle = .singleLine
-        $0.allowsSelection = false
-        $0.separatorColor = UIColor.customLightGray
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.layer.addShadow(location: [.top, .bottom])
-        $0.isScrollEnabled = true
+        $0.allowsSelection = false
         $0.register(PackageBasicTableViewCell.self, forCellReuseIdentifier: PackageBasicTableViewCell.identifier)
     }
     
@@ -65,19 +55,9 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = UITableView().then {
-//        let table = ListTableView(
-//            rowHeight: tableRowHeight,
-//            isScrollEnabled: false)
-        $0.layer.borderWidth = 0.2
-        $0.layer.cornerRadius = 5
-        $0.layer.borderColor = UIColor.borderColor.cgColor
-        $0.separatorStyle = .singleLine
-        $0.allowsSelection = false
-        $0.separatorColor = UIColor.customLightGray
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.layer.addShadow(location: [.top, .bottom])
-        $0.isScrollEnabled = true
+        $0.allowsSelection = false
         $0.register(PackageDeliveryTableViewCell.self, forCellReuseIdentifier: PackageDeliveryTableViewCell.identifier)
     }
     
