@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserInfo {
+struct UserInfo: Decodable {
     let userID: String
     let userPassword: String
     let userIdentityNum: String

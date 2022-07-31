@@ -47,6 +47,9 @@ class SignUpViewController: UIViewController {
     var isPhoneCer = false
     var isIdCheck = false
     
+    var dataManager: SignUpDataManager = SignUpDataManager()
+    var checkDataManager: IDCheckDataManager = IDCheckDataManager()
+    
     // -MARK: UILabel
     lazy var labelID = UILabel().then {
         $0.text = "아이디"
@@ -312,16 +315,16 @@ class SignUpViewController: UIViewController {
             shakeTextField(textField: idField)
             return
         }
-        if isValidPassword(pwd: password) {
-            if password != passwordCheck {
-                shakeTextField(textField: passwordCheckField)
-                return
-            }
-        }
-        else {
-            shakeTextField(textField: passwordCheckField)
-            return
-        }
+//        if isValidPassword(pwd: password) {
+//            if password != passwordCheck {
+//                shakeTextField(textField: passwordCheckField)
+//                return
+//            }
+//        }
+//        else {
+//            shakeTextField(textField: passwordCheckField)
+//            return
+//        }
         if isPhone == false {
             shakeTextField(textField: phoneField)
             return
@@ -344,6 +347,34 @@ class SignUpViewController: UIViewController {
             return
         }
         
+        
+        
+        dataManager.postLogIn(userID: idField.text!, userPassword: password, userIdentityNum: "\(firstIDNum)-\(secondIDNum)", userPhone: phoneField.text!, userAccount: accountField.text!, viewController: self)
+        
+        
+    }
+    
+    
+    func didSuccessSignUp() {
+        print("success")
+        
+        let vc = MainViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func failedToSignUp(message: String) {
+        print(message)
+    }
+    
+    func didSuccessChecked() {
+        print("중북확인 완료")
+        // 중복확인 ok 되면 아이디 확정
+        isIdCheck = true
+        
+    }
+    
+    func failedToCheck(message: String) {
+        self.presentAlert(title: message)
     }
     
     @objc func touchUpIdCheck() {
@@ -351,9 +382,8 @@ class SignUpViewController: UIViewController {
             shakeTextField(textField: idField)
             return
         }
-        // 중복확인 ok 되면 아이디 확정
-        isIdCheck = true
         
+        checkDataManager.postIDCheck(userID: idField.text!, viewController: self)
     }
     
     @objc func touchUpGetCertify() {
@@ -445,7 +475,7 @@ class SignUpViewController: UIViewController {
 }
 
 extension SignUpViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField,                   shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         if let char = string.cString(using: String.Encoding.utf8) {
             let isBackSpace = strcmp(char, "\\b")
