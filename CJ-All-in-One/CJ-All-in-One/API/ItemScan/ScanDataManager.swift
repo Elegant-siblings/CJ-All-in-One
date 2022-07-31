@@ -11,7 +11,15 @@ import Alamofire
 class ScanDataManager {
     func sendMissingItems(deliveryPK: [Int]) {
         let path = "/item/scan?"
-        let urlString = base_url+path+""
+        
+        var pkToString = ""
+        deliveryPK.forEach {
+            pkToString += "\($0),"
+        }
+        _ = pkToString.popLast()
+        let urlString = base_url+path+"deliveryPK=\(pkToString)"
+        
+        print("URL: \(urlString)")
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
             _ = AF.request(url, method: .get)

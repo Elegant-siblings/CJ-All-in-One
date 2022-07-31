@@ -17,6 +17,7 @@ class BarcodeViewController: UIViewController {
     var terminalAddr = ""
     var workPK: Int?
     var checklist: [Bool] = []
+    var randomIndex = 0
     var lists:[Item] = [
 //        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
     ]
@@ -216,10 +217,21 @@ class BarcodeViewController: UIViewController {
         let alert = UIAlertController(title: "바코드 스캔을 완료하시겠습니까?", message: "누락된 물품은 다시 등록하지 못 합니다.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
             let vc = LoadViewController()
-            vc.lists = self.lists
+            
             vc.terminalAddr = self.terminalAddr
             vc.workPK = self.workPK
-            self.scanDataManager.sendMissingItems(deliveryPK: [1,2,3])
+            var scanned: [Item] = []
+            var missing: [Int] = []
+            self.lists.enumerated().forEach {
+                if self.checklist[$0] == true {
+                    scanned.append($1)
+                }
+                else {
+                    missing.append($1.deliveryPK)
+                }
+            }
+            self.scanDataManager.sendMissingItems(deliveryPK: missing)
+            vc.lists = scanned
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -242,7 +254,13 @@ extension BarcodeViewController: ReaderViewDelegate {
                 message = "QR코드 or 바코드를 인식하지 못했습니다.\n다시 시도해주세요."
                 break
             }
-
+            
+            if randomIndex < lists.count {
+                checklist[randomIndex] = true
+                randomIndex += 1
+            }
+            print(checklist)
+            
             title = "알림"
             message = "인식성공\n\(code)"
         case .fail:
@@ -260,7 +278,6 @@ extension BarcodeViewController: ReaderViewDelegate {
         }
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
         let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
 
         alert.addAction(okAction)
