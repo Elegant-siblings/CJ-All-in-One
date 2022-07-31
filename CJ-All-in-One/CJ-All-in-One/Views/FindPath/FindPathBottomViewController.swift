@@ -21,6 +21,7 @@ class FindPathBottomViewController: UIViewController {
     let contents = ["서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
     var ways = [1, 1, 2, 2, 3, 3, 4, 4]
     var colors : [UIColor] = [UIColor.pathRed, UIColor.pathYellow, UIColor.pathPink, UIColor.pathGreen, UIColor.pathBlue, UIColor.pathBlack]
+    var tableInfo : [Item]?
     
     // Bool Variable
     var onDelivery : Bool = true
@@ -33,6 +34,7 @@ class FindPathBottomViewController: UIViewController {
     
     let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
+        $0.tableHeaderView = .none
         $0.register(FindPathBottomTableViewCell.self, forCellReuseIdentifier: FindPathBottomTableViewCell.identifier)
     }
     
@@ -71,6 +73,7 @@ class FindPathBottomViewController: UIViewController {
         $0.backgroundColor = .customLightGray
         $0.layer.borderColor = UIColor.customLightGray.cgColor
         $0.setTitle("배달 완료", for: .normal)
+        $0.isEnabled = false
         $0.addTarget(self, action: #selector(deliveryCompleted), for: .touchUpInside)
     }
     
@@ -139,6 +142,11 @@ class FindPathBottomViewController: UIViewController {
         }
     }
     
+    func successGetItemList(result: [Item]) {
+        tableInfo = result
+        tableView.reloadData()
+    }
+    
     
     @objc func toggleDeliveryStatus() {
         if !onDelivery {
@@ -183,12 +191,16 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
 //        }
         cell.selectionStyle = .none
         
+        if let data = tableInfo {
+            cell.numLabel.text = "\(indexPath.row + 1)"
+            cell.titleLabel.text = data[indexPath.row].itemCategory
+            cell.contentLabel.text = data[indexPath.row].receiverAddr
+            cell.wayLabel.text = String(data[indexPath.row].deliveryPK)
+            cell.wayLabel.textColor = colors[ways[indexPath.row]-1]
+        }
+        
         // 셀 정보 업데이트
-        cell.numLabel.text = "\(indexPath.row + 1)"
-        cell.titleLabel.text = titles[indexPath.row]
-        cell.contentLabel.text = contents[indexPath.row]
-        cell.wayLabel.text = "\(ways[indexPath.row])"
-        cell.wayLabel.textColor = colors[ways[indexPath.row]-1]
+        
         
         return cell
     }

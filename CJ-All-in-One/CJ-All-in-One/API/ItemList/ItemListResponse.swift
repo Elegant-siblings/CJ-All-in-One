@@ -19,3 +19,9 @@ struct Item: Codable {
     let senderAddr: String
     let receiverAddr: String
 }
+
+
+struct TerminalAddressResponse: Decodable{
+    let success: Bool
+    let position: [String]
+}

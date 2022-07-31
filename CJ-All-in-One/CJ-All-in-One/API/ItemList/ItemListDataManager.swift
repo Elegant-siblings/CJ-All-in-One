@@ -31,4 +31,29 @@ class ItemListDataManager: ItemListDataManagerDelegate {
                 }
         }
     }
+    
+    func getTermAddress(terminalAddr: String, vc: WorkViewController) {
+        let urlString = "\(base_url)/map/terminal?terminalAddr=서울 강서구 양천로 373"
+
+        print(urlString)
+        
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
+            _ = AF.request(url, method: .get)
+                .validate()
+                .responseDecodable(of: TerminalAddressResponse.self) {
+                    response in
+                    switch response.result {
+                    case .success(let response):
+                        if response.success{
+                            vc.successGetTerminalAddress(result: response)
+                            print("DEBUG: ",response)
+                        } else {
+                            print("배송지 에러")
+                        }
+                    case .failure(let error):
+                        print("DEBUG: ",error)
+                    }
+                }
+        }
+    }
 }
