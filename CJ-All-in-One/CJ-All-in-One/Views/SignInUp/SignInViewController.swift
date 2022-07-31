@@ -14,33 +14,13 @@ class SignInViewController: UIViewController {
     
     var dataManager : LogInDataManager = LogInDataManager()
     
-    lazy var usernameEmailField = UITextField().then {
+    lazy var usernameEmailField = SignUpTextField().then {
         $0.placeholder = "Username or Email..."
-        $0.returnKeyType = .next
-        $0.leftViewMode = .always
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-        $0.autocapitalizationType = .none
-        $0.autocorrectionType = .no
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = cornerRadius
-        $0.backgroundColor = .secondarySystemBackground
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = UIColor.secondaryLabel.cgColor
     }
     
-    lazy var passwordField = UITextField().then {
+    lazy var passwordField = SignUpTextField().then {
         $0.isSecureTextEntry = true
         $0.placeholder = "Password..."
-        $0.returnKeyType = .continue
-        $0.leftViewMode = .always
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
-        $0.autocapitalizationType = .none
-        $0.autocorrectionType = .no
-        $0.layer.masksToBounds = true
-        $0.layer.cornerRadius = cornerRadius
-        $0.backgroundColor = .secondarySystemBackground
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = UIColor.secondaryLabel.cgColor
     }
     
     lazy var buttonSignIn = MainButton(type: .main).then {
@@ -132,6 +112,7 @@ class SignInViewController: UIViewController {
     func didSuccessLogIn(result: UserInfo){
         print("LogIn 성공")
         let vc = MainViewController()
+        ManId = result.deliveryManID
         self.navigationController?.changeRootViewController(vc)
     }
     func failedToLogIn(message: String) {
