@@ -282,6 +282,7 @@ extension BarcodeViewController: ReaderViewDelegate {
         let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
 
         alert.addAction(okAction)
+        print(message)
         self.present(alert, animated: true, completion: nil)
     }
 }
