@@ -11,6 +11,7 @@ import SnapKit
 protocol DetailDelegate {
     func getTaskDetail(whatTask: Task)
     func getCompleteDetail(whatTask: Task)
+    func getIngDetail(whatTask: Task)
 }
 
 class DeliveryDetailTableViewCell: UITableViewCell {
@@ -194,11 +195,14 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     }
     
     @objc func touchUpContentView() {
-        if task.workState == 2{
+        if task.workState == 2 {
             detailDelegate?.getCompleteDetail(whatTask: self.task)
         }
-        else {
+        else if task.workState == 0 {
             detailDelegate?.getTaskDetail(whatTask: self.task)
+        }
+        else {
+            detailDelegate?.getIngDetail(whatTask: self.task)
         }
     }
 }
