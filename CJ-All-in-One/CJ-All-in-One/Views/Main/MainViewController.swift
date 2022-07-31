@@ -145,6 +145,12 @@ class MainViewController: UIViewController {
         taskDataManager.getTasks(self, id: ManId)
         sender.endRefreshing()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        taskDataManager.getTasks(self, id: ManId)
+        tableAssignedTask.reloadData()
+    }
 
     // -MARK: viewDidLoad
     override func viewDidLoad() {
