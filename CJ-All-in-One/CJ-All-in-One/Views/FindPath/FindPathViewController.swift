@@ -163,7 +163,7 @@ class FindPathViewController: UIViewController {
         var deliveryPKtoString = deliveryPK.description
         deliveryPKtoString.removeLast()
         deliveryPKtoString.removeFirst()
-        dataManager.getLocation(terminalAddr: terminalAddr, deliveryPK: deliveryPKtoString)
+        dataManager.getLocation(terminalAddr: terminalAddr, deliveryPK: "deliveryPKtoString")
     }
     
 //    override func viewDidAppear(_ animated: Bool) {

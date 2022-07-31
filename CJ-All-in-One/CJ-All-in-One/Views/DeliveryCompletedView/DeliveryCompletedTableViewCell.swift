@@ -24,12 +24,6 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
         $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
         $0.textColor = .gray
     }
-    let confirmLabel = MainLabel(type: .main).then {
-        $0.text = "확인"
-        $0.font = UIFont.AppleSDGothicNeo(.regular, size: 12)
-        $0.textColor = .lightGray
-        
-    }
     let checkImage = UIImageView().then {
         $0.image = UIImage(named: "CellCheck")
     }
@@ -52,7 +46,8 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubviews([numLabel, titleLabel, contentLabel, checkImage, confirmLabel])
+
+        self.contentView.addSubviews([numLabel, titleLabel, contentLabel, checkImage])
         
         setConstraints()
     }
@@ -81,10 +76,6 @@ class DeliveryCompletedTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-20)
             make.width.equalTo(15)
             make.height.equalTo(15)
-        }
-        confirmLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-20)
         }
     }
 }
