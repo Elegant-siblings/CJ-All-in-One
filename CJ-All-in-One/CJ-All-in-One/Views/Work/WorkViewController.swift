@@ -17,11 +17,13 @@ class WorkViewController: UIViewController {
     var itemList: [Item] = []
     let fontsizeTerminalLabel = CGFloat(15)
     
+    var terminalAddr = [NMGLatLng]()
+    
     // -MARK: UIViews
     lazy var navBar = CustomNavigationBar(title: "터미널 정보")
     lazy var viewTerminalInfo = UIView()
-    lazy var viewTermImage = UIView().then {
-        $0.backgroundColor = .CjBlue
+    lazy var mapView = NMFMapView().then {
+        $0.backgroundColor = .white
         $0.layer.cornerRadius = 30
     }
     lazy var viewDivideLine = UIView().then {
@@ -89,7 +91,7 @@ class WorkViewController: UIViewController {
         ])
         
         viewTerminalInfo.addSubviews([
-            viewTermImage,
+            mapView,
             labelTermAddress,
             labelTime,
             viewDivideLine
@@ -149,15 +151,15 @@ class WorkViewController: UIViewController {
             make.top.equalTo(navBar.snp.bottom).offset(20)
             make.height.equalTo(308)
         }
-        viewTermImage.snp.makeConstraints { make in
+        mapView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
             make.width.equalToSuperview().offset(-40)
             make.height.equalTo(235)
         }
         labelTermAddress.snp.makeConstraints { make in
-            make.trailing.equalTo(viewTermImage).offset(-13)
-            make.top.equalTo(viewTermImage.snp.bottom).offset(15)
+            make.trailing.equalTo(mapView).offset(-13)
+            make.top.equalTo(mapView.snp.bottom).offset(15)
         }
         labelTime.snp.makeConstraints { make in
             make.trailing.equalTo(labelTermAddress)
@@ -188,6 +190,7 @@ class WorkViewController: UIViewController {
         
         if task.workState == 0 {
             itemListDataManager.getItemList(self, pk: task.workPK)
+            itemListDataManager.getTermAddress(terminalAddr: task.terminalAddr, vc: self)
             view.addSubviews([
                 labelTotal,
                 labelTos,
@@ -217,7 +220,7 @@ class WorkViewController: UIViewController {
             labelComment.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(labelCommentTitle.snp.bottom).offset(10)
-                make.width.equalTo(viewTermImage).offset(-70)
+                make.width.equalTo(mapView).offset(-70)
             }
             buttonArrived.isEnabled = false
             buttonCancel.isEnabled = false
@@ -261,6 +264,25 @@ class WorkViewController: UIViewController {
         _ = cityText.popLast()
         labelTos.text = cityText
         tableItem.reloadData()
+    }
+    
+    func successGetTerminalAddress(result: TerminalAddressResponse){
+        terminalAddr.append(NMGLatLng(lat: Double(result.position[0]) ?? 0, lng: Double(result.position[1]) ?? 0))
+        
+        //터미널 위치 마커 찍기
+        let terminalMark = NMFMarker(position: terminalAddr[0])
+        terminalMark.mapView = mapView
+        terminalMark.iconImage = NMF_MARKER_IMAGE_BLACK
+//        terminalMark.captionTextSize = 20
+//        terminalMark.captionAligns = [NMFAlignType.top]
+//        terminalMark.captionText = "
+        
+        // 터미널 위치로 카메라 이동하기
+        let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: terminalAddr[0].lat, lng: terminalAddr[0].lng), zoom: 16))
+        camUpdate.animation = .fly
+        camUpdate.animationDuration = 0.5
+        mapView.moveCamera(camUpdate)
+        
     }
 }
 

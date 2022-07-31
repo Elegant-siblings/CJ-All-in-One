@@ -120,6 +120,8 @@
 		32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedResponse.swift; sourceTree = "<group>"; };
 		32C0110F289647CB00962BCE /* DeliveryCompletedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedDelegate.swift; sourceTree = "<group>"; };
 		32C0111128964E3E00962BCE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		32C011132896616400962BCE /* StartDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDataManager.swift; sourceTree = "<group>"; };
+		32C011152896619100962BCE /* StartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartResponse.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		7814AE90289656C100EC7E82 /* StartResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartResponse.swift; path = "CJ-All-in-One/API/WorkStart/StartResponse.swift"; sourceTree = "<group>"; };
 		7814AE92289656FB00EC7E82 /* StartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartDataManager.swift; path = "CJ-All-in-One/API/WorkStart/StartDataManager.swift"; sourceTree = "<group>"; };
@@ -187,7 +189,6 @@
 				1D546E71288D1DDD00160E82 /* Products */,
 				2BA054BBDDDC068C9EEE3FCC /* Pods */,
 				7088BD170D1F625BC806BDFC /* Frameworks */,
-				78BA59782892F4A80000A5AD /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -495,13 +496,14 @@
 			name = Struct;
 			sourceTree = "<group>";
 		};
-		78BA59782892F4A80000A5AD /* Recovered References */ = {
+		78BA59782892F4A80000A5AD /* WorkStart */ = {
 			isa = PBXGroup;
 			children = (
-				7814AE92289656FB00EC7E82 /* StartDataManager.swift */,
-				7814AE90289656C100EC7E82 /* StartResponse.swift */,
+				32C011132896616400962BCE /* StartDataManager.swift */,
+				32C011152896619100962BCE /* StartResponse.swift */,
 			);
-			name = "Recovered References";
+			name = WorkStart;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		78FC36AD28944F16007B48BD /* Update */ = {
@@ -647,6 +649,7 @@
 				78A3EB5F289478CF00F3380A /* UIButton.swift in Sources */,
 				32A2C571288FE15D0000CCB6 /* IndicatorView.swift in Sources */,
 				3207A93F2892BA0C00F0E740 /* PieChartView.swift in Sources */,
+				32C011162896619100962BCE /* StartResponse.swift in Sources */,
 				78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */,
 				783EEBF22895A9930038A472 /* SignUpViewController.swift in Sources */,
 				32A2C55B288FDE710000CCB6 /* Constant.swift in Sources */,
@@ -694,6 +697,7 @@
 				783EEBE8289592830038A472 /* MapDelegate.swift in Sources */,
 				7814AEA1289662B600EC7E82 /* BasicResponse.swift in Sources */,
 				32796B3828957039001DCDB6 /* PackageDetail.swift in Sources */,
+				32C011142896616400962BCE /* StartDataManager.swift in Sources */,
 				3207A93B2892B9A600F0E740 /* DeliveryCompletedViewController.swift in Sources */,
 				78D942BD2890497800C8B224 /* WorkItemsTableViewCell.swift in Sources */,
 				32A2C563288FDFFE0000CCB6 /* ButtonClass.swift in Sources */,

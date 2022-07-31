@@ -9,4 +9,5 @@ import Foundation
 
 protocol ItemListDataManagerDelegate {
     func getItemList(_ vc: WorkViewController, pk: Int)
+    func getTermAddress(terminalAddr: String, vc: WorkViewController)
 }
