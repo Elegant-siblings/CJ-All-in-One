@@ -46,7 +46,7 @@ class AssignViewController: UIViewController {
     lazy var labelAgreement = UILabel().then {
         $0.text = "위탁 계약서"
         $0.textColor = UIColor(hex: 0x888585)
-        $0.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.font = .systemFont(ofSize: 20, weight: .semibold)
     }
     // -MARK: UITableViews
     lazy var tableViewedItem = ListTableView(rowHeight: 35, scrollType: .vertical).then {
@@ -67,9 +67,9 @@ class AssignViewController: UIViewController {
         $0.layer.borderWidth = 0.7
         $0.layer.borderColor = UIColor.CjRed.cgColor
         $0.layer.cornerRadius = 3
-        let customButtonLabel = NSMutableAttributedString(string: " 동의 ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.CjRed, NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: 15)])
-        $0.setAttributedTitle(customButtonLabel, for: .normal)
-        
+        $0.setTitle(" 동의 ", for: .normal)
+        $0.setTitleColor(.CjRed, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
     }
     lazy var buttonApply = MainButton(type: .main).then {
         $0.setTitle("업무 신청하기", for: .normal)
@@ -81,12 +81,8 @@ class AssignViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print("in viewDidLoad")
-//        print(applyForm!)
-//        print(date, toLists)
         view.backgroundColor = .CjWhite
         
-
         dataManager.getAssignedItems(date: date, locations: toLists, self)
         
         view.addSubviews([
@@ -204,6 +200,7 @@ class AssignViewController: UIViewController {
         vc.modalPresentationStyle = .automatic
         vc.didAgree = isAgree
         vc.modalDelegate = self
+        vc.agreeTitle = "위탁 계약 동의서"
         self.present(vc, animated: true)
     }
 }
@@ -299,14 +296,12 @@ extension AssignViewController: AgreementDelegate {
             self.isAgree = isAgree
             buttonAgree.tintColor = .darkGray
             buttonAgree.layer.borderColor = UIColor.darkGray.cgColor
-            let customButtonLabel = NSMutableAttributedString(string: " 동의 ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: 15)])
-            buttonAgree.setAttributedTitle(customButtonLabel, for: .normal)
+            buttonAgree.setTitleColor(.darkGray, for: .normal)
         case 0:
             self.isAgree = isAgree
             buttonAgree.tintColor = .CjRed
             buttonAgree.layer.borderColor = UIColor.CjRed.cgColor
-            let customButtonLabel = NSMutableAttributedString(string: " 동의 ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.CjRed, NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: 15)])
-            buttonAgree.setAttributedTitle(customButtonLabel, for: .normal)
+            buttonAgree.setTitleColor(.CjRed, for: .normal)
         default:
             break
         }
