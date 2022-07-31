@@ -20,6 +20,8 @@ class Constant {
                 "X-NCP-APIGW-API-KEY" : "WZ2rtCWUOKJrKd1BJn0XEvLoqC0DELzG8yQCDnCI"
         ]
     }
+    
+    
 }
 
 let mainButtonHeight = 48

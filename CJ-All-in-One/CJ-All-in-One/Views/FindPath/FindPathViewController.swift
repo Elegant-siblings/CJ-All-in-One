@@ -27,8 +27,8 @@ class FindPathViewController: UIViewController {
     var longitude: CLLocationDegrees!
     var latitude: CLLocationDegrees!
     
-    var terminalAddr = ""
-    var deliveryPK : [Item] = []
+    var terminalAddr : String!
+    var deliveryPK : [Int]!
 
     //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
 //    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
@@ -159,10 +159,11 @@ class FindPathViewController: UIViewController {
         //경로 찾기 함수 실행
 //        pathButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         setConstraints()
-        
-        dataManager.getLocation()
-        
-        
+    
+        var deliveryPKtoString = deliveryPK.description
+        deliveryPKtoString.removeLast()
+        deliveryPKtoString.removeFirst()
+        dataManager.getLocation(terminalAddr: terminalAddr, deliveryPK: deliveryPKtoString)
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
