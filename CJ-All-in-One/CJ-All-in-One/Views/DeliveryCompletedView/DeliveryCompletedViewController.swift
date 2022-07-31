@@ -581,10 +581,10 @@ extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
             dateLabel.text = "\(info.deliveryDate) / 주간"
             incomeLabel.text = "\(String(info.income).insertComma)원"
             deliveryLabel.text = info.deliveryManID
-            deliveryTimeLabel.text = "배송 시간: \(info.startTime.substring(range: 12..<17)) ~ \(info.endTime.substring(range: 12..<17))"
+            deliveryTimeLabel.text = "배송 시간: \(info.startTime!.substring(range: 12..<17)) ~ \(info.endTime!.substring(range: 12..<17))"
             itemCountLabel.text = "배송물품: \(info.itemNum)개"
             completedItemCountLabel.text = "배송완료: \(info.completeNum)개"
-            missedItemCountLabel.text = "미배송: \(info.itemNum - info.completeNum)개"
+            missedItemCountLabel.text = "미배송: \(info.itemNum - (info.completeNum ?? 0))개"
         }
         
         tableView.reloadData()

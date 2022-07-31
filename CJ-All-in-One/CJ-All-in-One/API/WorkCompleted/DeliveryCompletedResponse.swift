@@ -21,8 +21,9 @@ struct WorkInfo: Decodable {
     let deliveryCar, terminalAddr: String
     let workState: Int
     let comment: String?
-    let itemNum, completeNum, income: Int
-    let startTime, endTime: String
+    let completeNum : Int?
+    let itemNum, income: Int
+    let startTime, endTime: String?
 }
 
 
