@@ -15,6 +15,10 @@ class DeliveryCompletedViewController: UIViewController {
     
     static let identifier = "DeliveryCompletedViewController"
     
+    lazy var dataManager: DeliveryCompletedDataManager = DeliveryCompletedDataManager(delegate: self)
+    var workInfo: WorkInfo?
+    var itemList: [ItemList]?
+    
     // Table 정보
     let tableRowHeight = CGFloat(40)
     let titles = ["#", "라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
@@ -175,10 +179,47 @@ class DeliveryCompletedViewController: UIViewController {
 
     }
     
+    
     let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
+        
+        
+        let sharpLabel = MainLabel(type: .table).then {
+            $0.text = "#"
+        }
+        let productLabel = MainLabel(type: .table).then {
+            $0.text = "배송상품"
+
+        }
+        let destLabel = MainLabel(type: .table).then {
+            $0.text = "배송지"
+
+        }
+        let confirmTableLabel = MainLabel(type: .table).then {
+            $0.text = "확인"
+        }
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
+        $0.tableHeaderView?.addSubviews([sharpLabel, productLabel, destLabel, confirmTableLabel])
         $0.register(DeliveryCompletedTableViewCell.self, forCellReuseIdentifier: DeliveryCompletedTableViewCell.identifier)
+        
+        sharpLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
+        }
+        productLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(sharpLabel)
+            make.leading.equalTo(sharpLabel.snp.trailing).offset(20)
+        }
+        destLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(sharpLabel)
+            make.leading.equalTo(sharpLabel.snp.leading).offset(120)
+            make.trailing.equalTo(confirmTableLabel.snp.leading).offset(-20)
+        }
+        confirmTableLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(sharpLabel)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
     }
     let separateLine3 = UIView().then {
         $0.backgroundColor = .gray
@@ -217,6 +258,9 @@ class DeliveryCompletedViewController: UIViewController {
         infoContainerView2.addSubviews([onTimePercentLabel, missTimePercentLabel, lowTimePercentLabel, onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
         
         setConstraints()
+        
+        
+        dataManager.getDeliveryCompletedDetail(1)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -378,6 +422,8 @@ class DeliveryCompletedViewController: UIViewController {
 //            make.height.equalTo(102)
 //        }
         
+    
+        
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(infoContainerView1.snp.bottom).offset(10)
@@ -476,7 +522,11 @@ class DeliveryCompletedViewController: UIViewController {
 
 extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles.count
+        if let list = itemList {
+            return list.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -489,41 +539,59 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
 //            cell.backgroundColor = .white
 //        }
         
-        cell.numLabel.text = "\(indexPath.row + 1)"
-        cell.titleLabel.text = titles[indexPath.row]
-        cell.contentLabel.text = contents[indexPath.row]
-        
         // 셀 정보 업데이트
-        if indexPath.row == 0{
-            cell.contentView.backgroundColor = .darkGray
-            cell.checkImage.isHidden = true
-            cell.confirmLabel.isHidden = false
-        
+        if let list = itemList {
+            cell.numLabel.text = "\(indexPath.row)"
+            cell.titleLabel.text = list[indexPath.row].itemCategory
+            cell.contentLabel.text = list[indexPath.row].receiverAddr
             
-            
-            
-            
-            cell.numLabel.textColor = .lightGray
-            cell.titleLabel.textColor = .lightGray
-            cell.contentLabel.textColor = .lightGray
-            
-        } else {
-            cell.contentView.backgroundColor = .white
-            cell.checkImage.isHidden = false
-            cell.confirmLabel.isHidden = true
-
-            
-            cell.numLabel.textColor = .gray
-            cell.titleLabel.textColor = .gray
-            cell.contentLabel.textColor = .gray
-        
+            if list[indexPath.row].complete == 0 {
+                cell.checkImage.image = UIImage(named: "CellCheck")
+            } else if list[indexPath.row].complete == 1 {
+                cell.checkImage.image = UIImage(named: "CellUncheck")
+            } else {
+                cell.checkImage.image = UIImage(named: "CellRejected")
+            }
         }
+        
+    
+        cell.contentView.backgroundColor = .white
+        cell.checkImage.isHidden = false
+
+        
+        cell.numLabel.textColor = .gray
+        cell.titleLabel.textColor = .gray
+        cell.contentLabel.textColor = .gray
+        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
+    }
+}
+
+extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
+    func didSuccessGetCompletedDetail(_ result: DeliveryCompletedResponse) {
+        workInfo = result.workInfo
+        itemList = result.itemList
+        
+        if let info = workInfo {
+            dateLabel.text = "\(info.deliveryDate) / 주간"
+            incomeLabel.text = "\(String(info.income).insertComma)원"
+            deliveryLabel.text = info.deliveryManID
+            deliveryTimeLabel.text = "배송 시간: \(info.startTime.substring(range: 12..<17)) ~ \(info.endTime.substring(range: 12..<17))"
+            itemCountLabel.text = "배송물품: \(info.itemNum)개"
+            completedItemCountLabel.text = "배송완료: \(info.completeNum)개"
+            missedItemCountLabel.text = "미배송: \(info.itemNum - info.completeNum)개"
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func failedToRequest(_ message: String) {
+        print(message)
     }
 }
 

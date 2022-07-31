@@ -36,8 +36,8 @@
 		32C011092896402600962BCE /* PackageDetailUpdateInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C011082896402600962BCE /* PackageDetailUpdateInput.swift */; };
 		32C0110C289645A400962BCE /* DeliveryCompletedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110B289645A400962BCE /* DeliveryCompletedDataManager.swift */; };
 		32C0110E289645B100962BCE /* DeliveryCompletedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */; };
-		7814AE91289656C200EC7E82 /* StartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE90289656C100EC7E82 /* StartResponse.swift */; };
-		7814AE93289656FB00EC7E82 /* StartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE92289656FB00EC7E82 /* StartDataManager.swift */; };
+		32C01110289647CB00962BCE /* DeliveryCompletedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110F289647CB00962BCE /* DeliveryCompletedDelegate.swift */; };
+		32C0111228964E3E00962BCE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0111128964E3E00962BCE /* String.swift */; };
 		7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */; };
 		7826885E2893E85100B16A55 /* TaskDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885D2893E85100B16A55 /* TaskDataManager.swift */; };
 		782688602893E85900B16A55 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885F2893E85900B16A55 /* TaskProtocol.swift */; };
@@ -111,6 +111,8 @@
 		32C011082896402600962BCE /* PackageDetailUpdateInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailUpdateInput.swift; sourceTree = "<group>"; };
 		32C0110B289645A400962BCE /* DeliveryCompletedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedDataManager.swift; sourceTree = "<group>"; };
 		32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedResponse.swift; sourceTree = "<group>"; };
+		32C0110F289647CB00962BCE /* DeliveryCompletedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedDelegate.swift; sourceTree = "<group>"; };
+		32C0111128964E3E00962BCE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		7814AE90289656C100EC7E82 /* StartResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartResponse.swift; path = "CJ-All-in-One/API/WorkStart/StartResponse.swift"; sourceTree = "<group>"; };
 		7814AE92289656FB00EC7E82 /* StartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartDataManager.swift; path = "CJ-All-in-One/API/WorkStart/StartDataManager.swift"; sourceTree = "<group>"; };
@@ -209,7 +211,7 @@
 				783EEBEE2895A9270038A472 /* SignInUp */,
 				3207A9392892B94700F0E740 /* Package */,
 				3207A9382892B93600F0E740 /* FindPath */,
-				3207A9372892B92A00F0E740 /* DeliveryCompleted */,
+				3207A9372892B92A00F0E740 /* DeliveryCompletedView */,
 				78A3EB6028956B6E00F3380A /* Main */,
 				78A3EB6128956B8400F3380A /* Apply */,
 				78A3EB6228956B9400F3380A /* Work */,
@@ -228,14 +230,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		3207A9372892B92A00F0E740 /* DeliveryCompleted */ = {
+		3207A9372892B92A00F0E740 /* DeliveryCompletedView */ = {
 			isa = PBXGroup;
 			children = (
 				3207A93A2892B9A600F0E740 /* DeliveryCompletedViewController.swift */,
 				3207A93C2892B9EC00F0E740 /* DeliveryCompletedTableViewCell.swift */,
 				3207A93E2892BA0C00F0E740 /* PieChartView.swift */,
 			);
-			path = DeliveryCompleted;
+			path = DeliveryCompletedView;
 			sourceTree = "<group>";
 		};
 		3207A9382892B93600F0E740 /* FindPath */ = {
@@ -293,6 +295,7 @@
 				32A2C56C288FE0BD0000CCB6 /* CALayer.swift */,
 				32A2C56E288FE0C80000CCB6 /* UIFont.swift */,
 				78A3EB5E289478CF00F3380A /* UIButton.swift */,
+				32C0111128964E3E00962BCE /* String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */,
 				32796B3728957039001DCDB6 /* PackageDetail.swift */,
 				783EEBE7289592830038A472 /* MapDelegate.swift */,
+				32C0110F289647CB00962BCE /* DeliveryCompletedDelegate.swift */,
 			);
 			path = "Protocol ";
 			sourceTree = "<group>";
@@ -591,6 +595,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32C01110289647CB00962BCE /* DeliveryCompletedDelegate.swift in Sources */,
 				782688602893E85900B16A55 /* TaskProtocol.swift in Sources */,
 				78ABB2AA289152350072C41E /* LoadItemTableViewCell.swift in Sources */,
 				78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */,
@@ -622,6 +627,7 @@
 				78ABB2AF2891626B0072C41E /* ItemListResponse.swift in Sources */,
 				1D546E74288D1DDD00160E82 /* AppDelegate.swift in Sources */,
 				7826885E2893E85100B16A55 /* TaskDataManager.swift in Sources */,
+				32C0111228964E3E00962BCE /* String.swift in Sources */,
 				783EEBE42895918A0038A472 /* MapResponse.swift in Sources */,
 				3207A9472892BAA000F0E740 /* PackageDetailViewController.swift in Sources */,
 				78ABB2B8289162D40072C41E /* ApplyDataManager.swift in Sources */,
@@ -805,7 +811,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedFInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
