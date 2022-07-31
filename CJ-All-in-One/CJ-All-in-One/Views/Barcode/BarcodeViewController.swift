@@ -134,7 +134,6 @@ class BarcodeViewController: UIViewController {
         ])
         
         checklist = Array(repeating: false, count: lists.count)
-        checklist[1] = true
         
         navBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
