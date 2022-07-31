@@ -15,12 +15,7 @@ class WorkViewController: UIViewController {
     let itemListDataManager = ItemListDataManager()
     var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
     var itemList: [Item] = []
-    let terminalAddress = "서울특별시 서초구 양재동 225-5"
-    let time = "오전 7:00"
     let fontsizeTerminalLabel = CGFloat(15)
-    let cnt = 0
-    let gae = " 개"
-    let locations = ["서울", "경기", "인천"]
     
     // -MARK: UIViews
     lazy var navBar = CustomNavigationBar(title: "터미널 정보")
@@ -40,21 +35,12 @@ class WorkViewController: UIViewController {
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
     lazy var labelTime = UILabel().then {
-        $0.text = time
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
     lazy var labelTotal = UILabel().then {
-        $0.text = "총 \(cnt)개"
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
     lazy var labelTos = UILabel().then {
-        $0.text = ""
-        for lo in locations {
-            $0.text! += lo
-            if lo != locations.last {
-                $0.text! += ", "
-            }
-        }
         $0.font = .systemFont(ofSize: fontsizeTerminalLabel, weight: .semibold)
     }
     lazy var labelCommentTitle = UILabel().then {
@@ -243,6 +229,7 @@ class WorkViewController: UIViewController {
         let vc = BarcodeViewController()
         vc.lists = itemList
         vc.terminalAddr = task.terminalAddr
+        vc.workPK = task.workPK
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func touchUpCancelButton() {

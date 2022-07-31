@@ -22,4 +22,5 @@ struct Row: Codable, Equatable {
 
 struct ApplySuccess: Codable {
     let success: Bool
+    let err: String?
 }

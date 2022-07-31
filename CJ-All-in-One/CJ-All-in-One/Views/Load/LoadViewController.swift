@@ -13,17 +13,14 @@ class LoadViewController: UIViewController {
     let seatRadius = CGFloat(10)
     let seatButtonOffset = CGFloat(3)
     let fontSizeAgree = CGFloat(14)
+    let startDataManager = StartDataMananer()
+    
     var terminalAddr = ""
+    var workPK: Int?
     var isAgree = 0
     var isSeat: [Bool] = []
     var lists:[Item] = [
-        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 1, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 4, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 6, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 7, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 17, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 21, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+//        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
     ]
     let colors:[UIColor] = [.CjRed,.CjYellow,.CjBlue,.CjGreen]
     
@@ -159,11 +156,12 @@ class LoadViewController: UIViewController {
     }
     // -MARK: Selectors
     @objc func touchUpCompleteButton() {
-        print("적재 완료")
         let alert = UIAlertController(title: "배송을 시작하시겠습니까?", message: "", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
-            print("배송시작!")
+            // 배송 시작 쿼리 보내기
+            self.startDataManager.sendWorkStart(workPk: self.workPK!, manID: ManId)
+            // 뷰 넘기기
             let vc = FindPathViewController()
             vc.terminalAddr = self.terminalAddr
             
@@ -303,7 +301,7 @@ class LoadViewController: UIViewController {
     }
     
     private func getSeatNum(pk: Int) -> Int{
-        return pk*13%4
+        return pk*pk%4
     }
 }
 

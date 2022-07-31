@@ -197,6 +197,7 @@ class AssignViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
         print("업무 신청하기")
     }
+    
     @objc func touchUpAgreeButton() {
         let vc = AgreementViewController()
         vc.modalTransitionStyle = .coverVertical
@@ -204,7 +205,6 @@ class AssignViewController: UIViewController {
         vc.didAgree = isAgree
         vc.modalDelegate = self
         self.present(vc, animated: true)
-        print("agree")
     }
 }
 // -MARK: extensions
@@ -311,6 +311,5 @@ extension AssignViewController: AgreementDelegate {
             break
         }
         isEnableButton()
-        print("agree here")
     }
 }
