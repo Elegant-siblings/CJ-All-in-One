@@ -17,11 +17,12 @@ class FindPathBottomViewController: UIViewController {
     
     // Table 정보
     let tableRowHeight = CGFloat(40)
-    let titles = ["라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
-    let contents = ["서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
-    var ways = [1, 1, 2, 2, 3, 3, 4, 4]
-    var colors : [UIColor] = [UIColor.pathRed, UIColor.pathYellow, UIColor.pathPink, UIColor.pathGreen, UIColor.pathBlue, UIColor.pathBlack]
-    var tableInfo : [Item]?
+//    let titles = ["라이언머그컵", "김치", "된장", "거울", "컴퓨터", "홍삼즙", "받는 주소", "요청사항"]
+//    let contents = ["서울특별시 송파구 압구정로", "서울특별시 서초구 신세계", "서울특별시 관악구 서울대학교", "최** (010-2287-****)", "서울특별시 서초구 양재동 225-5", "서울특별시 서초구 양재동 225-5", "개가 뭅니다", "서울"]
+    var colors : [UIColor] = [UIColor.CjRed, UIColor.CjYellow, UIColor.CjBlue, UIColor.CjGreen]
+    var tableInfo : [ItemList]?
+    var dataManager: WorksItemListDataManager = WorksItemListDataManager()
+    var workPK: Int?
     
     // Bool Variable
     var onDelivery : Bool = true
@@ -97,6 +98,9 @@ class FindPathBottomViewController: UIViewController {
         leftDistanceLabel.text = "남은 이동거리: \(distance!)"
         deliveryEndTimeLabel.text = "예상 소요시간: \(time!)"
         
+        if let workPK = workPK {
+            dataManager.getPackageDetail(workPK: workPK, vc: self)
+        }
     }
     
     func setConstraints(){
@@ -142,9 +146,13 @@ class FindPathBottomViewController: UIViewController {
         }
     }
     
-    func successGetItemList(result: [Item]) {
-        tableInfo = result
+    func didSuccessGetItemList(_ result: DeliveryCompletedResponse) {
+        
+        tableInfo = result.itemList
         tableView.reloadData()
+    }
+    func failedToRequest(message: String) {
+        print(message)
     }
     
     
@@ -177,7 +185,11 @@ class FindPathBottomViewController: UIViewController {
 
 extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles.count
+        if let data = tableInfo {
+            return data.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -195,8 +207,20 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
             cell.numLabel.text = "\(indexPath.row + 1)"
             cell.titleLabel.text = data[indexPath.row].itemCategory
             cell.contentLabel.text = data[indexPath.row].receiverAddr
-            cell.wayLabel.text = String(data[indexPath.row].deliveryPK)
-            cell.wayLabel.textColor = colors[ways[indexPath.row]-1]
+            cell.wayLabel.text = String(data[indexPath.row].seatNum)
+            print(data[indexPath.row].seatNum-1)
+            //seatNum 조정 필요
+            cell.wayLabel.textColor = colors[data[indexPath.row].seatNum]
+            
+            if data[indexPath.row].complete == 4 {
+                cell.checkImage.image = UIImage(named: "CellUnchecked")
+            } else if data[indexPath.row].complete == 1 {
+                cell.checkImage.image = UIImage(named: "CellCheck")
+            } else if data[indexPath.row].complete == 2{
+                cell.checkImage.image = UIImage(named: "CellRejected")
+            } else {
+                cell.checkImage.isHidden = true
+            }
         }
         
         // 셀 정보 업데이트
@@ -212,7 +236,7 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
         self.dismiss(animated: true)
-        tableDelegate.cellTouched()
+        tableDelegate.cellTouched(info: tableInfo![indexPath.row].deliveryPK)
     }
 }
 

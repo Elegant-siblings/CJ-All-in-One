@@ -251,7 +251,7 @@ class MainViewController: UIViewController {
         if let task = whatTask {
             let vc = FindPathViewController()
             vc.terminalAddr = task.terminalAddr
-            
+            vc.workPK = task.workPK
             var deliveryPK : [Int] = []
             for i in result.itemList {
                 deliveryPK.append(i.deliveryPK)

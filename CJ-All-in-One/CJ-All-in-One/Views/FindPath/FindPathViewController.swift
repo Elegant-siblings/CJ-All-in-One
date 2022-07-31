@@ -20,7 +20,6 @@ class FindPathViewController: UIViewController {
     var time: String!
     
     
-    let bottomSheetVC = FindPathBottomViewController()
     
     private let locationManager = NMFLocationManager.sharedInstance()
     
@@ -29,6 +28,7 @@ class FindPathViewController: UIViewController {
     
     var terminalAddr : String!
     var deliveryPK : [Int]!
+    var workPK: Int?
 
     //출발 & 도착 위치 정보: southWest -> 출발, nortEast -> 도착
 //    let departLocation = NMGLatLng(lat: 37.7014553, lng: 126.7644840)
@@ -93,6 +93,15 @@ class FindPathViewController: UIViewController {
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
     }
+    let exitButton = UIButton().then {
+        $0.backgroundColor = .CjOrange
+        $0.layer.cornerRadius = 30
+        $0.layer.borderColor = UIColor.CjOrange.cgColor
+        $0.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right.fill"), for: .normal)
+        $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        $0.adjustsImageWhenHighlighted = false
+        $0.tintColor = .CjWhite
+    }
     
     let distanceLabel = UILabel().then {
         $0.textColor = .black
@@ -132,8 +141,9 @@ class FindPathViewController: UIViewController {
         
         pathButton.addTarget(self, action: #selector(showTable), for: .touchUpInside)
         zoomWayButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
+        exitButton.addTarget(self, action: #selector(popToMain), for: .touchUpInside)
         
-        view.addSubviews([mapView, pathButton, zoomWayButton])
+        view.addSubviews([mapView, pathButton, zoomWayButton, exitButton])
         mapView.addSubviews([infoView])
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
         
@@ -202,6 +212,12 @@ class FindPathViewController: UIViewController {
             make.width.equalTo(60)
             make.height.equalTo(60)
             make.trailing.equalTo(pathButton.snp.leading).offset(-20)
+            make.bottom.equalTo(self.view).offset(-40)
+        }
+        exitButton.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+            make.trailing.equalTo(zoomWayButton.snp.leading).offset(-20)
             make.bottom.equalTo(self.view).offset(-40)
         }
         
@@ -351,12 +367,21 @@ class FindPathViewController: UIViewController {
     
     @objc func showTable() {
         print("show")
+        
+        let bottomSheetVC = FindPathBottomViewController()
+
+        bottomSheetVC.workPK = workPK
         bottomSheetVC.distance = distance
         bottomSheetVC.time = time
         bottomSheetVC.delegate = self
         bottomSheetVC.tableDelegate = self
         bottomSheetVC.modalPresentationStyle = .overCurrentContext
         self.presentPanModal(bottomSheetVC)
+    }
+    
+    @objc func popToMain() {
+        print("pop")
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -369,8 +394,9 @@ extension FindPathViewController: ViewDelegate {
 }
 
 extension FindPathViewController: TableViewDelegate {
-    func cellTouched() {
+    func cellTouched(info: Int) {
         let nextVC = PackageDetailViewController()
+        nextVC.deliveryPK = info
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

@@ -11,5 +11,5 @@ protocol ViewDelegate: AnyObject {
     func pushed()
 }
 protocol TableViewDelegate: AnyObject {
-    func cellTouched()
+    func cellTouched(info: Int)
 }

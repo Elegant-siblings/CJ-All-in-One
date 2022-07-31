@@ -15,7 +15,7 @@ struct PackageDetailUpdateInput {
 /// 에그 머니 전환 API Input Body
 /// - API Index : 22
 struct PackageDetailUpdateBody {
-    var deliveryPK: String
+    var deliveryPK: Int
     var complete: Int
     var receipt: String
     var recipient: String
