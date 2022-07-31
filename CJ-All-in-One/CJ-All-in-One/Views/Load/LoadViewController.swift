@@ -13,7 +13,8 @@ class LoadViewController: UIViewController {
     let seatRadius = CGFloat(10)
     let seatButtonOffset = CGFloat(3)
     let fontSizeAgree = CGFloat(14)
-    let startDataManager = StartDataMananer()
+    let startDataManager = StartDataManager()
+    let updateDataManager = UpdateDataManager()
     
     var terminalAddr = ""
     var workPK: Int?
@@ -80,27 +81,10 @@ class LoadViewController: UIViewController {
     lazy var buttonAgree = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         $0.tintColor = UIColor(hex: 0xCCCCCC)
-        $0.setTitle(" 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의", for: [.normal])
+        $0.setTitle(" 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의", for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: fontSizeAgree, weight: .bold)
         $0.setTitleColor(UIColor(hex: 0xCCCCCC), for: .normal)
         $0.setTitleColor(.gray, for: .highlighted)
-//        $0.setAttributedTitle(
-//            NSMutableAttributedString(
-//                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-//                attributes: [
-//                    NSAttributedString.Key.foregroundColor: UIColor(hex: 0xCCCCCC),
-//                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-//                ]),
-//            for: .normal
-//        )
-//        $0.setAttributedTitle(
-//            NSMutableAttributedString(
-//                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-//                attributes: [
-//                    NSAttributedString.Key.foregroundColor: UIColor.gray,
-//                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-//                ]),
-//            for: .highlighted
-//        )
         $0.addTarget(self, action: #selector(touchUpAgreeButton(_:)), for: .touchUpInside)
     }
     lazy var buttonDriver = UIButton().then {
@@ -162,8 +146,9 @@ class LoadViewController: UIViewController {
         let alert = UIAlertController(title: "배송을 시작하시겠습니까?", message: "", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
-            // 배송 시작 쿼리 보내기
+            // 배송 시작 && 상태 업데이트 쿼리 보내기
             self.startDataManager.sendWorkStart(workPk: self.workPK!, manID: ManId)
+            self.updateDataManager.updateWorkState(workPK: self.workPK!, workState: 3)
             // 뷰 넘기기
             let vc = FindPathViewController()
             vc.terminalAddr = self.terminalAddr
@@ -212,28 +197,12 @@ class LoadViewController: UIViewController {
         case 0:
             isAgree = 1
             button.tintColor = UIColor(hex: 0x888585)
-            button.setAttributedTitle(
-                    NSMutableAttributedString(
-                        string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                        attributes: [
-                            NSAttributedString.Key.foregroundColor: UIColor(hex: 0x888585),
-                            NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                        ]),
-                    for: .normal
-                )
+            button.setTitleColor(UIColor(hex: 0x888585), for: .normal)
             buttonComplete.isEnabled = true
         default:
             isAgree = 0
             button.tintColor = UIColor(hex: 0xCCCCCC)
-            button.setAttributedTitle(
-                NSMutableAttributedString(
-                    string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                    attributes: [
-                        NSAttributedString.Key.foregroundColor: UIColor(hex: 0xCCCCCC),
-                        NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                    ]),
-                for: .normal
-            )
+            button.setTitleColor(UIColor(hex: 0xCCCCCC), for: .normal)
             buttonComplete.isEnabled = false
         }
     }

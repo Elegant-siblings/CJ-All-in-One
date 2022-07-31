@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 
-        window?.rootViewController = UINavigationController(rootViewController: FindPathViewController())
+        window?.rootViewController = UINavigationController(rootViewController: SignUpViewController())
         window?.makeKeyAndVisible()
     }
 

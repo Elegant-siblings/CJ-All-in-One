@@ -11,6 +11,7 @@ import SnapKit
 
 class BarcodeViewController: UIViewController {
     
+    let scanDataManager = ScanDataManager()
     let fontSizeAgree = CGFloat(14)
     var isAgree = 0
     var terminalAddr = ""
@@ -50,24 +51,10 @@ class BarcodeViewController: UIViewController {
     lazy var buttonAgree = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         $0.tintColor = UIColor(hex: 0xCCCCCC)
-        $0.setAttributedTitle(
-            NSMutableAttributedString(
-                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hex: 0xCCCCCC),
-                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                ]),
-            for: .normal
-        )
-        $0.setAttributedTitle(
-            NSMutableAttributedString(
-                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor.gray,
-                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                ]),
-            for: .highlighted
-        )
+        $0.setTitle(" 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의", for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: fontSizeAgree, weight: .bold)
+        $0.setTitleColor(UIColor(hex: 0xCCCCCC), for: .normal)
+        $0.setTitleColor(.gray, for: .highlighted)
         $0.addTarget(self, action: #selector(touchUpAgreeButton(_:)), for: .touchUpInside)
     }
     lazy var buttonComplete = MainButton(type: .main).then {
@@ -198,28 +185,12 @@ class BarcodeViewController: UIViewController {
         case 0:
             isAgree = 1
             button.tintColor = UIColor(hex: 0x888585)
-            button.setAttributedTitle(
-                    NSMutableAttributedString(
-                        string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                        attributes: [
-                            NSAttributedString.Key.foregroundColor: UIColor(hex: 0x888585),
-                            NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                        ]),
-                    for: .normal
-                )
+            button.setTitleColor(UIColor(hex: 0x888585), for: .normal)
             buttonComplete.isEnabled = true
         default:
             isAgree = 0
             button.tintColor = UIColor(hex: 0xCCCCCC)
-            button.setAttributedTitle(
-                NSMutableAttributedString(
-                    string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                    attributes: [
-                        NSAttributedString.Key.foregroundColor: UIColor(hex: 0xCCCCCC),
-                        NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                    ]),
-                for: .normal
-            )
+            button.setTitleColor(UIColor(hex: 0xCCCCCC), for: .normal)
             buttonComplete.isEnabled = false
         }
     }
@@ -231,6 +202,7 @@ class BarcodeViewController: UIViewController {
             vc.lists = self.lists
             vc.terminalAddr = self.terminalAddr
             vc.workPK = self.workPK
+            self.scanDataManager.sendMissingItems(deliveryPK: [1,2,3])
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)

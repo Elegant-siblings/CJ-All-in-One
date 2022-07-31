@@ -38,6 +38,13 @@
 		32C0110E289645B100962BCE /* DeliveryCompletedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */; };
 		32C01110289647CB00962BCE /* DeliveryCompletedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110F289647CB00962BCE /* DeliveryCompletedDelegate.swift */; };
 		32C0111228964E3E00962BCE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0111128964E3E00962BCE /* String.swift */; };
+		7814AE9528965CC900EC7E82 /* StartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE92289656FB00EC7E82 /* StartDataManager.swift */; };
+		7814AE9628965CC900EC7E82 /* StartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE90289656C100EC7E82 /* StartResponse.swift */; };
+		7814AE9A28965D1F00EC7E82 /* StartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE9828965D1F00EC7E82 /* StartResponse.swift */; };
+		7814AE9B28965D1F00EC7E82 /* StartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE9928965D1F00EC7E82 /* StartDataManager.swift */; };
+		7814AE9F2896628F00EC7E82 /* ScanDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE9E2896628F00EC7E82 /* ScanDataManager.swift */; };
+		7814AEA1289662B600EC7E82 /* BasicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AEA0289662B600EC7E82 /* BasicResponse.swift */; };
+		7814AEA32896661D00EC7E82 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AEA22896661D00EC7E82 /* UserInfo.swift */; };
 		7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */; };
 		7826885E2893E85100B16A55 /* TaskDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885D2893E85100B16A55 /* TaskDataManager.swift */; };
 		782688602893E85900B16A55 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885F2893E85900B16A55 /* TaskProtocol.swift */; };
@@ -116,6 +123,11 @@
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		7814AE90289656C100EC7E82 /* StartResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartResponse.swift; path = "CJ-All-in-One/API/WorkStart/StartResponse.swift"; sourceTree = "<group>"; };
 		7814AE92289656FB00EC7E82 /* StartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartDataManager.swift; path = "CJ-All-in-One/API/WorkStart/StartDataManager.swift"; sourceTree = "<group>"; };
+		7814AE9828965D1F00EC7E82 /* StartResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartResponse.swift; sourceTree = "<group>"; };
+		7814AE9928965D1F00EC7E82 /* StartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartDataManager.swift; sourceTree = "<group>"; };
+		7814AE9E2896628F00EC7E82 /* ScanDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDataManager.swift; sourceTree = "<group>"; };
+		7814AEA0289662B600EC7E82 /* BasicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicResponse.swift; sourceTree = "<group>"; };
+		7814AEA22896661D00EC7E82 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		7826885D2893E85100B16A55 /* TaskDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataManager.swift; sourceTree = "<group>"; };
 		7826885F2893E85900B16A55 /* TaskProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskProtocol.swift; sourceTree = "<group>"; };
@@ -263,6 +275,8 @@
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				7814AE9D2896628200EC7E82 /* ItemScan */,
+				7814AE9728965D1F00EC7E82 /* WorkStart */,
 				32C0110A2896457E00962BCE /* WorkCompleted */,
 				783EEBE12895918A0038A472 /* NaverMap */,
 				783EEBDC289591710038A472 /* PackageDetail */,
@@ -270,6 +284,8 @@
 				7826885C2893E81500B16A55 /* Task */,
 				78ABB2B2289162B10072C41E /* Apply */,
 				78ABB2AB289162450072C41E /* ItemList */,
+				7814AEA0289662B600EC7E82 /* BasicResponse.swift */,
+				7814AEA22896661D00EC7E82 /* UserInfo.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -345,6 +361,23 @@
 				87662E309CD1A8BDAD0463A1 /* Pods_CJ_All_in_One.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7814AE9728965D1F00EC7E82 /* WorkStart */ = {
+			isa = PBXGroup;
+			children = (
+				7814AE9828965D1F00EC7E82 /* StartResponse.swift */,
+				7814AE9928965D1F00EC7E82 /* StartDataManager.swift */,
+			);
+			path = WorkStart;
+			sourceTree = "<group>";
+		};
+		7814AE9D2896628200EC7E82 /* ItemScan */ = {
+			isa = PBXGroup;
+			children = (
+				7814AE9E2896628F00EC7E82 /* ScanDataManager.swift */,
+			);
+			path = ItemScan;
 			sourceTree = "<group>";
 		};
 		7826885C2893E81500B16A55 /* Task */ = {
@@ -595,8 +628,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7814AE9528965CC900EC7E82 /* StartDataManager.swift in Sources */,
+				7814AE9628965CC900EC7E82 /* StartResponse.swift in Sources */,
 				32C01110289647CB00962BCE /* DeliveryCompletedDelegate.swift in Sources */,
 				782688602893E85900B16A55 /* TaskProtocol.swift in Sources */,
+				7814AEA32896661D00EC7E82 /* UserInfo.swift in Sources */,
+				7814AE9B28965D1F00EC7E82 /* StartDataManager.swift in Sources */,
 				78ABB2AA289152350072C41E /* LoadItemTableViewCell.swift in Sources */,
 				78ABB2A828914A2C0072C41E /* LoadViewController.swift in Sources */,
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
@@ -626,6 +663,7 @@
 				783EEBDF289591710038A472 /* PackageResponse.swift in Sources */,
 				78ABB2AF2891626B0072C41E /* ItemListResponse.swift in Sources */,
 				1D546E74288D1DDD00160E82 /* AppDelegate.swift in Sources */,
+				7814AE9A28965D1F00EC7E82 /* StartResponse.swift in Sources */,
 				7826885E2893E85100B16A55 /* TaskDataManager.swift in Sources */,
 				32C0111228964E3E00962BCE /* String.swift in Sources */,
 				783EEBE42895918A0038A472 /* MapResponse.swift in Sources */,
@@ -633,7 +671,6 @@
 				78ABB2B8289162D40072C41E /* ApplyDataManager.swift in Sources */,
 				78ABB2B1289162750072C41E /* ItemListDataManager.swift in Sources */,
 				78B4940828928F090073CB0B /* CityModel.swift in Sources */,
-				7814AE93289656FB00EC7E82 /* StartDataManager.swift in Sources */,
 				783EEBE52895918A0038A472 /* MapDataManager.swift in Sources */,
 				78D942B92890174700C8B224 /* UiViews.swift in Sources */,
 				32C0110E289645B100962BCE /* DeliveryCompletedResponse.swift in Sources */,
@@ -651,9 +688,11 @@
 				3207A9432892BA4B00F0E740 /* FindPathBottomViewController.swift in Sources */,
 				78D942B52890169300C8B224 /* ApplyViewController.swift in Sources */,
 				78B4940528928A9B0073CB0B /* ApplyView.swift in Sources */,
+				7814AE9F2896628F00EC7E82 /* ScanDataManager.swift in Sources */,
 				78D942B7289016CA00C8B224 /* ToListTableViewCell.swift in Sources */,
 				3207A9412892BA2E00F0E740 /* FindPathViewController.swift in Sources */,
 				783EEBE8289592830038A472 /* MapDelegate.swift in Sources */,
+				7814AEA1289662B600EC7E82 /* BasicResponse.swift in Sources */,
 				32796B3828957039001DCDB6 /* PackageDetail.swift in Sources */,
 				3207A93B2892B9A600F0E740 /* DeliveryCompletedViewController.swift in Sources */,
 				78D942BD2890497800C8B224 /* WorkItemsTableViewCell.swift in Sources */,
@@ -662,7 +701,6 @@
 				78B494032891980A0073CB0B /* AssignedTableViewCell.swift in Sources */,
 				783EEBDB289576C40038A472 /* ScanItemTableViewCell.swift in Sources */,
 				3207A9492892BADD00F0E740 /* PackageBasicTableViewCell.swift in Sources */,
-				7814AE91289656C200EC7E82 /* StartResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
