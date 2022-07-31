@@ -93,7 +93,6 @@ class ListTableView: UITableView {
         
         header.backgroundColor = .firstRowBackgroundColor
         self.tableHeaderView = header
-
         
         self.rowHeight = rowHeight
         switch scrollType {
