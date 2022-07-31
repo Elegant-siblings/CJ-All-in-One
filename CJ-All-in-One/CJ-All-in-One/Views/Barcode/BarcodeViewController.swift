@@ -196,7 +196,7 @@ class BarcodeViewController: UIViewController {
     }
     
     @objc func touchUpCompleteButton() {
-        let alert = UIAlertController(title: "바코드 스캔을 완료하시겠습니까?", message: "넘어가면 누락된 물품 다시 등록 못 함 ㅅㄱ", preferredStyle: .alert)
+        let alert = UIAlertController(title: "바코드 스캔을 완료하시겠습니까?", message: "누락된 물품은 다시 등록하지 못 합니다.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
             let vc = LoadViewController()
             vc.lists = self.lists
