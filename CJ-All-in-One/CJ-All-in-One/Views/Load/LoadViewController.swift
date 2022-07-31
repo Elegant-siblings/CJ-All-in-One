@@ -80,24 +80,27 @@ class LoadViewController: UIViewController {
     lazy var buttonAgree = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         $0.tintColor = UIColor(hex: 0xCCCCCC)
-        $0.setAttributedTitle(
-            NSMutableAttributedString(
-                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hex: 0xCCCCCC),
-                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                ]),
-            for: .normal
-        )
-        $0.setAttributedTitle(
-            NSMutableAttributedString(
-                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor.gray,
-                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
-                ]),
-            for: .highlighted
-        )
+        $0.setTitle(" 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의", for: [.normal])
+        $0.setTitleColor(UIColor(hex: 0xCCCCCC), for: .normal)
+        $0.setTitleColor(.gray, for: .highlighted)
+//        $0.setAttributedTitle(
+//            NSMutableAttributedString(
+//                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
+//                attributes: [
+//                    NSAttributedString.Key.foregroundColor: UIColor(hex: 0xCCCCCC),
+//                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
+//                ]),
+//            for: .normal
+//        )
+//        $0.setAttributedTitle(
+//            NSMutableAttributedString(
+//                string: " 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의",
+//                attributes: [
+//                    NSAttributedString.Key.foregroundColor: UIColor.gray,
+//                    NSAttributedString.Key.font: UIFont.AppleSDGothicNeo(.bold, size: fontSizeAgree)
+//                ]),
+//            for: .highlighted
+//        )
         $0.addTarget(self, action: #selector(touchUpAgreeButton(_:)), for: .touchUpInside)
     }
     lazy var buttonDriver = UIButton().then {
