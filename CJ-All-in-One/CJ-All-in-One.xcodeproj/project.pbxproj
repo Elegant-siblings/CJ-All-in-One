@@ -122,9 +122,6 @@
 		32C0111128964E3E00962BCE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		32C011132896616400962BCE /* StartDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDataManager.swift; sourceTree = "<group>"; };
 		32C011152896619100962BCE /* StartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartResponse.swift; sourceTree = "<group>"; };
-		32C011182896642400962BCE /* MapItemListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemListDataManager.swift; sourceTree = "<group>"; };
-		32C0111C2896647900962BCE /* MapItemListProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemListProtocol.swift; sourceTree = "<group>"; };
-		32C011202896744C00962BCE /* LoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataManager.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		7814AE9828965D1F00EC7E82 /* StartResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartResponse.swift; sourceTree = "<group>"; };
 		7814AE9928965D1F00EC7E82 /* StartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartDataManager.swift; sourceTree = "<group>"; };
@@ -278,8 +275,7 @@
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				32C0111F2896743200962BCE /* Login */,
-				32C011172896634100962BCE /* MapItemList */,
+				7814AEA62896779800EC7E82 /* ItemScan */,
 				78BA59782892F4A80000A5AD /* WorkStart */,
 				32C0110A2896457E00962BCE /* WorkCompleted */,
 				783EEBE12895918A0038A472 /* NaverMap */,
@@ -357,23 +353,6 @@
 				32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */,
 			);
 			path = WorkCompleted;
-			sourceTree = "<group>";
-		};
-		32C011172896634100962BCE /* MapItemList */ = {
-			isa = PBXGroup;
-			children = (
-				32C011182896642400962BCE /* MapItemListDataManager.swift */,
-				32C0111C2896647900962BCE /* MapItemListProtocol.swift */,
-			);
-			path = MapItemList;
-			sourceTree = "<group>";
-		};
-		32C0111F2896743200962BCE /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				32C011202896744C00962BCE /* LoginDataManager.swift */,
-			);
-			path = Login;
 			sourceTree = "<group>";
 		};
 		7088BD170D1F625BC806BDFC /* Frameworks */ = {
@@ -659,8 +638,6 @@
 				32A2C56F288FE0C80000CCB6 /* UIFont.swift in Sources */,
 				78FC36AF28944F39007B48BD /* UpdateProtocol.swift in Sources */,
 				1D546E78288D1DDD00160E82 /* MainViewController.swift in Sources */,
-				32C0111D2896647900962BCE /* MapItemListProtocol.swift in Sources */,
-				32C011212896744C00962BCE /* LoginDataManager.swift in Sources */,
 				7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */,
 				32C0110C289645A400962BCE /* DeliveryCompletedDataManager.swift in Sources */,
 				78ABB2AD289162640072C41E /* ItemListProtocol.swift in Sources */,

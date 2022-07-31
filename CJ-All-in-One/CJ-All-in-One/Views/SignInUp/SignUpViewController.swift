@@ -79,11 +79,14 @@ class SignUpViewController: UIViewController {
         $0.textColor = .primaryFontColor
         $0.textAlignment = .center
     }
+<<<<<<< HEAD
     lazy var labelAgreement = UILabel().then {
         $0.text = "개인정보 제공 및 활용 동의"
         $0.textColor = UIColor(hex: 0x888585)
         $0.font = .systemFont(ofSize: 20, weight: .semibold)
     }
+=======
+>>>>>>> 7e7a295 (sign up view)
     
     // -MARK: TextField
     lazy var idField = SignUpTextField().then {
