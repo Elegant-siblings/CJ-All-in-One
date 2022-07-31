@@ -15,6 +15,7 @@ class AgreementViewController: UIViewController {
     
     var modalDelegate: AgreementDelegate?
     var didAgree = 0
+    var agreeTitle = ""
 
     lazy var viewContent = UIView().then {
         $0.layer.borderColor = UIColor.darkGray.cgColor
@@ -26,7 +27,7 @@ class AgreementViewController: UIViewController {
     }
     
     lazy var labelTitle = UILabel().then {
-        $0.text = "위탁 계약서"
+        $0.text = agreeTitle
         $0.textColor = .primaryFontColor
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 30)
     }
@@ -51,7 +52,6 @@ class AgreementViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .CjWhite
-
         view.addSubviews([
             labelTitle,
             viewContent,
