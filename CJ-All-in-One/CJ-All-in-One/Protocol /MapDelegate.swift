@@ -9,7 +9,7 @@ import Foundation
 
 protocol MapDataManagerDelegate{
     func shortestPath(depLng: Double, depLat: Double, destLng: Double, destLat: Double, wayPoints: String?, option: String)
-    func getLocation()
+    func getLocation(terminalAddr : String, deliveryPK : String)
 }
 
 protocol FindPathViewControllerDelegate: AnyObject{

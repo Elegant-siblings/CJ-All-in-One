@@ -15,10 +15,13 @@ class PackageDetailViewController: UIViewController {
     lazy var dataManager: PackageDetailDataManager = PackageDetailDataManager(delegate: self)
     
     // Table 정보
-    var packageItemInfo : [PackageRow]?
+    var packageItemInfo : PackageResponse!
     let tableRowHeight = CGFloat(40)
     let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청 사항"]
-    let contents = ["AXSD-SDXD-****-ZS**", "1233567", "홍삼즙", "다** (053-573-****)", "최** (010-2287-****)", "아아아아아"]
+    var contents = ["AXSD-SDXD-****-ZS**", "1233567"]
+    let deliveryTitles = ["배송현황", "배송 완료 시각", "수취 방법", "수령인", "사진"]
+    var deliveryContents : [String] = ["", "24시", "경비실 전달", "대리수령", ""]
+    var deliveryImgStr : String?
     
     
     let navigationView = UIView().then {
@@ -41,9 +44,10 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
+        $0.tableHeaderView = .none
         $0.register(PackageBasicTableViewCell.self, forCellReuseIdentifier: PackageBasicTableViewCell.identifier)
     }
     
@@ -54,16 +58,17 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
+        $0.tableHeaderView = .none
         $0.register(PackageDeliveryTableViewCell.self, forCellReuseIdentifier: PackageDeliveryTableViewCell.identifier)
     }
     
     
     //Button
     let completedButton = MainButton(type: .main).then {
-        $0.backgroundColor = .CjBlue
+        $0.setBackgroundColor(.CjBlue, for: .normal)
         $0.layer.borderColor = UIColor.CjBlue.cgColor
         $0.setTitle("배송완료", for: .normal)
     }
@@ -116,7 +121,7 @@ class PackageDetailViewController: UIViewController {
         
         setConstraints()
         
-        dataManager.getPackageList(workPK: 1)
+        dataManager.getPackageDetail(deliveryPK: 1)
 
         
     }
@@ -225,7 +230,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
         if tableView == basicTableView {
             return titles.count
         } else {
-            return titles.count
+            return 5
         }
     }
     
@@ -234,50 +239,77 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(withIdentifier: PackageBasicTableViewCell.identifier, for: indexPath) as! PackageBasicTableViewCell
     
             cell.titleLabel.text = titles[indexPath.row]
-            cell.contentLabel.text = contents[indexPath.row]
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PackageDeliveryTableViewCell.identifier, for: indexPath) as! PackageDeliveryTableViewCell
-    
-            cell.titleLabel.text = titles[indexPath.row]
-            
-            // 사진 올리기
-            if indexPath.row == 5 {
-                
-                cell.contentView.addSubviews([packageImage, packageImageTouch, cameraButton])
-                
-                packageImage.snp.makeConstraints { make in
-                    make.centerY.equalToSuperview()
-                    make.leading.equalToSuperview().offset(75)
-                    make.height.equalTo(60)
-                    make.width.equalTo(60)
-                }
-                packageImageTouch.snp.makeConstraints { make in
-                    make.edges.equalTo(packageImage)
-                }
-                cameraButton.snp.makeConstraints { make in
-                    make.centerY.equalToSuperview()
-                    make.leading.equalToSuperview().offset(150)
-                    make.height.equalTo(60)
-                    make.width.equalTo(60)
-                }
-                
-                
-            } else if indexPath.row == 1 {
-                cell.contentLabel.text = "배송완료"
-                cell.contentLabel.textColor = .CjBlue
-            } else {
+            if let data = packageItemInfo {
                 cell.contentLabel.text = contents[indexPath.row]
             }
             return cell
+            
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PackageDeliveryTableViewCell.identifier, for: indexPath) as! PackageDeliveryTableViewCell
+    
+            cell.titleLabel.text = deliveryTitles[indexPath.row]
+            
+            
+            if let data = packageItemInfo {
+                // 사진 올리기
+                if indexPath.row == 4 {
+
+                    cell.contentView.addSubviews([packageImage, packageImageTouch, cameraButton])
+                    
+                    packageImage.snp.makeConstraints { make in
+                        make.centerY.equalToSuperview()
+                        make.leading.equalToSuperview().offset(75)
+                        make.height.equalTo(60)
+                        make.width.equalTo(60)
+                    }
+                    packageImageTouch.snp.makeConstraints { make in
+                        make.edges.equalTo(packageImage)
+                    }
+                    cameraButton.snp.makeConstraints { make in
+                        make.centerY.equalToSuperview()
+                        make.leading.equalToSuperview().offset(150)
+                        make.height.equalTo(60)
+                        make.width.equalTo(60)
+                    }
+                    
+                    if let img = deliveryImgStr {
+                        if let url = URL(string: img) {
+                            if let data = try? Data(contentsOf: url) {
+                                packageImage.image = UIImage(data: data)
+                            }
+                        }
+                        
+                        cameraButton.isHidden = true
+                        
+                    } else {
+                        
+                        cameraButton.isHidden = false
+                    }
+            
+                } else if indexPath.row == 0 {
+                    
+                    if packageItemInfo.complete == 0{
+                        cell.contentLabel.text = "미배송"
+                        cell.contentLabel.textColor = .CjOrange
+                    } else if packageItemInfo.complete == 1 {
+                        cell.contentLabel.text = "배송완료"
+                        cell.contentLabel.textColor = .CjBlue
+                    } else {
+                        cell.contentLabel.text = "수취 거부"
+                        cell.contentLabel.textColor = .CjRed
+                    }
+                    
+                } else {
+                    cell.contentLabel.text = deliveryContents[indexPath.row]
+                }
+            }
+            return cell
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == deliveryTableView {
-            if indexPath.row == 5 {
+            if indexPath.row == 4 {
                 return 80
             }
         }
@@ -287,10 +319,34 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
 
 extension PackageDetailViewController: PackageDetailViewControllerDelegate {
     func didSuccessGetPackageDetail(_ result: PackageResponse) {
-        packageItemInfo = result.rows
+        packageItemInfo = result
+        
+        contents.append(result.itemCategory)
+        contents.append(result.sender)
+        contents.append(result.receiver)
+        contents.append(result.senderAddr)
+        contents.append(result.receiverAddr)
+        contents.append(result.comment)
+        
+        
+//        deliveryContents.append("24시")
+//        deliveryContents.append(result.receipt)
+//        deliveryContents.append(result.recipient)
+//        deliveryContents.append(result.picture)
+        
+        basicTableView.reloadData()
+        deliveryTableView.reloadData()
     }
     func failedToRequest(_ message: String) {
         print(message)
+    }
+    
+    func didSuccessUpdatePackageDetail(_ result: PackageResponse) {
+        print(result)
+    }
+    
+    func failedToUpadte(_ messgae: String) {
+        print(messgae)
     }
 }
 

@@ -166,7 +166,12 @@ class LoadViewController: UIViewController {
             print("배송시작!")
             let vc = FindPathViewController()
             vc.terminalAddr = self.terminalAddr
-            vc.deliveryPK = self.lists
+            
+            var deliveryPKList : [Int] = []
+            for i in self.lists {
+                deliveryPKList.append(i.deliveryPK)
+            }
+            vc.deliveryPK = deliveryPKList
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
