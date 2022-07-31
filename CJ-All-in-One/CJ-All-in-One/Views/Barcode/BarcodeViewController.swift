@@ -137,7 +137,7 @@ class BarcodeViewController: UIViewController {
         viewBarcodeReader.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(labelBarcodeScan.snp.bottom).offset(20)
-            make.width.equalTo(300)
+            make.width.equalTo(330)
             make.height.equalTo(220)
         }
         readerView.snp.makeConstraints { make in
@@ -257,6 +257,7 @@ extension BarcodeViewController: ReaderViewDelegate {
             
             if randomIndex < lists.count {
                 checklist[randomIndex] = true
+                tableScanItem.reloadData()
                 randomIndex += 1
             }
             print(checklist)

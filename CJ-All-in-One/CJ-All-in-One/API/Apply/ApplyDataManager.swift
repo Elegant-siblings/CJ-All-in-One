@@ -52,7 +52,7 @@ class ApplyDataManager: ApplyDataManagerDelegate {
             deliveryPKs += "\(pk),"
         }
         _ = deliveryPKs.popLast()
-        let urlString = base_url+path+"deliveryPK=\(deliveryPKs)&deliveryMainID=\(applyForm.deliveryManID)&deliveryDate=\(applyForm.deliveryDate)&deliveryType=\(applyForm.deliveryType)&deliveryTime=\(applyForm.deliveryTime)&deliveryCar=\(applyForm.deliveryCar)&terminalAddr=\(applyForm.terminalAddr)"
+        let urlString = base_url+path+"deliveryPK=\(deliveryPKs)&deliveryManID=\(applyForm.deliveryManID)&deliveryDate=\(applyForm.deliveryDate)&deliveryType=\(applyForm.deliveryType)&deliveryTime=\(applyForm.deliveryTime)&deliveryCar=\(applyForm.deliveryCar)&terminalAddr=\(applyForm.terminalAddr)"
         print("URL: ", urlString)
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
