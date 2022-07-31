@@ -25,7 +25,6 @@ class BarcodeViewController: UIViewController {
     //-MARK: UIViews
     lazy var navBar = CustomNavigationBar(title: "배송 물품 등록")
     lazy var viewBarcodeReader = UIView().then {
-        $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 30
     }
     lazy var viewDivideLine = UIView().then {
@@ -38,8 +37,9 @@ class BarcodeViewController: UIViewController {
         $0.font = .systemFont(ofSize: 20, weight: .bold)
         $0.textColor = .primaryFontColor
     }
-    lazy var readerView = ReaderView().then{
+    lazy var readerView = ReaderView(frame: CGRect(x: view.frame.width/4, y: view.frame.height/4, width: 330, height: 220)).then{
         $0.delegate = self
+        $0.layer.cornerRadius = 30
     }
     
     // -MARK: UIButton
@@ -47,6 +47,8 @@ class BarcodeViewController: UIViewController {
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
         $0.addTarget(self, action: #selector(touchUpReadButton(sender:)), for: .touchUpInside)
+        $0.backgroundColor = .CjBlue
+        $0.setTitle("물품 스캔", for: .normal)
     }
     lazy var buttonAgree = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
@@ -107,18 +109,20 @@ class BarcodeViewController: UIViewController {
         
         view.backgroundColor = .CjWhite
         navigationController?.navigationBar.tintColor = .CjWhite
-        
+        readerView.backgroundColor = .opaqueSeparator
         view.addSubviews([
             navBar,
             labelBarcodeScan,
             viewBarcodeReader,
             viewDivideLine,
-//            buttonRead,
+            buttonRead,
             tableScanItem,
             buttonAgree,
             buttonComplete
             
         ])
+        
+        viewBarcodeReader.addSubview(readerView)
         
         checklist = Array(repeating: false, count: lists.count)
         
@@ -133,11 +137,24 @@ class BarcodeViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(labelBarcodeScan.snp.bottom).offset(20)
             make.width.equalTo(300)
-            make.height.equalTo(230)
+            make.height.equalTo(220)
         }
+        readerView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        buttonRead.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(viewBarcodeReader.snp.bottom).offset(10)
+            make.width.equalTo(200)
+            make.height.equalTo(40)
+        }
+        
         viewDivideLine.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(viewBarcodeReader.snp.bottom).offset(30)
+            make.top.equalTo(buttonRead.snp.bottom).offset(15)
             make.height.equalTo(1)
             make.width.equalToSuperview().offset(-50)
         }
