@@ -20,6 +20,9 @@ class MainViewController: UIViewController {
     var taskList:[Task] = []
     var allTasks: [Task] = []
     var completedTasks:[Task] = []
+    var whatTask : Task?
+    
+    let worksDetailDataManager: MainWorkDetailDataManager = MainWorkDetailDataManager()
     
     // -MARK: UIViews
     lazy var navBar = CustomNavigationBar().then {
@@ -242,6 +245,25 @@ class MainViewController: UIViewController {
         tableAssignedTask.reloadData()
         tableCompleteTask.reloadData()
     }
+    
+    func didSuccessGetCompletedDetail(_ result: DeliveryCompletedResponse) {
+        
+        if let task = whatTask {
+            let vc = FindPathViewController()
+            vc.terminalAddr = task.terminalAddr
+            
+            var deliveryPK : [Int] = []
+            for i in result.itemList {
+                deliveryPK.append(i.deliveryPK)
+            }
+            vc.deliveryPK = deliveryPK
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func failedToRequest(message: String) {
+        print(message)
+    }
 }
 
 // -MARK: TableView Extension
@@ -269,6 +291,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: DetailDelegate {
     func getIngDetail(whatTask: Task) {
         // 배송중인 화면
+        self.whatTask = whatTask
+        worksDetailDataManager.getDeliveryCompletedDetail(whatTask.workPK, self)
+        
     }
     
     func getTaskDetail(whatTask: Task) {
