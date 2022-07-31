@@ -40,6 +40,8 @@
 		32C0111228964E3E00962BCE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0111128964E3E00962BCE /* String.swift */; };
 		32C011142896616400962BCE /* StartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C011132896616400962BCE /* StartDataManager.swift */; };
 		32C011162896619100962BCE /* StartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C011152896619100962BCE /* StartResponse.swift */; };
+		32C011192896642400962BCE /* MapItemListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C011182896642400962BCE /* MapItemListDataManager.swift */; };
+		32C0111D2896647900962BCE /* MapItemListProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0111C2896647900962BCE /* MapItemListProtocol.swift */; };
 		7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */; };
 		7826885E2893E85100B16A55 /* TaskDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885D2893E85100B16A55 /* TaskDataManager.swift */; };
 		782688602893E85900B16A55 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885F2893E85900B16A55 /* TaskProtocol.swift */; };
@@ -117,6 +119,8 @@
 		32C0111128964E3E00962BCE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		32C011132896616400962BCE /* StartDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDataManager.swift; sourceTree = "<group>"; };
 		32C011152896619100962BCE /* StartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartResponse.swift; sourceTree = "<group>"; };
+		32C011182896642400962BCE /* MapItemListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemListDataManager.swift; sourceTree = "<group>"; };
+		32C0111C2896647900962BCE /* MapItemListProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemListProtocol.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
 		7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		7826885D2893E85100B16A55 /* TaskDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataManager.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 		32A2C556288FDDCA0000CCB6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				32C011172896634100962BCE /* MapItemList */,
 				78BA59782892F4A80000A5AD /* WorkStart */,
 				32C0110A2896457E00962BCE /* WorkCompleted */,
 				783EEBE12895918A0038A472 /* NaverMap */,
