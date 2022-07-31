@@ -26,8 +26,8 @@ class DeliveryDetailTableViewCell: UITableViewCell {
     let address = "부산 금정구 장전동"
     let delType = "일반 배송"
     let state = "모집확정"
-    let stateText = ["모집 확정", "모집 취소", "배송 완료"]
-    let stateColor = [UIColor.CjBlue,UIColor.CjRed,UIColor.CjGreen]
+    let stateText = ["모집 확정", "모집 취소", "배송 완료", "배송 중"]
+    let stateColor = [UIColor.CjBlue,UIColor.CjRed, UIColor.CjGreen, UIColor.CjYellow]
     var task: Task = Task(workPK: 0, deliveryDate: "", deliveryType: "", deliveryTime: "", deliveryCar: "", terminalAddr: "", workState: 0, comment: "")
     
     // -MARK: UIView

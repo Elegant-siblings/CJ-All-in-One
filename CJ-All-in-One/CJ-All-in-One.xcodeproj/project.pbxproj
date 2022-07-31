@@ -36,6 +36,8 @@
 		32C011092896402600962BCE /* PackageDetailUpdateInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C011082896402600962BCE /* PackageDetailUpdateInput.swift */; };
 		32C0110C289645A400962BCE /* DeliveryCompletedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110B289645A400962BCE /* DeliveryCompletedDataManager.swift */; };
 		32C0110E289645B100962BCE /* DeliveryCompletedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */; };
+		7814AE91289656C200EC7E82 /* StartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE90289656C100EC7E82 /* StartResponse.swift */; };
+		7814AE93289656FB00EC7E82 /* StartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814AE92289656FB00EC7E82 /* StartDataManager.swift */; };
 		7815B6A72893166D00CB9FF3 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */; };
 		7826885E2893E85100B16A55 /* TaskDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885D2893E85100B16A55 /* TaskDataManager.swift */; };
 		782688602893E85900B16A55 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7826885F2893E85900B16A55 /* TaskProtocol.swift */; };
@@ -48,8 +50,6 @@
 		783EEBE8289592830038A472 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EEBE7289592830038A472 /* MapDelegate.swift */; };
 		783EEBF02895A94B0038A472 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EEBEF2895A94B0038A472 /* SignInViewController.swift */; };
 		783EEBF22895A9930038A472 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EEBF12895A9930038A472 /* SignUpViewController.swift */; };
-		783EEBFF289651D80038A472 /* StartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EEBFE289651D80038A472 /* StartDataManager.swift */; };
-		783EEC01289651F20038A472 /* StartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EEC00289651F20038A472 /* StartResponse.swift */; };
 		785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */; };
 		78A3EB5F289478CF00F3380A /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A3EB5E289478CF00F3380A /* UIButton.swift */; };
 		78ABB2A42891462E0072C41E /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABB2A32891462E0072C41E /* BarcodeViewController.swift */; };
@@ -112,6 +112,8 @@
 		32C0110B289645A400962BCE /* DeliveryCompletedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedDataManager.swift; sourceTree = "<group>"; };
 		32C0110D289645B100962BCE /* DeliveryCompletedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryCompletedResponse.swift; sourceTree = "<group>"; };
 		752125581FE725568AF02A70 /* Pods-CJ-All-in-One.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJ-All-in-One.release.xcconfig"; path = "Target Support Files/Pods-CJ-All-in-One/Pods-CJ-All-in-One.release.xcconfig"; sourceTree = "<group>"; };
+		7814AE90289656C100EC7E82 /* StartResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartResponse.swift; path = "CJ-All-in-One/API/WorkStart/StartResponse.swift"; sourceTree = "<group>"; };
+		7814AE92289656FB00EC7E82 /* StartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartDataManager.swift; path = "CJ-All-in-One/API/WorkStart/StartDataManager.swift"; sourceTree = "<group>"; };
 		7815B6A62893166D00CB9FF3 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		7826885D2893E85100B16A55 /* TaskDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataManager.swift; sourceTree = "<group>"; };
 		7826885F2893E85900B16A55 /* TaskProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskProtocol.swift; sourceTree = "<group>"; };
@@ -124,8 +126,6 @@
 		783EEBE7289592830038A472 /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		783EEBEF2895A94B0038A472 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		783EEBF12895A9930038A472 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		783EEBFE289651D80038A472 /* StartDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDataManager.swift; sourceTree = "<group>"; };
-		783EEC00289651F20038A472 /* StartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartResponse.swift; sourceTree = "<group>"; };
 		785A4D1C288FECF900709373 /* DeliveryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDetailTableViewCell.swift; sourceTree = "<group>"; };
 		78A3EB5E289478CF00F3380A /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		78ABB2A32891462E0072C41E /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
@@ -381,15 +381,6 @@
 			path = SignInUp;
 			sourceTree = "<group>";
 		};
-		783EEBFD289651920038A472 /* WorkStart */ = {
-			isa = PBXGroup;
-			children = (
-				783EEBFE289651D80038A472 /* StartDataManager.swift */,
-				783EEC00289651F20038A472 /* StartResponse.swift */,
-			);
-			path = WorkStart;
-			sourceTree = "<group>";
-		};
 		78A3EB6028956B6E00F3380A /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,6 +461,8 @@
 		78BA59782892F4A80000A5AD /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				7814AE92289656FB00EC7E82 /* StartDataManager.swift */,
+				7814AE90289656C100EC7E82 /* StartResponse.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -634,6 +627,7 @@
 				78ABB2B8289162D40072C41E /* ApplyDataManager.swift in Sources */,
 				78ABB2B1289162750072C41E /* ItemListDataManager.swift in Sources */,
 				78B4940828928F090073CB0B /* CityModel.swift in Sources */,
+				7814AE93289656FB00EC7E82 /* StartDataManager.swift in Sources */,
 				783EEBE52895918A0038A472 /* MapDataManager.swift in Sources */,
 				78D942B92890174700C8B224 /* UiViews.swift in Sources */,
 				32C0110E289645B100962BCE /* DeliveryCompletedResponse.swift in Sources */,
@@ -643,12 +637,10 @@
 				1D546E76288D1DDD00160E82 /* SceneDelegate.swift in Sources */,
 				32A2C569288FE0990000CCB6 /* UIColor.swift in Sources */,
 				78ABB2B6289162CB0072C41E /* ApplyResponse.swift in Sources */,
-				783EEC01289651F20038A472 /* StartResponse.swift in Sources */,
 				3207A94B2892BAFF00F0E740 /* PackageDeliveryTableViewCell.swift in Sources */,
 				782688622893E86200B16A55 /* TaskResponse.swift in Sources */,
 				32A2C56D288FE0BD0000CCB6 /* CALayer.swift in Sources */,
 				785A4D1D288FECF900709373 /* DeliveryDetailTableViewCell.swift in Sources */,
-				783EEBFF289651D80038A472 /* StartDataManager.swift in Sources */,
 				32A2C565288FE0080000CCB6 /* NavBarClass.swift in Sources */,
 				3207A9432892BA4B00F0E740 /* FindPathBottomViewController.swift in Sources */,
 				78D942B52890169300C8B224 /* ApplyViewController.swift in Sources */,
@@ -664,6 +656,7 @@
 				78B494032891980A0073CB0B /* AssignedTableViewCell.swift in Sources */,
 				783EEBDB289576C40038A472 /* ScanItemTableViewCell.swift in Sources */,
 				3207A9492892BADD00F0E740 /* PackageBasicTableViewCell.swift in Sources */,
+				7814AE91289656C200EC7E82 /* StartResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
