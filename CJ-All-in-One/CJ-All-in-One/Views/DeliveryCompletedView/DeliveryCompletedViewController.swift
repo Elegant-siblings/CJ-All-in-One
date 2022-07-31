@@ -545,12 +545,14 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
             cell.titleLabel.text = list[indexPath.row].itemCategory
             cell.contentLabel.text = list[indexPath.row].receiverAddr
             
-            if list[indexPath.row].complete == 0 {
+            if list[indexPath.row].complete == 1 {
                 cell.checkImage.image = UIImage(named: "CellCheck")
-            } else if list[indexPath.row].complete == 1 {
+            } else if list[indexPath.row].complete == 2 {
                 cell.checkImage.image = UIImage(named: "CellUncheck")
-            } else {
+            } else if list[indexPath.row].complete == 4 {
                 cell.checkImage.image = UIImage(named: "CellRejected")
+            } else {
+                cell.checkImage.isHidden = true
             }
         }
         

@@ -9,7 +9,7 @@ import Foundation
 
 
 struct DeliveryCompletedResponse: Decodable {
-    let workInfo: WorkInfo
+    let workInfo: WorkInfo?
     let itemList: [ItemList]
 }
 
@@ -20,7 +20,7 @@ struct WorkInfo: Decodable {
     let deliveryType, deliveryTime: Int
     let deliveryCar, terminalAddr: String
     let workState: Int
-    let comment: String?
+    let comment: String
     let completeNum : Int?
     let itemNum, income: Int
     let startTime, endTime: String?
@@ -32,5 +32,6 @@ struct ItemList: Decodable {
     let deliveryPK: Int
     let itemCategory, senderAddr, receiverAddr: String
     let complete: Int
+    let seatNum: Int
 }
 
