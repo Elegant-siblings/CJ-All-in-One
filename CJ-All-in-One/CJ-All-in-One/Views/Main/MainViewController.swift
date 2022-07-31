@@ -267,6 +267,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
 // -MARK: CellDelegate Extension
 extension MainViewController: DetailDelegate {
+    func getIngDetail(whatTask: Task) {
+        // 배송중인 화면
+    }
+    
     func getTaskDetail(whatTask: Task) {
         let vc = WorkViewController()
         vc.task = whatTask
@@ -275,7 +279,6 @@ extension MainViewController: DetailDelegate {
     
     func getCompleteDetail(whatTask: Task) {
         print("배송완료상세내역")
-        
         //whatTask 넘겨줘야 함
         let vc = DeliveryCompletedViewController()
         self.navigationController?.pushViewController(vc, animated: true)

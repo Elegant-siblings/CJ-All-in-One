@@ -94,17 +94,20 @@ class ApplyViewController: UIViewController {
         $0.borderStyle = .roundedRect
     }
     
-    lazy var toolbar = UIToolbar().then {
-        $0.barStyle = UIBarStyle.default
-        $0.isTranslucent = true
+    lazy var toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = UIBarStyle.default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
         
         let doneBT = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(self.donePicker))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelBT = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(self.cancelPicker))
         
-        $0.setItems([cancelBT,flexibleSpace,doneBT], animated: false)
-        $0.isUserInteractionEnabled = true
-    }
+        toolbar.setItems([cancelBT,flexibleSpace,doneBT], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        return toolbar
+    } ()
     
     // -MARK: UIButton
     lazy var applyButton = MainButton(type: .main).then {
