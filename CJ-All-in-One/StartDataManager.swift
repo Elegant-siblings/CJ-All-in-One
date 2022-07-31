@@ -9,9 +9,24 @@ import Foundation
 import Alamofire
 
 class StartDataManager {
-    func sendWorkStart(workPk: Int, manID: String) {
+    func sendWorkStart(workPk: Int, manID: String, deliveryPKs: [Item], seatNum: [Int]) {
         let path = "/works/start?"
-        let urlString = base_url+path+"workPK=\(workPk)&deliveryManID=\(manID)"
+        
+        var dPKtoString = ""
+        deliveryPKs.forEach {
+            dPKtoString += "\($0.deliveryPK),"
+        }
+        _ = dPKtoString.popLast()
+        
+        var seatNumtoString = ""
+        seatNum.forEach {
+            seatNumtoString += "\($0),"
+        }
+        _ = seatNumtoString.popLast()
+        
+        let urlString = base_url+path+"workPK=\(workPk)&deliveryManID=\(manID)&deliveryPK=\(dPKtoString)&seatNum=\(seatNumtoString)"
+        
+//        print("URL: \(urlString)")
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
             _ = AF.request(url, method: .get)
@@ -26,6 +41,5 @@ class StartDataManager {
                     }
                 }
         }
-
     }
 }
