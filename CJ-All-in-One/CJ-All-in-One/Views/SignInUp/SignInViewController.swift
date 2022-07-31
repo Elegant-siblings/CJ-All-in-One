@@ -12,6 +12,8 @@ class SignInViewController: UIViewController {
     let cornerRadius: CGFloat = 8.0
     let uiOffset = CGFloat(10)
     
+    var dataManager : LogInDataManager = LogInDataManager()
+    
     lazy var usernameEmailField = UITextField().then {
         $0.placeholder = "Username or Email..."
         $0.returnKeyType = .next
@@ -99,17 +101,25 @@ class SignInViewController: UIViewController {
             make.top.equalTo(buttonSignIn.snp.bottom).offset(8)
             make.leading.trailing.height.equalTo(usernameEmailField)
         }
+        
+        
     }
     
     // -MARK: Selectors
     @objc func touchUpSignIn() {
         
         guard let usernameEmail = usernameEmailField.text, !usernameEmail.isEmpty,
-              let password = passwordField.text, !password.isEmpty, password.count >= 8 else {
+              let password = passwordField.text, !password.isEmpty else {
                   return
               }
         
         print("sign in")
+        
+        print(usernameEmail)
+        print(password)
+        
+        dataManager.postLogIn(userID: usernameEmail, userPassword: password, viewController: self)
+
         
     }
     
@@ -117,5 +127,14 @@ class SignInViewController: UIViewController {
         let vc = SignUpViewController()
         navigationController?.pushViewController(vc, animated: true)
         
+    }
+    
+    func didSuccessLogIn(result: UserInfo){
+        print("LogIn 성공")
+        let vc = MainViewController()
+        self.navigationController?.changeRootViewController(vc)
+    }
+    func failedToLogIn(message: String) {
+        print(message)
     }
 }
