@@ -398,14 +398,14 @@ class DeliveryCompletedViewController: UIViewController {
         
         infoContainerView1.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(infoContainerView2.snp.bottom).offset(15)
+            make.top.equalTo(infoContainerView2.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(150)
+            make.height.equalTo(130)
         }
         itemCountLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(25)
+            make.top.equalToSuperview().offset(13)
         }
         completedItemCountLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
