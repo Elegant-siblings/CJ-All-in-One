@@ -215,6 +215,7 @@ class DeliveryCompletedViewController: UIViewController {
             make.centerY.equalTo(sharpLabel)
             make.leading.equalTo(sharpLabel.snp.leading).offset(120)
         }
+        //MARK: - 이 부분이요 진짜!
         confirmTableLabel.snp.makeConstraints { make in
             make.centerY.equalTo(sharpLabel)
             make.trailing.equalToSuperview().offset(-20)
