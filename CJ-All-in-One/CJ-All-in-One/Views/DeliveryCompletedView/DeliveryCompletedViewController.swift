@@ -28,9 +28,9 @@ class DeliveryCompletedViewController: UIViewController {
     var mapImage = UIImage()
     
     //DeliveryPercent
-    var onTime: String!
-    var lowTime: String!
-    var missTime: String!
+    var onTime: Int!
+    var lowTime: Int!
+    var missTime: Int!
     
     
     // UIScrollView 정의
@@ -550,9 +550,9 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
             
             if list[indexPath.row].complete == 1 {
                 cell.checkImage.image = UIImage(named: "CellCheck")
-            } else if list[indexPath.row].complete == 2 {
-                cell.checkImage.image = UIImage(named: "CellUncheck")
             } else if list[indexPath.row].complete == 4 {
+                cell.checkImage.image = UIImage(named: "CellUncheck")
+            } else if list[indexPath.row].complete == 2 {
                 cell.checkImage.image = UIImage(named: "CellRejected")
             } else {
                 cell.checkImage.isHidden = true
@@ -583,12 +583,15 @@ extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
         itemList = result.itemList
         
         if let info = workInfo {
+            onTime = Int((info.completeNum! / info.itemNum) * 100)
+            lowTime = 100 - onTime
+            
             dateLabel.text = "\(info.deliveryDate) / 주간"
             incomeLabel.text = "\(String(info.income).insertComma)원"
             deliveryLabel.text = info.deliveryManID
             deliveryTimeLabel.text = "배송 시간: \(info.startTime!.substring(range: 12..<17)) ~ \(info.endTime!.substring(range: 12..<17))"
             itemCountLabel.text = "배송물품: \(info.itemNum)개"
-            completedItemCountLabel.text = "배송완료: \(info.completeNum)개"
+            completedItemCountLabel.text = "배송완료: \(info.completeNum!)개"
             missedItemCountLabel.text = "미배송: \(info.itemNum - (info.completeNum ?? 0))개"
         }
         
@@ -598,6 +601,9 @@ extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
     func failedToRequest(_ message: String) {
         print(message)
     }
+    
+    func didSuccessGetCompletedWork(){}
+    func failedToRequestWork(_ message: String){}
 }
 
 

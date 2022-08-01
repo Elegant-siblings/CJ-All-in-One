@@ -35,5 +35,29 @@ class DeliveryCompletedDataManager: DeliveryCompletedDataManagerDelegate {
                 }
         }
     }
+    
+    func getWorkCompletedDetail(_ workPK: Int, _ completeNum: Int) {
+        let urlString = "\(base_url)/works/complete?workPK=\(workPK)&completeNum=\(completeNum)"
+        
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let url = URL(string: encoded) {
+            print(url)
+        
+            AF.request(url, method: .get)
+                .validate()
+                .responseDecodable(of: WorkCompleted.self) { response in
+                    switch response.result {
+                    case .success(let response):
+                        if response.success {
+                            self.delegate?.didSuccessGetCompletedWork()
+                        } else {
+                            self.delegate?.failedToRequestWork(response.err!)
+                        }
+                    case .failure(let error):
+                        print(error)
+                        self.delegate?.failedToRequestWork("서버와의 연동이 불안정합니다.")
+                    }
+                }
+        }
+    }
 }
 

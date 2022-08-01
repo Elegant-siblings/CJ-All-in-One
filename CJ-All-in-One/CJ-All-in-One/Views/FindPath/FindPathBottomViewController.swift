@@ -22,6 +22,7 @@ class FindPathBottomViewController: UIViewController {
     var colors : [UIColor] = [UIColor.CjRed, UIColor.CjYellow, UIColor.CjBlue, UIColor.CjGreen]
     var tableInfo : [ItemList]?
     var dataManager: WorksItemListDataManager = WorksItemListDataManager()
+    lazy var completedDataManager: DeliveryCompletedDataManager = DeliveryCompletedDataManager(delegate: self)
     var workPK: Int?
     
     // Bool Variable
@@ -191,10 +192,33 @@ class FindPathBottomViewController: UIViewController {
     }
     
     @objc func deliveryCompleted() {
+        
+        var num = 0
+        for i in tableInfo! {
+            if i.complete == 1 {
+                num += 1
+            }
+        }
+        
+        completedDataManager.getWorkCompletedDetail(self.workPK!, num)
+        
+    }
+}
+
+extension FindPathBottomViewController: DeliveryCompletedViewDelegate {
+    func didSuccessGetCompletedWork(){
+        print("배달 완료 성공")
+        
         print("pushed")
         self.dismiss(animated: true)
         delegate.pushed()
     }
+    func failedToRequestWork(_ message: String) {
+        print(message)
+    }
+    
+    func didSuccessGetCompletedDetail(_ result: DeliveryCompletedResponse){}
+    func failedToRequest(_ message: String){}
 }
 
 
@@ -228,7 +252,7 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
             cell.wayLabel.textColor = colors[data[indexPath.row].seatNum-1]
             
             if data[indexPath.row].complete == 4 {
-                cell.checkImage.image = UIImage(named: "CellUnchecked")
+                cell.checkImage.image = UIImage(named: "CellUncheck")
             } else if data[indexPath.row].complete == 1 {
                 cell.checkImage.image = UIImage(named: "CellCheck")
             } else if data[indexPath.row].complete == 2{
