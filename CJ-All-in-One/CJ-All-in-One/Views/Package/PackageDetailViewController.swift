@@ -132,13 +132,7 @@ class PackageDetailViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        basicTableView.snp.makeConstraints { make in
-            make.height.equalTo(basicTableView.contentSize.height)
-        }
-        deliveryTableView.snp.makeConstraints { make in
-            make.height.equalTo(basicTableView.contentSize.height)
-        }
+    
         
         
         dataManager.getPackageDetail(deliveryPK: deliveryPK!)
