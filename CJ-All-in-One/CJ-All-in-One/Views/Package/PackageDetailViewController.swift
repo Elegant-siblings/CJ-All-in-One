@@ -20,8 +20,9 @@ class PackageDetailViewController: UIViewController {
     let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청 사항"]
     var contents = ["AXSD-SDXD-****-ZS**", "1233567"]
     let deliveryTitles = ["배송현황", "배송 완료 시각", "수취 방법", "수령인", "사진"]
-    var deliveryContents : [String] = ["", "24시", "경비실 전달", "대리수령", ""]
+    var deliveryContents : [String] = [""]
     var deliveryImgStr : String?
+    var deliveryPK : Int?
     
     
     let navigationView = UIView().then {
@@ -71,16 +72,21 @@ class PackageDetailViewController: UIViewController {
         $0.setBackgroundColor(.CjBlue, for: .normal)
         $0.layer.borderColor = UIColor.CjBlue.cgColor
         $0.setTitle("배송완료", for: .normal)
+        $0.addTarget(self, action: #selector(deliveryComplete), for: .touchUpInside)
     }
     let declinedButton = MainButton(type: .sub).then {
         $0.backgroundColor = .CjYellow
         $0.layer.borderColor = UIColor.CjYellow.cgColor
         $0.setTitle("수취거부", for: .normal)
+        $0.addTarget(self, action: #selector(deliveryReject), for: .touchUpInside)
+
     }
     let missedButton = MainButton(type: .sub).then {
         $0.backgroundColor = .CjRed
         $0.layer.borderColor = UIColor.CjRed.cgColor
         $0.setTitle("미배송", for: .normal)
+        $0.addTarget(self, action: #selector(deliveryMiss), for: .touchUpInside)
+
     }
     
     //셀 내 이미지
@@ -121,7 +127,7 @@ class PackageDetailViewController: UIViewController {
         
         setConstraints()
         
-        dataManager.getPackageDetail(deliveryPK: 1)
+        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
 
         
     }
@@ -222,6 +228,37 @@ class PackageDetailViewController: UIViewController {
         imagePicker.cameraCaptureMode = .photo
         imagePicker.delegate = self
         present(imagePicker, animated: true)
+    }
+    
+    @objc func deliveryComplete() {
+        if let str = packageImage.image?.base64, let num = deliveryPK {
+            print(str)
+            
+            let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str))
+            dataManager.updateDeliveryInfo(data: inputData)
+        }
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    @objc func deliveryReject(){
+        if let str = packageImage.image?.base64, let num = deliveryPK {
+            print(str)
+            
+            let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: str))
+            dataManager.updateDeliveryInfo(data: inputData)
+        }
+        self.navigationController?.popViewController(animated: true)
+
+    }
+    @objc func deliveryMiss() {
+        if let str = packageImage.image?.base64, let num = deliveryPK {
+            print(str)
+            
+            let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 0, receipt: "haha", recipient: "hoho", picture: str))
+            dataManager.updateDeliveryInfo(data: inputData)
+        }
+        self.navigationController?.popViewController(animated: true)
+
     }
 }
 
@@ -329,10 +366,10 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
         contents.append(result.comment)
         
         
-//        deliveryContents.append("24시")
-//        deliveryContents.append(result.receipt)
-//        deliveryContents.append(result.recipient)
-//        deliveryContents.append(result.picture)
+        deliveryContents.append("24시")
+        deliveryContents.append(result.receipt ?? "")
+        deliveryContents.append(result.recipient ?? "")
+        deliveryContents.append(result.picture ?? "")
         
         basicTableView.reloadData()
         deliveryTableView.reloadData()
