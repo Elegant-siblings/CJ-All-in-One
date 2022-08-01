@@ -279,7 +279,7 @@ class LoadViewController: UIViewController {
     }
     
     private func getSeatNum(pk: Int) -> Int{
-        return (pk*pk)%4
+        return pk%4
     }
 }
 
