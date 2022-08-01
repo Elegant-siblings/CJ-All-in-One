@@ -198,11 +198,11 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         if task.workState == 2 {
             detailDelegate?.getCompleteDetail(whatTask: self.task)
         }
-        else if task.workState == 3 {
-            detailDelegate?.getIngDetail(whatTask: self.task)
+        else if task.workState == 0 {
+            detailDelegate?.getTaskDetail(whatTask: self.task)
         }
         else {
-            detailDelegate?.getTaskDetail(whatTask: self.task)
+            detailDelegate?.getIngDetail(whatTask: self.task)
         }
     }
 }
