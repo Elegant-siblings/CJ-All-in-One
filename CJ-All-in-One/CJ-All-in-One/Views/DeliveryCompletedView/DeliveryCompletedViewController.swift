@@ -216,6 +216,7 @@ class DeliveryCompletedViewController: UIViewController {
             make.leading.equalTo(sharpLabel.snp.leading).offset(120)
             make.trailing.equalTo(confirmTableLabel.snp.leading).offset(-20)
         }
+        //MARK: - 이 부분이요 진짜!
         confirmTableLabel.snp.makeConstraints { make in
             make.centerY.equalTo(sharpLabel)
             make.trailing.equalToSuperview().offset(-20)
@@ -586,7 +587,15 @@ extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
             onTime = Int((info.completeNum! / info.itemNum) * 100)
             lowTime = 100 - onTime
             
-            dateLabel.text = "\(info.deliveryDate) / 주간"
+            var date : String = info.deliveryDate
+            
+            let index1 = date.index(date.startIndex, offsetBy: 4)
+            let index2 = date.index(date.startIndex, offsetBy: 7)
+
+            date.insert(".", at: index1)
+            date.insert(".", at: index2)
+            
+            dateLabel.text = "\(date) / 주간"
             incomeLabel.text = "\(String(info.income).insertComma)원"
             accountLabel.text = Constant.shared.account
             deliveryLabel.text = format(info.deliveryManID)
