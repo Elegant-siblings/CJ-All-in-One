@@ -238,7 +238,6 @@ class PackageDetailViewController: UIViewController {
         if let str = photoURL, let num = deliveryPK {
             print(str)
             
-            let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str))
             dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str)
             
             self.navigationController?.popViewController(animated: true)
@@ -249,11 +248,9 @@ class PackageDetailViewController: UIViewController {
         
     }
     @objc func deliveryReject(){
-        if let str = photoURL, let num = deliveryPK {
-            print(str)
+        if let num = deliveryPK {
             
-            let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: str))
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: str)
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: nil)
             self.navigationController?.popViewController(animated: true)
 
         } else {
@@ -262,11 +259,8 @@ class PackageDetailViewController: UIViewController {
 
     }
     @objc func deliveryMiss() {
-        if let str = photoURL, let num = deliveryPK {
-            print(str)
-            
-            let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 0, receipt: "haha", recipient: "hoho", picture: str))
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: str)
+        if let num = deliveryPK {
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: nil)
             self.navigationController?.popViewController(animated: true)
 
         } else {
