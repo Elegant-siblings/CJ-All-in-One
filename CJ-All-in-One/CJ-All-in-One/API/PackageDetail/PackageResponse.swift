@@ -13,6 +13,7 @@ struct PackageResponse: Decodable {
     let receiverAddr: String?
     let complete: Int?
     let comment: String?
+    let completeTime: String?
     let receipt, recipient, picture: String?
 }
 
