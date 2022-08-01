@@ -108,7 +108,6 @@
 		3207A9462892BAA000F0E740 /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
 		3207A9482892BADD00F0E740 /* PackageBasicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageBasicTableViewCell.swift; sourceTree = "<group>"; };
 		3207A94A2892BAFF00F0E740 /* PackageDeliveryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDeliveryTableViewCell.swift; sourceTree = "<group>"; };
-		3207A9502892BFB800F0E740 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32796B3728957039001DCDB6 /* PackageDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetail.swift; sourceTree = "<group>"; };
 		32A2C55A288FDE710000CCB6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		32A2C55E288FDF8E0000CCB6 /* ViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDelegate.swift; sourceTree = "<group>"; };
@@ -348,7 +347,6 @@
 			children = (
 				1D546E7C288D1DDF00160E82 /* Assets.xcassets */,
 				1D546E7E288D1DDF00160E82 /* LaunchScreen.storyboard */,
-				3207A9502892BFB800F0E740 /* Info.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
