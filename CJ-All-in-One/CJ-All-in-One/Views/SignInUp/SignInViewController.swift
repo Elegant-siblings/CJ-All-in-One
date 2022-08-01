@@ -126,7 +126,11 @@ class SignInViewController: UIViewController {
     
     @objc func touchUpSignUp() {
         let vc = SignUpViewController()
-        navigationController?.pushViewController(vc, animated: true)
+//        navigationController?.pushViewController(vc, animated: true)
+//        let nc = UINavigationController(rootViewController: self)
+//        nc.pushViewController(vc, animated: true)
+//        vc.modalPresentationStyle = .formSheet
+        present(vc, animated: true)
         
     }
     
@@ -142,9 +146,10 @@ class SignInViewController: UIViewController {
     
     func didSuccessLogIn(result: UserInfo){
         print("LogIn 성공")
-        let vc = MainViewController()
+//        let vc = MainViewController()
         ManId = result.deliveryManID
-        self.navigationController?.changeRootViewController(vc)
+        self.dismiss(animated: true, completion: nil)
+//        self.navigationController?.changeRootViewController(vc)
     }
     func failedToLogIn(message: String) {
         let alert = UIAlertController(title: "로그인 실패", message: message, preferredStyle: .alert)

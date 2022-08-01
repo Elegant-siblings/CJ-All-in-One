@@ -153,6 +153,7 @@ class ApplyViewController: UIViewController {
         
         self.view.backgroundColor = .CjWhite
         navigationController?.navigationBar.tintColor = .CjWhite
+        print("here")
         
         pickerVehicle.delegate = self
         pickerVehicle.dataSource = self
