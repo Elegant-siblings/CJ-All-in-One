@@ -35,3 +35,11 @@ struct ItemList: Decodable {
     let seatNum: Int
 }
 
+
+
+//MARK: - work completed
+
+struct WorkCompleted: Decodable {
+    let success: Bool
+    let err: String?
+}
