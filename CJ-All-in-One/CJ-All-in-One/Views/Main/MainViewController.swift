@@ -336,6 +336,7 @@ extension MainViewController: DetailDelegate {
         print("배송완료상세내역")
         //whatTask 넘겨줘야 함
         let vc = DeliveryCompletedViewController()
+        vc.workPK = whatTask.workPK
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

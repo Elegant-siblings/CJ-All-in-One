@@ -20,7 +20,7 @@ class Constant {
                 "X-NCP-APIGW-API-KEY" : "WZ2rtCWUOKJrKd1BJn0XEvLoqC0DELzG8yQCDnCI"
         ]
     }
-    
+    var account: String = ""
     
 }
 
@@ -29,3 +29,4 @@ let mainButtonWidth = 343
 let base_url = "http://34.125.0.122:3000"
 var ManId: String = "EGGJKROSRTQYVJKR"
 let mainButtonTopOffset = 754
+

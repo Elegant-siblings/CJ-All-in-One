@@ -139,24 +139,24 @@ class DeliveryCompletedViewController: UIViewController {
         $0.textColor = .lightGray
         $0.text = "이동경로"
     }
-    let mapView = UIImageView().then {
-        $0.cornerRadius = 10
-        $0.clipsToBounds = true
-        $0.layer.addShadow(location: [.bottom])
-        $0.layer.borderWidth = 1
-    }
+//    let mapView = UIImageView().then {
+//        $0.cornerRadius = 10
+//        $0.clipsToBounds = true
+//        $0.layer.addShadow(location: [.bottom])
+//        $0.layer.borderWidth = 1
+//    }
     let totalDistanceLabel = MainLabel(type: .main).then {
         $0.text = "총 이동거리: 123km"
     }
-    let totalTimeLabel = MainLabel(type: .main).then {
-        $0.text = "총 이동시간: 8시간 32분"
-    }
+//    let totalTimeLabel = MainLabel(type: .main).then {
+//        $0.text = "총 이동시간: 8시간 32분"
+//    }
     let deliveryTimeLabel = MainLabel(type: .main).then {
         $0.text = "배송시간: 10:30 ~ 20:02"
     }
-    let mealTimeLabel = MainLabel(type: .main).then {
-        $0.text = "식사 시간: 30분"
-    }
+//    let mealTimeLabel = MainLabel(type: .main).then {
+//        $0.text = "식사 시간: 30분"
+//    }
     let separateLine2 = UIView().then {
         $0.backgroundColor = .gray
     }
@@ -253,7 +253,7 @@ class DeliveryCompletedViewController: UIViewController {
         upperView.addSubviews([deliverySummaryLavbel, backButton])
         infoView.addSubviews([infoLabel, accountLabel, incomeLabel, deliveryLabel])
         
-        scrollContentView.addSubviews([distanceInfoLabel, mapView, totalDistanceLabel, totalTimeLabel, deliveryTimeLabel, mealTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton, deliveryRateLabel])
+        scrollContentView.addSubviews([distanceInfoLabel, totalDistanceLabel, deliveryTimeLabel, verticalLine, infoContainerView1, infoContainerView2, tableView, separateLine3, confirmButton, deliveryRateLabel])
         
         infoContainerView1.addSubviews([itemCountLabel, missedItemCountLabel, completedItemCountLabel])
         infoContainerView2.addSubviews([onTimePercentLabel, missTimePercentLabel, lowTimePercentLabel, onTimeLabel, lowTimeLabel, missTimeLabel, onTimeImage, lowTimeImage, missTimeImage])
@@ -285,7 +285,7 @@ class DeliveryCompletedViewController: UIViewController {
         scrollContentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(1450)
+            make.height.equalTo(1200)
         }
         
         
@@ -449,30 +449,14 @@ class DeliveryCompletedViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(separateLine3.snp.bottom).offset(15)
         }
-        mapView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(distanceInfoLabel.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(220)
-        }
         totalDistanceLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(mapView.snp.bottom).offset(15)
-        }
-        totalTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(totalDistanceLabel.snp.bottom).offset(5)
+            make.top.equalTo(distanceInfoLabel.snp.bottom).offset(15)
         }
         deliveryTimeLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(totalTimeLabel.snp.bottom).offset(5)
+            make.top.equalTo(totalDistanceLabel.snp.bottom).offset(5)
         }
-        mealTimeLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(deliveryTimeLabel.snp.bottom).offset(5)
-        }
-        
         
        
         
@@ -482,6 +466,22 @@ class DeliveryCompletedViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
+    }
+    
+    func format(_ unformatted:String) -> String {
+
+      var formatted = ""
+      let count = unformatted.count
+
+      unformatted.enumerated().forEach {
+        if $0.offset % 3 == 0 && $0.offset != 0 && $0.offset != count - 1 || $0.offset == count - 2 && count % 3 != 0 {
+          formatted += "-" + String($0.element)
+          return
+        }
+        formatted += String($0.element)
+        return
+      }
+      return formatted
     }
     
     private func presentCircleView() {
@@ -588,7 +588,8 @@ extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
             
             dateLabel.text = "\(info.deliveryDate) / 주간"
             incomeLabel.text = "\(String(info.income).insertComma)원"
-            deliveryLabel.text = info.deliveryManID
+            accountLabel.text = Constant.shared.account
+            deliveryLabel.text = format(info.deliveryManID)
             deliveryTimeLabel.text = "배송 시간: \(info.startTime!.substring(range: 12..<17)) ~ \(info.endTime!.substring(range: 12..<17))"
             itemCountLabel.text = "배송물품: \(info.itemNum)개"
             completedItemCountLabel.text = "배송완료: \(info.completeNum!)개"
