@@ -21,9 +21,15 @@ class LoadViewController: UIViewController {
     var isAgree = 0
     var isSeat: [Bool] = []
     var lists:[Item] = [
-//        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
+        Item(deliveryPK: 1, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+        Item(deliveryPK: 5, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+        Item(deliveryPK: 7, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+        Item(deliveryPK: 8, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+        Item(deliveryPK: 9, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
+        Item(deliveryPK: 34, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
     ]
     let colors:[UIColor] = [.CjRed,.CjYellow,.CjBlue,.CjGreen]
+    var seatNums: [Int] = []
     
     // -MARK: UIView
     lazy var navBar = CustomNavigationBar(title: "물품 차량 적재")
@@ -107,7 +113,8 @@ class LoadViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .CjWhite
-//        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
+        
         view.addSubviews([
             navBar,
             viewImageContainer,
@@ -115,12 +122,17 @@ class LoadViewController: UIViewController {
             buttonAgree,
             buttonComplete
         ])
+        
         viewImageContainer.addSubviews([imageVehicle,viewSeatsContainer])
         viewSeatsContainer.addSubview(buttonDriver)
         viewSeatsContainer.addSubviews(buttonSeats)
         
         isSeat = Array(repeatElement(false, count: lists.count))
-        
+        lists.forEach {
+            seatNums.append(getSeatNum(pk: $0.deliveryPK)+1)
+        }
+        print(seatNums)
+        workPK = 3
         buttonSeats.enumerated().forEach {
             $1.backgroundColor = .white
             $1.setTitle("\($0+1)", for: .normal)
@@ -147,7 +159,7 @@ class LoadViewController: UIViewController {
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
             // 배송 시작 && 상태 업데이트 쿼리 보내기
-            self.startDataManager.sendWorkStart(workPk: self.workPK!, manID: ManId)
+            self.startDataManager.sendWorkStart(workPk: self.workPK!, manID: ManId, deliveryPKs: self.lists, seatNum: self.seatNums)
             self.updateDataManager.updateWorkState(workPK: self.workPK!, workState: 3)
             // 뷰 넘기기
             let vc = FindPathViewController()
@@ -274,7 +286,7 @@ class LoadViewController: UIViewController {
     }
     
     private func getSeatNum(pk: Int) -> Int{
-        return pk*pk%4
+        return (pk*pk)%4
     }
 }
 
@@ -289,9 +301,9 @@ extension LoadViewController: UITableViewDataSource {
         cell.labelNum.text = "\(indexPath.row+1)"
         cell.labelCategory.text = lists[indexPath.row].itemCategory
         cell.labelReceivAddr.text = lists[indexPath.row].receiverAddr
-        let seat = getSeatNum(pk: lists[indexPath.row].deliveryPK)
-        cell.labelSeat.text = "\(seat+1)"
-        cell.labelSeat.textColor = colors[seat]
+        let seat = seatNums[indexPath.row]
+        cell.labelSeat.text = "\(seat)"
+        cell.labelSeat.textColor = colors[seat-1]
         switch isSeat[indexPath.row] {
         case true:
             cell.layer.borderWidth = 3

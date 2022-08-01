@@ -109,14 +109,14 @@ class ReaderView: UIView {
     private func setCenterGuideLineView() {
             let centerGuideLineView = UIView()
             centerGuideLineView.translatesAutoresizingMaskIntoConstraints = false
-            centerGuideLineView.backgroundColor = #colorLiteral(red: 1, green: 0.5411764706, blue: 0.2392156863, alpha: 1)
+        centerGuideLineView.backgroundColor = .CjRed
             self.addSubview(centerGuideLineView)
             self.bringSubviewToFront(centerGuideLineView)
 
             centerGuideLineView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
             centerGuideLineView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
             centerGuideLineView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-            centerGuideLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+            centerGuideLineView.heightAnchor.constraint(equalToConstant: 2).isActive = true
 
             self.centerGuideLineView = centerGuideLineView
         }

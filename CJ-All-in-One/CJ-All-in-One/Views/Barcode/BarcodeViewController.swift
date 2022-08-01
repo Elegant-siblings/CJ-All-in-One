@@ -17,6 +17,7 @@ class BarcodeViewController: UIViewController {
     var terminalAddr = ""
     var workPK: Int?
     var checklist: [Bool] = []
+    var randomIndex = 0
     var lists:[Item] = [
 //        Item(deliveryPK: 0, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
     ]
@@ -25,7 +26,6 @@ class BarcodeViewController: UIViewController {
     //-MARK: UIViews
     lazy var navBar = CustomNavigationBar(title: "배송 물품 등록")
     lazy var viewBarcodeReader = UIView().then {
-        $0.backgroundColor = .CjBlue
         $0.layer.cornerRadius = 30
     }
     lazy var viewDivideLine = UIView().then {
@@ -38,8 +38,9 @@ class BarcodeViewController: UIViewController {
         $0.font = .systemFont(ofSize: 20, weight: .bold)
         $0.textColor = .primaryFontColor
     }
-    lazy var readerView = ReaderView().then{
+    lazy var readerView = ReaderView(frame: CGRect(x: view.frame.width/4, y: view.frame.height/4, width: 330, height: 220)).then{
         $0.delegate = self
+        $0.layer.cornerRadius = 30
     }
     
     // -MARK: UIButton
@@ -47,6 +48,8 @@ class BarcodeViewController: UIViewController {
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 15
         $0.addTarget(self, action: #selector(touchUpReadButton(sender:)), for: .touchUpInside)
+        $0.backgroundColor = .CjBlue
+        $0.setTitle("물품 스캔", for: .normal)
     }
     lazy var buttonAgree = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
@@ -107,18 +110,20 @@ class BarcodeViewController: UIViewController {
         
         view.backgroundColor = .CjWhite
         navigationController?.navigationBar.tintColor = .CjWhite
-        
+        readerView.backgroundColor = .opaqueSeparator
         view.addSubviews([
             navBar,
             labelBarcodeScan,
             viewBarcodeReader,
             viewDivideLine,
-//            buttonRead,
+            buttonRead,
             tableScanItem,
             buttonAgree,
             buttonComplete
             
         ])
+        
+        viewBarcodeReader.addSubview(readerView)
         
         checklist = Array(repeating: false, count: lists.count)
         
@@ -132,12 +137,25 @@ class BarcodeViewController: UIViewController {
         viewBarcodeReader.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(labelBarcodeScan.snp.bottom).offset(20)
-            make.width.equalTo(300)
-            make.height.equalTo(230)
+            make.width.equalTo(330)
+            make.height.equalTo(220)
         }
+        readerView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        buttonRead.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(viewBarcodeReader.snp.bottom).offset(10)
+            make.width.equalTo(200)
+            make.height.equalTo(40)
+        }
+        
         viewDivideLine.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(viewBarcodeReader.snp.bottom).offset(30)
+            make.top.equalTo(buttonRead.snp.bottom).offset(15)
             make.height.equalTo(1)
             make.width.equalToSuperview().offset(-50)
         }
@@ -196,13 +214,24 @@ class BarcodeViewController: UIViewController {
     }
     
     @objc func touchUpCompleteButton() {
-        let alert = UIAlertController(title: "바코드 스캔을 완료하시겠습니까?", message: "넘어가면 누락된 물품 다시 등록 못 함 ㅅㄱ", preferredStyle: .alert)
+        let alert = UIAlertController(title: "바코드 스캔을 완료하시겠습니까?", message: "누락된 물품은 다시 등록하지 못 합니다.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
             let vc = LoadViewController()
-            vc.lists = self.lists
+            
             vc.terminalAddr = self.terminalAddr
             vc.workPK = self.workPK
-            self.scanDataManager.sendMissingItems(deliveryPK: [1,2,3])
+            var scanned: [Item] = []
+            var missing: [Int] = []
+            self.lists.enumerated().forEach {
+                if self.checklist[$0] == true {
+                    scanned.append($1)
+                }
+                else {
+                    missing.append($1.deliveryPK)
+                }
+            }
+            self.scanDataManager.sendMissingItems(deliveryPK: missing)
+            vc.lists = scanned
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -225,7 +254,14 @@ extension BarcodeViewController: ReaderViewDelegate {
                 message = "QR코드 or 바코드를 인식하지 못했습니다.\n다시 시도해주세요."
                 break
             }
-
+            
+            if randomIndex < lists.count {
+                checklist[randomIndex] = true
+                tableScanItem.reloadData()
+                randomIndex += 1
+            }
+            print(checklist)
+            
             title = "알림"
             message = "인식성공\n\(code)"
         case .fail:
@@ -243,7 +279,6 @@ extension BarcodeViewController: ReaderViewDelegate {
         }
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
         let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
 
         alert.addAction(okAction)
