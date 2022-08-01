@@ -38,7 +38,7 @@ class SignInViewController: UIViewController {
     }
     
     lazy var buttonSignUp = UIButton().then {
-        $0.setTitleColor(.label, for: .normal)
+        $0.setTitleColor(.CjRed, for: .normal)
         $0.setTitle("계정이 없으신가요? 계정 만들러 가기", for: .normal)
         $0.addTarget(self, action: #selector(touchUpSignUp), for: .touchUpInside)
     }

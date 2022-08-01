@@ -46,7 +46,7 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
         $0.tableHeaderView = .none
@@ -60,7 +60,7 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
         $0.tableHeaderView = .none
@@ -376,8 +376,14 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
         
         
         deliveryContents.append(result.completeTime ?? "")
-        deliveryContents.append("대면 배달")
-        deliveryContents.append("본인")
+        if let result = result.completeTime{
+            deliveryContents.append("대면 배달")
+            deliveryContents.append("본인")
+        }
+        else{
+            deliveryContents.append("")
+            deliveryContents.append("")
+        }
         deliveryContents.append(result.picture ?? "")
         
         basicTableView.reloadData()

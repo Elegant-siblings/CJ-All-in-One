@@ -300,7 +300,7 @@ extension LoadViewController: UITableViewDataSource {
         switch isSeat[indexPath.row] {
         case true:
             cell.layer.borderWidth = 3
-            cell.layer.borderColor = colors[seat].cgColor
+            cell.layer.borderColor = colors[seat-1].cgColor
         default:
             cell.layer.borderWidth = 0
         }

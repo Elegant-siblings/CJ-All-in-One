@@ -24,6 +24,7 @@ class FindPathBottomViewController: UIViewController {
     var dataManager: WorksItemListDataManager = WorksItemListDataManager()
     lazy var completedDataManager: DeliveryCompletedDataManager = DeliveryCompletedDataManager(delegate: self)
     var workPK: Int?
+    var dliveryNum: Int!
     
     // Bool Variable
     var onDelivery : Bool = true
@@ -109,6 +110,15 @@ class FindPathBottomViewController: UIViewController {
         if let workPK = workPK {
             dataManager.getPackageDetail(workPK: workPK, vc: self)
         }
+        dliveryNum = 0
+        if let item = tableInfo {
+            for i in item {
+                if i.complete == 0{
+                    dliveryNum += 1
+                }
+            }
+        }
+        leftDeliveryItemsLabel.text = "남은 배송 물품 \(dliveryNum!)개"
     }
     
     func setConstraints(){
