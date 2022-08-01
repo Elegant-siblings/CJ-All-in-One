@@ -146,7 +146,12 @@ class SignInViewController: UIViewController {
     
     func didSuccessLogIn(result: UserInfo){
         print("LogIn 성공")
+<<<<<<< HEAD
 //        let vc = MainViewController()
+=======
+        Constant.shared.account = result.userAccount
+        let vc = MainViewController()
+>>>>>>> 3cb5ca5 (account saved)
         ManId = result.deliveryManID
         self.dismiss(animated: true, completion: nil)
 //        self.navigationController?.changeRootViewController(vc)
