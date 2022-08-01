@@ -27,5 +27,5 @@ class Constant {
 let mainButtonHeight = 48
 let mainButtonWidth = 343
 let base_url = "http://34.125.0.122:3000"
-var ManId: String = ""
+var ManId: String = "EGGJKROSRTQYVJKR"
 let mainButtonTopOffset = 754
