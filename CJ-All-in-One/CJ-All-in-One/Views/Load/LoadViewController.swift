@@ -80,7 +80,7 @@ class LoadViewController: UIViewController {
     lazy var buttonAgree = UIButton().then {
         $0.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         $0.tintColor = UIColor(hex: 0xCCCCCC)
-        $0.setTitle(" 물품 다 챙긴거 같으니 책임은 모두 내가 진다 어쩌구 동의", for: .normal)
+        $0.setTitle(" 물품 분실 및 파손에 대한 책임은 본인에 있음을 동의함", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: fontSizeAgree, weight: .bold)
         $0.setTitleColor(UIColor(hex: 0xCCCCCC), for: .normal)
         $0.setTitleColor(.gray, for: .highlighted)
