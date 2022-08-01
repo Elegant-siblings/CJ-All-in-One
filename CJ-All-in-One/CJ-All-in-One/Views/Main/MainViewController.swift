@@ -59,18 +59,20 @@ class MainViewController: UIViewController {
         $0.layer.borderColor = UIColor(rgb: 0x8B8B8B).cgColor
         $0.layer.borderWidth = 0.5
         let customButtonLabel = NSMutableAttributedString(
-            string: " 정렬",
+            string: " 로그아웃",
             attributes: [
                 NSAttributedString.Key.foregroundColor: UIColor(rgb: 0x8B8B8B),
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10,weight: .bold)
             ])
         $0.setAttributedTitle(customButtonLabel, for: .normal)
-        $0.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
+        $0.setImage(UIImage(systemName: "x.circle.fill"), for: .normal)
         $0.tintColor = UIColor(rgb: 0x8B8B8B)
+        $0.addTarget(self, action: #selector(logOut), for: .touchUpInside)
     }
     
     lazy var logOutButton = UIButton().then {
         $0.setTitle("로그아웃", for: .normal)
+        $0.isEnabled = true
         $0.tintColor = .CjWhite
         $0.titleLabel!.font = UIFont.AppleSDGothicNeo(.bold, size: 14)
         $0.addTarget(self, action: #selector(logOut), for: .touchUpInside)
@@ -166,7 +168,7 @@ class MainViewController: UIViewController {
         Constant.shared.account = ""
         
         let vc = SignInViewController()
-        self.dismiss(animated: true)
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
         
     }
@@ -194,7 +196,11 @@ class MainViewController: UIViewController {
             viewApplyButtonContainer,
             buttonApply
         ])
-        navBar.addSubviews([imageLogo, logOutButton])
+        
+        navBar.addSubviews([
+            imageLogo
+        ])
+        
         self.viewTableContainer.addSubviews([
             pageViewController.view,
         ])
@@ -203,7 +209,6 @@ class MainViewController: UIViewController {
         
         setConstraints()
         detailTypeChanged(type: self.SCDetailType)
-        
     }
     
     // -MARK: makeConstraints
@@ -211,15 +216,13 @@ class MainViewController: UIViewController {
         navBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
         }
+        
         imageLogo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalToSuperview().offset(-40)
             make.bottom.equalToSuperview().offset(-3)
         }
-        logOutButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(20)
-            make.centerY.equalTo(imageLogo.snp.centerY)
-        }
+        
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
             make.top.equalTo(navBar.snp.bottom).offset(10)
@@ -229,9 +232,9 @@ class MainViewController: UIViewController {
         
         buttonSort.snp.makeConstraints { make in
             make.centerY.equalTo(SCDetailType)
-            make.leading.equalTo(314)
-            make.height.equalTo(SCDetailType)
-            make.width.equalTo(52)
+            make.trailing.equalToSuperview().offset(-25)
+            make.height.equalTo(SCDetailType).offset(5)
+            make.width.equalTo(70)
         }
         
         distributeBar.snp.makeConstraints { make in
