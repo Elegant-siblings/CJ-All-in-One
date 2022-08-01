@@ -8,11 +8,11 @@
 import Foundation
 
 struct PackageResponse: Decodable {
-    let deliveryPK, workPK: Int
-    let sender, receiver, itemCategory, senderAddr: String
-    let receiverAddr: String
-    let complete: Int
-    let comment: String
+    let deliveryPK, workPK: Int?
+    let sender, receiver, itemCategory, senderAddr: String?
+    let receiverAddr: String?
+    let complete: Int?
+    let comment: String?
     let receipt, recipient, picture: String?
 }
 
