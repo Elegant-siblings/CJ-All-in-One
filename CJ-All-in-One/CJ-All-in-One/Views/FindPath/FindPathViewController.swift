@@ -388,7 +388,7 @@ class FindPathViewController: UIViewController {
 extension FindPathViewController: ViewDelegate {
     func pushed() {
         let nextVC = DeliveryCompletedViewController()
-        nextVC.mapView.image = mapImage
+//        nextVC.mapView.image = mapImage
         nextVC.workPK = workPK
         navigationController?.pushViewController(nextVC, animated: true)
     }

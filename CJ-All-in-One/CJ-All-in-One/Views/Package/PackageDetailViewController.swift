@@ -319,12 +319,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                     }
                     
                     if let img = data.picture {
-                        if let url = URL(string: img) {
-                            if let data = try? Data(contentsOf: url) {
-                                packageImage.image = UIImage(data: data)
-                            }
-                        }
-                        
+                        packageImage.image = UIImage(named: "택배사진")
                         cameraButton.isHidden = true
                         
                     } else {
@@ -376,8 +371,8 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
         
         
         deliveryContents.append(result.completeTime ?? "")
-        deliveryContents.append(result.receipt ?? "")
-        deliveryContents.append(result.recipient ?? "")
+        deliveryContents.append("대면 배달")
+        deliveryContents.append("본인")
         deliveryContents.append(result.picture ?? "")
         
         basicTableView.reloadData()
