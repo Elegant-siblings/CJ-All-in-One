@@ -25,6 +25,15 @@ class PackageDetailViewController: UIViewController {
     var deliveryPK : Int?
     var photoURL : String?
     
+    // UIScrollView 정의
+    let scrollView = UIScrollView().then {
+        $0.backgroundColor = .deppBlue
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+    }
+    let scrollContentView = UIView().then {
+        $0.backgroundColor = .white
+    }
     let navigationView = UIView().then {
         $0.backgroundColor = .deppBlue
     }
@@ -45,7 +54,7 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
         $0.tableHeaderView = .none
@@ -59,7 +68,7 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
         $0.tableHeaderView = .none
@@ -120,8 +129,10 @@ class PackageDetailViewController: UIViewController {
 
         
 //        view.addSubviews([containerView])
+        view.addSubview(scrollView)
+        scrollView.addSubview(scrollContentView)
         
-        self.view.addSubviews([navigationView, basicInfoLabel, basicTableView, deliveryInfoLabel, deliveryTableView, missedButton, declinedButton, completedButton])
+        self.scrollContentView.addSubviews([navigationView, basicInfoLabel, basicTableView, deliveryInfoLabel, deliveryTableView, missedButton, declinedButton, completedButton])
         navigationView.addSubviews([backButton, completedLabel])
         
         
@@ -132,6 +143,14 @@ class PackageDetailViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        basicTableView.snp.makeConstraints { make in
+            make.height.equalTo(basicTableView.contentSize.height)
+        }
+        deliveryTableView.snp.makeConstraints { make in
+            make.height.equalTo(basicTableView.contentSize.height)
+        }
+        
         
         dataManager.getPackageDetail(deliveryPK: deliveryPK!)
     }
@@ -153,6 +172,20 @@ class PackageDetailViewController: UIViewController {
 //    }
     
     func setConstraints( ){
+        // ScrollView
+        scrollView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.snp.bottom)
+        }
+        scrollContentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView.snp.width)
+            make.height.equalTo(1200)
+        }
+        
         navigationView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.trailing.equalToSuperview()
