@@ -142,7 +142,7 @@ class DeliveryDetailTableViewCell: UITableViewCell {
         viewState.snp.makeConstraints { make in
             make.width.height.equalTo(42)
             make.centerY.equalTo(viewheader)
-            make.leading.equalTo(293)
+            make.trailing.equalToSuperview().offset(-10)
         }
         labelState.snp.makeConstraints { make in
             make.center.equalToSuperview()
