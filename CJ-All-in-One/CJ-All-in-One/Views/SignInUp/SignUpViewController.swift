@@ -41,11 +41,15 @@ class SignUpViewController: UIViewController {
     let cornerRadius: CGFloat = 8.0
     let uiOffset = CGFloat(12)
     let sectionOffset = CGFloat(45)
+    let widthOffset = CGFloat(30)
+    
+    var fCurTextfieldBottom: CGFloat = 0.0
     var isValids: [Bool] = [false,false,false,false,false,false]
     var isAgree: Int = 0
     var isPhone = false
     var isPhoneCer = false
     var isIdCheck = false
+    var isAccountCheck = false
     
     var dataManager: SignUpDataManager = SignUpDataManager()
     var checkDataManager: IDCheckDataManager = IDCheckDataManager()
@@ -92,41 +96,50 @@ class SignUpViewController: UIViewController {
     lazy var idField = SignUpTextField().then {
         $0.placeholder = "ID"
         $0.delegate = self
+        $0.addTarget(self, action: #selector(didEndOnExit), for: .editingDidEndOnExit)
     }
     
     lazy var passwordField = SignUpTextField().then {
         $0.isSecureTextEntry = true
-        $0.placeholder = "비밀번호"
+        $0.placeholder = "영문숫자 포함 8자리 이상"
         $0.delegate = self
+        $0.addTarget(self, action: #selector(didEndOnExit), for: .editingDidEndOnExit)
+
     }
     
     lazy var passwordCheckField = SignUpTextField().then {
         $0.isSecureTextEntry = true
         $0.placeholder = "비밀번호 확인"
         $0.delegate = self
+        $0.addTarget(self, action: #selector(didEndOnExit), for: .editingDidEndOnExit)
+
     }
     
     lazy var phoneField = SignUpTextField().then {
-        $0.placeholder = "전화번호"
+        $0.placeholder = "ex) 01096139717"
         $0.keyboardType = .phonePad
         $0.delegate = self
+        $0.addTarget(self, action: #selector(didEndOnExit), for: .editingDidEndOnExit)
+
     }
     
     lazy var phoneCertifyField = SignUpTextField().then {
-        $0.placeholder = "인증번호"
+        $0.placeholder = "인증번호 숫자 6자리"
         $0.keyboardType = .numberPad
         $0.delegate = self
+        $0.addTarget(self, action: #selector(didEndOnExit), for: .editingDidEndOnExit)
+
     }
     
     lazy var firstIdentityNumField = SignUpTextField().then {
-        $0.placeholder = "앞자리"
+        $0.placeholder = "앞 6자리"
         $0.keyboardType = .numberPad
         $0.delegate = self
     }
     
     lazy var secondIdentityNumField = SignUpTextField().then {
         $0.isSecureTextEntry = true
-        $0.placeholder = "뒷자리"
+        $0.placeholder = "뒤 7자리"
         $0.keyboardType = .numberPad
         $0.delegate = self
     }
@@ -174,7 +187,14 @@ class SignUpViewController: UIViewController {
         $0.layer.cornerRadius = 8
         $0.addTarget(self, action: #selector(touchUpPhoneCertify), for: .touchUpInside)
     }
-    
+    lazy var buttonAccountCheck = UIButton().then {
+        $0.setTitle("인증", for: .normal)
+        $0.setTitleColor(.CjWhite, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        $0.backgroundColor = .CjBlue
+        $0.layer.cornerRadius = 8
+        $0.addTarget(self, action: #selector(touchUpAccountCheck), for: .touchUpInside)
+    }
     lazy var buttonSignUp = MainButton(type:.main).then {
         $0.setTitle("회원가입하기", for: .normal)
         $0.isEnabled = false
@@ -182,10 +202,12 @@ class SignUpViewController: UIViewController {
         $0.addTarget(self, action: #selector(touchUpSignUp), for: .touchUpInside)
     }
 
+    // -MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .CjWhite
+        navigationController?.navigationBar.tintColor = .CjBlue
         
         view.addSubviews([
             labelID,idField,buttonIdDuplicateCheck,
@@ -193,14 +215,25 @@ class SignUpViewController: UIViewController {
             labelPhone,phoneField,phoneCertifyField,
             buttonGetPhoneCertifyNum,buttonPhoneCertify,
             labelIdenNum,firstIdentityNumField,labelHypon,secondIdentityNumField,
-            labelAccount,accountField,
+            labelAccount,accountField,buttonAccountCheck,
             labelAgreement, buttonAgree,
             buttonSignUp
         ])
-        let widthOffset = CGFloat(30)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIResponder.keyboardWillHideNotification, object: nil
+        )
+        
+        
         idField.snp.makeConstraints { make in
             make.height.equalTo(45)
-            make.top.equalToSuperview().offset(130)
+            make.top.equalToSuperview().offset(70)
             make.leading.equalToSuperview().offset(widthOffset)
             make.width.equalToSuperview().offset(-140)
         }
@@ -282,9 +315,17 @@ class SignUpViewController: UIViewController {
             make.leading.equalTo(accountField).offset(3)
         }
         accountField.snp.makeConstraints { make in
-            make.leading.trailing.height.equalTo(passwordField)
+            make.leading.height.equalTo(passwordField)
             make.top.equalTo(firstIdentityNumField.snp.bottom).offset(sectionOffset)
+            make.width.equalToSuperview().offset(-130)
         }
+        buttonAccountCheck.snp.makeConstraints { make in
+            make.centerY.equalTo(accountField)
+            make.leading.equalTo(accountField.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().offset(-widthOffset)
+            make.height.equalTo(accountField).offset(-5)
+        }
+        
         labelAgreement.snp.makeConstraints { make in
             make.centerY.equalTo(buttonAgree)
             make.trailing.equalTo(buttonAgree.snp.leading).offset(-10)
@@ -299,7 +340,8 @@ class SignUpViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.width.equalTo(mainButtonWidth)
             make.height.equalTo(mainButtonHeight)
-            make.top.equalTo(mainButtonTopOffset)
+//            make.top.equalTo(mainButtonTopOffset)
+            make.bottom.equalToSuperview().offset(-50)
         }
     }
     
@@ -315,16 +357,16 @@ class SignUpViewController: UIViewController {
             shakeTextField(textField: idField)
             return
         }
-//        if isValidPassword(pwd: password) {
-//            if password != passwordCheck {
-//                shakeTextField(textField: passwordCheckField)
-//                return
-//            }
-//        }
-//        else {
-//            shakeTextField(textField: passwordCheckField)
-//            return
-//        }
+        if isValidPassword(pwd: password) {
+            if password != passwordCheck {
+                shakeTextField(textField: passwordCheckField)
+                return
+            }
+        }
+        else {
+            shakeTextField(textField: passwordCheckField)
+            return
+        }
         if isPhone == false {
             shakeTextField(textField: phoneField)
             return
@@ -333,7 +375,7 @@ class SignUpViewController: UIViewController {
             shakeTextField(textField: phoneCertifyField)
             return
         }
-        if isValidSixDigit(num: firstIDNum) && isValidSixDigit(num: secondIDNum) {
+        if isValidSixDigit(num: firstIDNum) && isValidSevenDigit(num: secondIDNum) {
             // -MARK: 주민등록번호
         }
         else {
@@ -342,27 +384,61 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        if accountField.text?.isEmpty == true {
+        if isAccountCheck == false {
             shakeTextField(textField: accountField)
             return
         }
         
-        
-        
         dataManager.postLogIn(userID: idField.text!, userPassword: password, userIdentityNum: "\(firstIDNum)-\(secondIDNum)", userPhone: phoneField.text!, userAccount: accountField.text!, viewController: self)
-        
-        
     }
     
+    @objc func touchUpAccountCheck() {
+        let alert = UIAlertController(title: "계좌인증 완료", message: "", preferredStyle: .alert)
+        let okAlert = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAlert)
+        present(alert,animated: true)
+        isAccountCheck = true
+        buttonAccountCheck.isEnabled = false
+        buttonAccountCheck.backgroundColor = .disableButtonColor
+        accountField.isUserInteractionEnabled = false
+    }
+    
+    @objc func keyboardWillShow(_ sender: Notification) {
+//        self.view.frame.origin.y = -150 // Move view 150 points upward
+        
+        if let keyboardSize = (sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if fCurTextfieldBottom <= self.view.frame.height - keyboardSize.height {
+                return
+            }
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ sender: Notification) {
+//        self.view.frame.origin.y = 0 // Move view to original position
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
     
     func didSuccessSignUp() {
         print("success")
-        
-        let vc = MainViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let alert = UIAlertController(title: "회원가입 완료", message: "가입을 축하드립니다!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { (_) in
+//            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true)
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     func failedToSignUp(message: String) {
+        let alert = UIAlertController(title: "회원가입 실패", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
         print(message)
     }
     
@@ -370,7 +446,14 @@ class SignUpViewController: UIViewController {
         print("중북확인 완료")
         // 중복확인 ok 되면 아이디 확정
         isIdCheck = true
+        idField.isUserInteractionEnabled = false
+        buttonIdDuplicateCheck.isEnabled = false
+        buttonIdDuplicateCheck.backgroundColor = .disableButtonColor
         
+        let alert = UIAlertController(title: "사용가능한 아이디입니다.", message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     func failedToCheck(message: String) {
@@ -416,6 +499,8 @@ class SignUpViewController: UIViewController {
             buttonGetPhoneCertifyNum.isEnabled = false
             button.backgroundColor = .disableButtonColor
             buttonGetPhoneCertifyNum.backgroundColor = .disableButtonColor
+            phoneField.isUserInteractionEnabled = false
+            phoneCertifyField.isUserInteractionEnabled = false
         }
         else {
             shakeTextField(textField: phoneCertifyField)
@@ -430,6 +515,23 @@ class SignUpViewController: UIViewController {
         vc.modalDelegate = self
         vc.agreeTitle = "개인정보 동의서"
         self.present(vc, animated: true)
+    }
+    
+    @objc func didEndOnExit(_ sender: UITextField) {
+        if idField.isFirstResponder {
+            passwordField.becomeFirstResponder()
+        }
+//        else if passwordField.isFirstResponder {
+//            passwordCheckField.becomeFirstResponder()
+//        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        fCurTextfieldBottom = textField.frame.origin.y + textField.frame.height
     }
     
     func isValidPassword(pwd: String) -> Bool {
@@ -450,14 +552,11 @@ class SignUpViewController: UIViewController {
         return numTest.evaluate(with: num)
     }
     
-//    private func isEnableButton() {
-//        if isValids.allSatisfy({$0}) == true && isAgree == 1 {
-//            buttonSignUp.isEnabled = true
-//        }
-//        else {
-//            buttonSignUp.isEnabled = false
-//
-//    }
+    func isValidSevenDigit(num: String) -> Bool {
+        let numRegEx = "^[0-9]{7}$"
+        let numTest = NSPredicate(format: "SELF MATCHES %@", numRegEx)
+        return numTest.evaluate(with: num)
+    }
     
     func shakeTextField(textField: UITextField) -> Void{
         UIView.animate(withDuration: 0.2, animations: {
@@ -490,8 +589,10 @@ extension SignUpViewController: UITextFieldDelegate {
             maxLength = 20
         case phoneField:
             maxLength = 11
-        case firstIdentityNumField,secondIdentityNumField,phoneCertifyField:
+        case firstIdentityNumField,phoneCertifyField:
             maxLength = 6
+        case secondIdentityNumField:
+            maxLength = 7
         default:
             maxLength = 50
         }
@@ -501,6 +602,11 @@ extension SignUpViewController: UITextFieldDelegate {
             return false
         }
         
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
         return true
     }
 }
@@ -522,6 +628,5 @@ extension SignUpViewController: AgreementDelegate {
             buttonSignUp.isEnabled = false
         default: break
         }
-//        isEnableButton()
     }
 }

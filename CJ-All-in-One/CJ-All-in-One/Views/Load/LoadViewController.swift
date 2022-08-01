@@ -20,14 +20,7 @@ class LoadViewController: UIViewController {
     var workPK: Int?
     var isAgree = 0
     var isSeat: [Bool] = []
-    var lists:[Item] = [
-        Item(deliveryPK: 1, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 5, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 7, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 8, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 9, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로"),
-        Item(deliveryPK: 34, sender: "597e0212ad0264aa8a027767753a11c9", receiver: "cf278a94ab97933c4a75d78b9faea846", itemCategory: "식품", senderAddr: "전남 순천시 조례동", receiverAddr: "서울 서대문구 연희맛로")
-    ]
+    var lists:[Item] = []
     let colors:[UIColor] = [.CjRed,.CjYellow,.CjBlue,.CjGreen]
     var seatNums: [Int] = []
     
@@ -132,7 +125,6 @@ class LoadViewController: UIViewController {
             seatNums.append(getSeatNum(pk: $0.deliveryPK)+1)
         }
         print(seatNums)
-        workPK = 3
         buttonSeats.enumerated().forEach {
             $1.backgroundColor = .white
             $1.setTitle("\($0+1)", for: .normal)

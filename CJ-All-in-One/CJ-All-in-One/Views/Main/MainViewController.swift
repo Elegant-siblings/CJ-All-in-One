@@ -43,6 +43,10 @@ class MainViewController: UIViewController {
         $0.backgroundColor = UIColor(rgb: 0xB4B4B4)
     }
     
+    lazy var imageLogo = UIImageView(image: UIImage(named: "CJ_logo_with_txt")).then {
+        $0.contentMode = .scaleAspectFit
+    }
+    
     // -MARK: UIButtons
     lazy var buttonApply = MainButton(type: .main).then{
         $0.setTitle("모집 신청하기", for: .normal)
@@ -141,7 +145,8 @@ class MainViewController: UIViewController {
     
     @objc func touchUpApplyButton() {
         print("모집 신청하기")
-        navigationController?.pushViewController(ApplyViewController(), animated: true)
+        let vc = ApplyViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func refreshTable(_ sender: UIRefreshControl) {
@@ -160,6 +165,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
         
+//        handleNotAuthenticated()
+        
         taskDataManager.getTasks(self, id: ManId)
         
         self.view.addSubviews([
@@ -171,12 +178,13 @@ class MainViewController: UIViewController {
             viewApplyButtonContainer,
             buttonApply
         ])
-        
+        navBar.addSubviews([imageLogo])
         self.viewTableContainer.addSubviews([
             pageViewController.view,
         ])
         vcComplete.view.addSubviews([tableCompleteTask])
         vcAssigned.view.addSubviews([tableAssignedTask])
+        
         setConstraints()
         detailTypeChanged(type: self.SCDetailType)
     }
@@ -185,6 +193,11 @@ class MainViewController: UIViewController {
     private func setConstraints() {
         navBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+        }
+        imageLogo.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().offset(-30)
+            make.bottom.equalToSuperview().offset(-3)
         }
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
@@ -269,6 +282,17 @@ class MainViewController: UIViewController {
     
     func failedToRequest(message: String) {
         print(message)
+    }
+    
+    private func handleNotAuthenticated() {
+        // Check auth status
+        if ManId == "" {
+            // show log in
+            let loginVC = SignInViewController()
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: false)
+        }
+
     }
 }
 
