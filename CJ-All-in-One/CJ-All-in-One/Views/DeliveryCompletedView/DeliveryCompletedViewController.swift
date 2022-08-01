@@ -181,7 +181,7 @@ class DeliveryCompletedViewController: UIViewController {
     }
     
     
-    let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
+    lazy var tableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         
         
         let sharpLabel = MainLabel(type: .table).then {
@@ -270,6 +270,9 @@ class DeliveryCompletedViewController: UIViewController {
         super.viewDidAppear(true)
         
         presentCircleView()
+        tableView.snp.makeConstraints { make in
+            make.height.equalTo(tableView.contentSize.height)
+        }
     }
     
     
@@ -426,15 +429,16 @@ class DeliveryCompletedViewController: UIViewController {
 //        }
         
     
-        
+        print(tableView.contentSize.height)
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(infoContainerView1.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(220)
+//            make.height.equalTo(tableView.contentSize.height)
 
-//            make.height.equalTo(CGFloat(lists.count)*tableRowHeight)
+//            make.height.equalTo(CGFloat(itemList.count+1)*tableRowHeight)
         }
         separateLine3.snp.makeConstraints { make in
             make.top.equalTo(tableView.snp.bottom).offset(25)
