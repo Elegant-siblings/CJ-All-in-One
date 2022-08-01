@@ -127,9 +127,13 @@ class PackageDetailViewController: UIViewController {
         
         setConstraints()
         
-        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
 
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
     }
     
     
@@ -235,7 +239,7 @@ class PackageDetailViewController: UIViewController {
             print(str)
             
             let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str))
-            dataManager.updateDeliveryInfo(data: inputData)
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str)
             
             self.navigationController?.popViewController(animated: true)
         } else {
@@ -249,8 +253,7 @@ class PackageDetailViewController: UIViewController {
             print(str)
             
             let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: str))
-            dataManager.updateDeliveryInfo(data: inputData)
-            
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: str)
             self.navigationController?.popViewController(animated: true)
 
         } else {
@@ -263,7 +266,7 @@ class PackageDetailViewController: UIViewController {
             print(str)
             
             let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 0, receipt: "haha", recipient: "hoho", picture: str))
-            dataManager.updateDeliveryInfo(data: inputData)
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: str)
             self.navigationController?.popViewController(animated: true)
 
         } else {
