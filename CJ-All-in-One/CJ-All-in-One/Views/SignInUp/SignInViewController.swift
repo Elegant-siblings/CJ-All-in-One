@@ -18,13 +18,13 @@ class SignInViewController: UIViewController {
         $0.contentMode = .scaleAspectFit
     }
     lazy var usernameEmailField = SignUpTextField().then {
-        $0.placeholder = "Username or Email..."
+        $0.placeholder = "아이디"
         $0.addTarget(self, action: #selector(didEndOnExit(_:)), for: .editingDidEndOnExit)
     }
     
     lazy var passwordField = SignUpTextField().then {
         $0.isSecureTextEntry = true
-        $0.placeholder = "Password..."
+        $0.placeholder = "비밀번호"
         $0.addTarget(self, action: #selector(didEndOnExit(_:)), for: .editingDidEndOnExit)
     }
     
