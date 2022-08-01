@@ -36,7 +36,7 @@ class PackageDetailDataManager: PackageDetailDataManagerDelegate {
         }
     }
     
-    func updateDeliveryInfo(deliveryPK: Int, complete: Int, receipt: String, recipient: String, picture: String) {
+    func updateDeliveryInfo(deliveryPK: Int, complete: Int, receipt: String, recipient: String, picture: String? = nil) {
         let urlString = "\(base_url)/item/update?deliveryPK=\(deliveryPK)&complete=\(complete)&receipt=\(receipt)&recipient=\(recipient)&picture=\(picture)"
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let url = URL(string: encoded) {

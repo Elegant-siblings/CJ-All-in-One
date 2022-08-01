@@ -156,6 +156,7 @@ class LoadViewController: UIViewController {
             // 뷰 넘기기
             let vc = FindPathViewController()
             vc.terminalAddr = self.terminalAddr
+            vc.workPK = self.workPK
 
             
             var deliveryPKList : [Int] = []
