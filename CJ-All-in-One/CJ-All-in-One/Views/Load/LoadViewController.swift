@@ -132,7 +132,6 @@ class LoadViewController: UIViewController {
             seatNums.append(getSeatNum(pk: $0.deliveryPK)+1)
         }
         print(seatNums)
-        workPK = 3
         buttonSeats.enumerated().forEach {
             $1.backgroundColor = .white
             $1.setTitle("\($0+1)", for: .normal)

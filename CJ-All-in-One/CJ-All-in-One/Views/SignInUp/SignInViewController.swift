@@ -16,11 +16,13 @@ class SignInViewController: UIViewController {
     
     lazy var usernameEmailField = SignUpTextField().then {
         $0.placeholder = "Username or Email..."
+        $0.addTarget(self, action: #selector(didEndOnExit(_:)), for: .editingDidEndOnExit)
     }
     
     lazy var passwordField = SignUpTextField().then {
         $0.isSecureTextEntry = true
         $0.placeholder = "Password..."
+        $0.addTarget(self, action: #selector(didEndOnExit(_:)), for: .editingDidEndOnExit)
     }
     
     lazy var buttonSignIn = MainButton(type: .main).then {
@@ -57,6 +59,9 @@ class SignInViewController: UIViewController {
             buttonSignIn,
             buttonSignUp
         ])
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         
         headerView.snp.makeConstraints { make in
@@ -100,13 +105,31 @@ class SignInViewController: UIViewController {
         
         dataManager.postLogIn(userID: usernameEmail, userPassword: password, viewController: self)
 
-        
     }
+    
+    @objc func keyboardWillShow(_ sender: Notification) {
+        self.view.frame.origin.y = -150 // Move view 150 points upward
+    }
+    
+    @objc func keyboardWillHide(_ sender: Notification) {
+        self.view.frame.origin.y = 0 // Move view to original position
+    }
+    
     
     @objc func touchUpSignUp() {
         let vc = SignUpViewController()
         navigationController?.pushViewController(vc, animated: true)
         
+    }
+    
+    @objc func didEndOnExit(_ sender: UITextField) {
+        if usernameEmailField.isFirstResponder {
+            passwordField.becomeFirstResponder()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
     }
     
     func didSuccessLogIn(result: UserInfo){
@@ -116,6 +139,10 @@ class SignInViewController: UIViewController {
         self.navigationController?.changeRootViewController(vc)
     }
     func failedToLogIn(message: String) {
+        let alert = UIAlertController(title: "로그인 실패", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
         print(message)
     }
 }
