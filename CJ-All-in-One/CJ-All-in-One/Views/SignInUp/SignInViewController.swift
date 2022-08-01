@@ -14,6 +14,9 @@ class SignInViewController: UIViewController {
     
     var dataManager : LogInDataManager = LogInDataManager()
     
+    lazy var imageLogo = UIImageView(image: UIImage(named: "CJ_logo_SignIn")).then {
+        $0.contentMode = .scaleAspectFit
+    }
     lazy var usernameEmailField = SignUpTextField().then {
         $0.placeholder = "Username or Email..."
         $0.addTarget(self, action: #selector(didEndOnExit(_:)), for: .editingDidEndOnExit)
@@ -41,10 +44,13 @@ class SignInViewController: UIViewController {
     }
     
     lazy var headerView = UIView().then {
-        $0.clipsToBounds = true
-        $0.backgroundColor = .CjBlue
-        let backgroundImageView = UIImageView(image: UIImage(named: "gradient"))
-        $0.addSubview(backgroundImageView)
+//        $0.clipsToBounds = true
+        $0.backgroundColor = .CjWhite
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
+        $0.layer.shadowOpacity = 0.25
+//        let backgroundImageView = UIImageView(image: UIImage(named: "gradient"))
+//        $0.addSubview(backgroundImageView)
     }
 
     override func viewDidLoad() {
@@ -60,6 +66,8 @@ class SignInViewController: UIViewController {
             buttonSignUp
         ])
         
+        headerView.addSubviews([imageLogo])
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow(_:)),
@@ -71,14 +79,18 @@ class SignInViewController: UIViewController {
             name: UIResponder.keyboardWillHideNotification, object: nil
         )
         
-        
         headerView.snp.makeConstraints { make in
             make.top.trailing.leading.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.5)
         }
+        imageLogo.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(10)
+            make.width.equalToSuperview().offset(-80)
+        }
         usernameEmailField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(headerView.snp.bottom).offset(40)
+            make.top.equalTo(headerView.snp.bottom).offset(30)
             make.width.equalToSuperview().offset(-40)
             make.height.equalTo(55)
         }
