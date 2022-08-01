@@ -233,7 +233,7 @@ class SignUpViewController: UIViewController {
         
         idField.snp.makeConstraints { make in
             make.height.equalTo(45)
-            make.top.equalToSuperview().offset(140)
+            make.top.equalToSuperview().offset(70)
             make.leading.equalToSuperview().offset(widthOffset)
             make.width.equalToSuperview().offset(-140)
         }
@@ -340,7 +340,8 @@ class SignUpViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.width.equalTo(mainButtonWidth)
             make.height.equalTo(mainButtonHeight)
-            make.top.equalTo(mainButtonTopOffset)
+//            make.top.equalTo(mainButtonTopOffset)
+            make.bottom.equalToSuperview().offset(-50)
         }
     }
     
@@ -426,7 +427,8 @@ class SignUpViewController: UIViewController {
         print("success")
         let alert = UIAlertController(title: "회원가입 완료", message: "가입을 축하드립니다!", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { (_) in
-            self.navigationController?.popViewController(animated: true)
+//            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true)
         }
         alert.addAction(okAction)
         present(alert, animated: true)

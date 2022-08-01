@@ -141,7 +141,8 @@ class MainViewController: UIViewController {
     
     @objc func touchUpApplyButton() {
         print("모집 신청하기")
-        navigationController?.pushViewController(ApplyViewController(), animated: true)
+        let vc = ApplyViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func refreshTable(_ sender: UIRefreshControl) {
@@ -160,6 +161,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
         
+        handleNotAuthenticated()
+        
         taskDataManager.getTasks(self, id: ManId)
         
         self.view.addSubviews([
@@ -177,6 +180,7 @@ class MainViewController: UIViewController {
         ])
         vcComplete.view.addSubviews([tableCompleteTask])
         vcAssigned.view.addSubviews([tableAssignedTask])
+        
         setConstraints()
         detailTypeChanged(type: self.SCDetailType)
     }
@@ -269,6 +273,17 @@ class MainViewController: UIViewController {
     
     func failedToRequest(message: String) {
         print(message)
+    }
+    
+    private func handleNotAuthenticated() {
+        // Check auth status
+        if ManId == "" {
+            // show log in
+            let loginVC = SignInViewController()
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: false)
+        }
+
     }
 }
 
