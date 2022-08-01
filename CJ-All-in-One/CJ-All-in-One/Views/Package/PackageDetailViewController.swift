@@ -318,7 +318,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                         make.width.equalTo(60)
                     }
                     
-                    if let img = deliveryImgStr {
+                    if let img = data.picture {
                         if let url = URL(string: img) {
                             if let data = try? Data(contentsOf: url) {
                                 packageImage.image = UIImage(data: data)
@@ -375,7 +375,7 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
         contents.append(result.comment ?? "")
         
         
-        deliveryContents.append("24시")
+        deliveryContents.append(result.completeTime ?? "")
         deliveryContents.append(result.receipt ?? "")
         deliveryContents.append(result.recipient ?? "")
         deliveryContents.append(result.picture ?? "")
