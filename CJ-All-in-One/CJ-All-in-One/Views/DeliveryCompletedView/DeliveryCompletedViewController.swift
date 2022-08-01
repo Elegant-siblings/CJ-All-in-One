@@ -18,6 +18,7 @@ class DeliveryCompletedViewController: UIViewController {
     lazy var dataManager: DeliveryCompletedDataManager = DeliveryCompletedDataManager(delegate: self)
     var workInfo: WorkInfo?
     var itemList: [ItemList]?
+    var workPK: Int?
     
     // Table 정보
     let tableRowHeight = CGFloat(40)
@@ -259,8 +260,10 @@ class DeliveryCompletedViewController: UIViewController {
         
         setConstraints()
         
-        
-        dataManager.getDeliveryCompletedDetail(1)
+        if let num = workPK {
+            dataManager.getDeliveryCompletedDetail(num)
+
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
