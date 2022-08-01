@@ -36,13 +36,13 @@ class PackageDetailDataManager: PackageDetailDataManagerDelegate {
         }
     }
     
-    func updateDeliveryInfo(data: PackageDetailUpdateInput) {
-        let urlString = "\(base_url)/item/update"
+    func updateDeliveryInfo(deliveryPK: Int, complete: Int, receipt: String, recipient: String, picture: String) {
+        let urlString = "\(base_url)/item/update?deliveryPK=\(deliveryPK)&complete=\(complete)&receipt=\(receipt)&recipient=\(recipient)&picture=\(picture)"
         
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let url = URL(string: encoded) {
             print(url)
         
-            AF.request(url, method: .post, parameters: data.body.getBody, encoding: JSONEncoding.default)
+            AF.request(url, method: .get)
                 .validate()
                 .responseDecodable(of: PackageResponse.self) { response in
                     switch response.result {
