@@ -43,6 +43,10 @@ class MainViewController: UIViewController {
         $0.backgroundColor = UIColor(rgb: 0xB4B4B4)
     }
     
+    lazy var imageLogo = UIImageView(image: UIImage(named: "CJ_logo_with_txt")).then {
+        $0.contentMode = .scaleAspectFit
+    }
+    
     // -MARK: UIButtons
     lazy var buttonApply = MainButton(type: .main).then{
         $0.setTitle("모집 신청하기", for: .normal)
@@ -161,7 +165,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
         
-        handleNotAuthenticated()
+//        handleNotAuthenticated()
         
         taskDataManager.getTasks(self, id: ManId)
         
@@ -174,7 +178,7 @@ class MainViewController: UIViewController {
             viewApplyButtonContainer,
             buttonApply
         ])
-        
+        navBar.addSubviews([imageLogo])
         self.viewTableContainer.addSubviews([
             pageViewController.view,
         ])
@@ -189,6 +193,11 @@ class MainViewController: UIViewController {
     private func setConstraints() {
         navBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+        }
+        imageLogo.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().offset(-30)
+            make.bottom.equalToSuperview().offset(-3)
         }
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
