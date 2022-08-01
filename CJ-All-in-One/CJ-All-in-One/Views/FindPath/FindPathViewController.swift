@@ -395,6 +395,7 @@ extension FindPathViewController: ViewDelegate {
 
 extension FindPathViewController: TableViewDelegate {
     func cellTouched(info: Int) {
+        print(info)
         let nextVC = PackageDetailViewController()
         nextVC.deliveryPK = info
         self.navigationController?.pushViewController(nextVC, animated: true)
