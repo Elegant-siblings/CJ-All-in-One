@@ -43,7 +43,7 @@ class MainViewController: UIViewController {
         $0.backgroundColor = UIColor(rgb: 0xB4B4B4)
     }
     
-    lazy var imageLogo = UIImageView(image: UIImage(named: "CJ_logo_with_txt")).then {
+    lazy var imageLogo = UIImageView(image: UIImage(named: "CJ_logo_bar")).then {
         $0.contentMode = .scaleAspectFit
     }
     
@@ -165,7 +165,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .CjWhite
         
-//        handleNotAuthenticated()
+        handleNotAuthenticated()
         
         taskDataManager.getTasks(self, id: ManId)
         
@@ -196,7 +196,7 @@ class MainViewController: UIViewController {
         }
         imageLogo.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.height.equalToSuperview().offset(-30)
+            make.height.equalToSuperview().offset(-40)
             make.bottom.equalToSuperview().offset(-3)
         }
         SCDetailType.snp.makeConstraints { make in
