@@ -164,13 +164,19 @@ class MainViewController: UIViewController {
     }
     @objc func logOut() {
         print("로그 아웃")
-        ManId = ""
-        Constant.shared.account = ""
-        
-        let vc = SignInViewController()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-        
+        let alert = UIAlertController(title: "로그아웃", message: "정말 로그아웃 하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { (_) in
+            ManId = ""
+            Constant.shared.account = ""
+            
+            let vc = SignInViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
