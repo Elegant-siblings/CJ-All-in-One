@@ -250,7 +250,7 @@ class PackageDetailViewController: UIViewController {
     @objc func deliveryReject(){
         if let num = deliveryPK {
             
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: nil)
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: "")
             self.navigationController?.popViewController(animated: true)
 
         } else {
@@ -260,7 +260,7 @@ class PackageDetailViewController: UIViewController {
     }
     @objc func deliveryMiss() {
         if let num = deliveryPK {
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: nil)
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: "")
             self.navigationController?.popViewController(animated: true)
 
         } else {
