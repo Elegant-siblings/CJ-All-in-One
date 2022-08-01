@@ -73,6 +73,7 @@ class FindPathBottomViewController: UIViewController {
     let deliveryCompletedButton = MainButton(type: .main).then {
         $0.backgroundColor = .customLightGray
         $0.layer.borderColor = UIColor.customLightGray.cgColor
+        $0.setBackgroundColor(.CjYellow, for: .normal)
         $0.setTitle("배달 완료", for: .normal)
         $0.isEnabled = false
         $0.addTarget(self, action: #selector(deliveryCompleted), for: .touchUpInside)
@@ -97,6 +98,12 @@ class FindPathBottomViewController: UIViewController {
         
         leftDistanceLabel.text = "남은 이동거리: \(distance!)"
         deliveryEndTimeLabel.text = "예상 소요시간: \(time!)"
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
         if let workPK = workPK {
             dataManager.getPackageDetail(workPK: workPK, vc: self)
@@ -150,6 +157,14 @@ class FindPathBottomViewController: UIViewController {
         
         tableInfo = result.itemList
         tableView.reloadData()
+        
+        for i in result.itemList{
+            if i.complete == 0{ //아무 상태도 아닐 때
+                deliveryCompletedButton.isEnabled = false
+            } else {
+                deliveryCompletedButton.isEnabled = true
+            }
+        }
     }
     func failedToRequest(message: String) {
         print(message)
@@ -208,9 +223,9 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
             cell.titleLabel.text = data[indexPath.row].itemCategory
             cell.contentLabel.text = data[indexPath.row].receiverAddr
             cell.wayLabel.text = String(data[indexPath.row].seatNum)
-            print(data[indexPath.row].seatNum-1)
+            print(data[indexPath.row].seatNum)
             //seatNum 조정 필요
-            cell.wayLabel.textColor = colors[data[indexPath.row].seatNum]
+            cell.wayLabel.textColor = colors[data[indexPath.row].seatNum-1]
             
             if data[indexPath.row].complete == 4 {
                 cell.checkImage.image = UIImage(named: "CellUnchecked")

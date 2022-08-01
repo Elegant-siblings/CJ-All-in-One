@@ -23,7 +23,7 @@ class PackageDetailViewController: UIViewController {
     var deliveryContents : [String] = [""]
     var deliveryImgStr : String?
     var deliveryPK : Int?
-    
+    var photoURL : String?
     
     let navigationView = UIView().then {
         $0.backgroundColor = .deppBlue
@@ -231,33 +231,45 @@ class PackageDetailViewController: UIViewController {
     }
     
     @objc func deliveryComplete() {
-        if let str = packageImage.image?.base64, let num = deliveryPK {
+        if let str = photoURL, let num = deliveryPK {
             print(str)
             
             let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str))
             dataManager.updateDeliveryInfo(data: inputData)
+            
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.presentAlert(title: "사진을 첨부해 주세요.")
         }
         
-        self.navigationController?.popViewController(animated: true)
+        
     }
     @objc func deliveryReject(){
-        if let str = packageImage.image?.base64, let num = deliveryPK {
+        if let str = photoURL, let num = deliveryPK {
             print(str)
             
             let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: str))
             dataManager.updateDeliveryInfo(data: inputData)
+            
+            self.navigationController?.popViewController(animated: true)
+
+        } else {
+            self.presentAlert(title: "사진을 첨부해 주세요.")
         }
-        self.navigationController?.popViewController(animated: true)
 
     }
     @objc func deliveryMiss() {
-        if let str = packageImage.image?.base64, let num = deliveryPK {
+        if let str = photoURL, let num = deliveryPK {
             print(str)
             
             let inputData: PackageDetailUpdateInput = .init(body: .init(deliveryPK: num, complete: 0, receipt: "haha", recipient: "hoho", picture: str))
             dataManager.updateDeliveryInfo(data: inputData)
+            self.navigationController?.popViewController(animated: true)
+
+        } else {
+            self.presentAlert(title: "사진을 첨부해 주세요.")
+
         }
-        self.navigationController?.popViewController(animated: true)
 
     }
 }
@@ -358,12 +370,12 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
     func didSuccessGetPackageDetail(_ result: PackageResponse) {
         packageItemInfo = result
         
-        contents.append(result.itemCategory)
-        contents.append(result.sender)
-        contents.append(result.receiver)
-        contents.append(result.senderAddr)
-        contents.append(result.receiverAddr)
-        contents.append(result.comment)
+        contents.append(result.itemCategory ?? "")
+        contents.append(result.sender ?? "")
+        contents.append(result.receiver ?? "")
+        contents.append(result.senderAddr ?? "")
+        contents.append(result.receiverAddr ?? "")
+        contents.append(result.comment ?? "")
         
         
         deliveryContents.append("24시")
@@ -391,10 +403,30 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
 
 extension PackageDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // 선택한 이미지 넣기
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             packageImage.contentMode = .scaleToFill
             packageImage.image = pickedImage //4
         }
+        
+        
+        if let imgUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL{
+            let imgName = imgUrl.lastPathComponent
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            let localPath = documentDirectory?.appending(imgName)
+
+            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            let data = image.pngData()! as NSData
+            data.write(toFile: localPath!, atomically: true)
+            //let imageData = NSData(contentsOfFile: localPath!)!
+            let photoURL = URL.init(fileURLWithPath: localPath!)//NSURL(fileURLWithPath: localPath!)
+            
+            self.photoURL = photoURL.absoluteString
+            print(self.photoURL)
+
+        }
+        
+        
         dismiss(animated: true, completion: nil)
     }
         
