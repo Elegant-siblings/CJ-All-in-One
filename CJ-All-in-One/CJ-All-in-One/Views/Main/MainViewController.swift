@@ -68,6 +68,13 @@ class MainViewController: UIViewController {
         $0.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
         $0.tintColor = UIColor(rgb: 0x8B8B8B)
     }
+    
+    lazy var logOutButton = UIButton().then {
+        $0.setTitle("로그아웃", for: .normal)
+        $0.tintColor = .CjWhite
+        $0.titleLabel!.font = UIFont.AppleSDGothicNeo(.bold, size: 14)
+        $0.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+    }
 
     // -MARK: Others
     lazy var tableAssignedTask = UITableView().then{
@@ -153,7 +160,16 @@ class MainViewController: UIViewController {
         taskDataManager.getTasks(self, id: ManId)
         sender.endRefreshing()
     }
-    
+    @objc func logOut() {
+        print("로그 아웃")
+        ManId = ""
+        Constant.shared.account = ""
+        
+        let vc = SignInViewController()
+        self.dismiss(animated: true)
+        self.present(vc, animated: true)
+        
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         taskDataManager.getTasks(self, id: ManId)
@@ -178,7 +194,7 @@ class MainViewController: UIViewController {
             viewApplyButtonContainer,
             buttonApply
         ])
-        navBar.addSubviews([imageLogo])
+        navBar.addSubviews([imageLogo, logOutButton])
         self.viewTableContainer.addSubviews([
             pageViewController.view,
         ])
@@ -187,6 +203,7 @@ class MainViewController: UIViewController {
         
         setConstraints()
         detailTypeChanged(type: self.SCDetailType)
+        
     }
     
     // -MARK: makeConstraints
@@ -198,6 +215,10 @@ class MainViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.height.equalToSuperview().offset(-40)
             make.bottom.equalToSuperview().offset(-3)
+        }
+        logOutButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.centerY.equalTo(imageLogo.snp.centerY)
         }
         SCDetailType.snp.makeConstraints { make in
             make.leading.equalTo(21)
@@ -294,6 +315,7 @@ class MainViewController: UIViewController {
         }
 
     }
+    
 }
 
 // -MARK: TableView Extension
