@@ -18,22 +18,14 @@ class PackageDetailViewController: UIViewController {
     var packageItemInfo : PackageResponse!
     let tableRowHeight = CGFloat(40)
     let titles = ["배송기사", "송장번호", "상품정보", "보내는 분", "받는 분", "보내는 주소", "받는 주소", "요청 사항"]
-    var contents = ["AXSD-SDXD-****-ZS**", "1233567"]
+    var contents : [String] = []
     let deliveryTitles = ["배송현황", "배송 완료 시각", "수취 방법", "수령인", "사진"]
     var deliveryContents : [String] = [""]
     var deliveryImgStr : String?
     var deliveryPK : Int?
     var photoURL : String?
     
-    // UIScrollView 정의
-    let scrollView = UIScrollView().then {
-        $0.backgroundColor = .deppBlue
-        $0.showsVerticalScrollIndicator = false
-        $0.showsHorizontalScrollIndicator = false
-    }
-    let scrollContentView = UIView().then {
-        $0.backgroundColor = .white
-    }
+
     let navigationView = UIView().then {
         $0.backgroundColor = .deppBlue
     }
@@ -129,12 +121,9 @@ class PackageDetailViewController: UIViewController {
 
         
 //        view.addSubviews([containerView])
-        view.addSubview(scrollView)
-        scrollView.addSubview(scrollContentView)
         
-        self.scrollContentView.addSubviews([navigationView, basicInfoLabel, basicTableView, deliveryInfoLabel, deliveryTableView, missedButton, declinedButton, completedButton])
+        self.view.addSubviews([navigationView, basicInfoLabel, basicTableView, deliveryInfoLabel, deliveryTableView, missedButton, declinedButton, completedButton])
         navigationView.addSubviews([backButton, completedLabel])
-        
         
         setConstraints()
         
@@ -173,19 +162,6 @@ class PackageDetailViewController: UIViewController {
     
     func setConstraints( ){
         // ScrollView
-        scrollView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide)
-            make.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.snp.bottom)
-        }
-        scrollContentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(1200)
-        }
-        
         navigationView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.trailing.equalToSuperview()
@@ -395,6 +371,8 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
     func didSuccessGetPackageDetail(_ result: PackageResponse) {
         packageItemInfo = result
         
+        contents.append(ManId)
+        contents.append("123456")
         contents.append(result.itemCategory ?? "")
         contents.append(result.sender ?? "")
         contents.append(result.receiver ?? "")
