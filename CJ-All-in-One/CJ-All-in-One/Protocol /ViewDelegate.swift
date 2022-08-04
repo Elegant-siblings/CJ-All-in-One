@@ -10,3 +10,6 @@ import Foundation
 protocol ViewDelegate: AnyObject {
     func pushed()
 }
+protocol TableViewDelegate: AnyObject {
+    func cellTouched(info: Int)
+}
