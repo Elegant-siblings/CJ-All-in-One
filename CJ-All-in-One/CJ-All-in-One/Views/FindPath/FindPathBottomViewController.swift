@@ -24,7 +24,7 @@ class FindPathBottomViewController: UIViewController {
     var dataManager: WorksItemListDataManager = WorksItemListDataManager()
     lazy var completedDataManager: DeliveryCompletedDataManager = DeliveryCompletedDataManager(delegate: self)
     var workPK: Int?
-    var dliveryNum: Int!
+    var deliveryNum: Int!
     
     // Bool Variable
     var onDelivery : Bool = true
@@ -110,15 +110,7 @@ class FindPathBottomViewController: UIViewController {
         if let workPK = workPK {
             dataManager.getPackageDetail(workPK: workPK, vc: self)
         }
-        dliveryNum = 0
-        if let item = tableInfo {
-            for i in item {
-                if i.complete == 0{
-                    dliveryNum += 1
-                }
-            }
-        }
-        leftDeliveryItemsLabel.text = "남은 배송 물품 \(dliveryNum!)개"
+        
     }
     
     func setConstraints(){
@@ -169,13 +161,18 @@ class FindPathBottomViewController: UIViewController {
         tableInfo = result.itemList
         tableView.reloadData()
         
+        deliveryNum = 0
+
         for i in result.itemList{
             if i.complete == 0{ //아무 상태도 아닐 때
                 deliveryCompletedButton.isEnabled = false
+                deliveryNum += 1
             } else {
                 deliveryCompletedButton.isEnabled = true
             }
         }
+        
+        leftDeliveryItemsLabel.text = "남은 배송 물품 \(deliveryNum!)개"
     }
     func failedToRequest(message: String) {
         print(message)
