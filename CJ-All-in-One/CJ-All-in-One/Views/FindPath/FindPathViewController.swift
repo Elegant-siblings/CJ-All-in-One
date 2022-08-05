@@ -42,6 +42,10 @@ class FindPathViewController: UIViewController {
     var boundsArray = [NMGLatLngBounds]()
     var boundsIdx = 0
     
+    // 버튼
+    lazy var buttons : [UIButton] = [pathButton, zoomWayButton, exitButton]
+    var isShowFloating : Bool = false
+    
     // 경유지 정보
     var wayPoitns = [NMGLatLng]()
     
@@ -74,6 +78,33 @@ class FindPathViewController: UIViewController {
     
     var mapImage = UIImage()
     
+    let buttonStack = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .fill
+        $0.distribution = .equalSpacing
+        $0.spacing = 8
+        
+        $0.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
+    }
+    
+    let stackButton = UIButton().then {
+        $0.backgroundColor = .CjGray
+        $0.layer.cornerRadius = 30
+        $0.layer.borderColor = UIColor.CjGray.cgColor
+        $0.setImage(UIImage(systemName: "plus.circle"), for: .normal)
+        $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        $0.adjustsImageWhenHighlighted = false
+        $0.tintColor = .CjWhite
+        
+        $0.addTarget(self, action: #selector(showButtons), for: .touchUpInside)
+        
+        $0.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
+    }
     
     let pathButton = UIButton().then {
         $0.backgroundColor = .CjBlue
@@ -83,6 +114,11 @@ class FindPathViewController: UIViewController {
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
+        
+        $0.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
     }
     let zoomWayButton = UIButton().then {
         $0.backgroundColor = .CjYellow
@@ -92,6 +128,11 @@ class FindPathViewController: UIViewController {
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
+        
+        $0.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
     }
     let exitButton = UIButton().then {
         $0.backgroundColor = .CjOrange
@@ -101,6 +142,11 @@ class FindPathViewController: UIViewController {
         $0.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         $0.adjustsImageWhenHighlighted = false
         $0.tintColor = .CjWhite
+        
+        $0.snp.makeConstraints { make in
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
     }
     
     let distanceLabel = UILabel().then {
@@ -143,13 +189,18 @@ class FindPathViewController: UIViewController {
         zoomWayButton.addTarget(self, action: #selector(serialPath), for: .touchUpInside)
         exitButton.addTarget(self, action: #selector(popToMain), for: .touchUpInside)
         
-        view.addSubviews([mapView, pathButton, zoomWayButton, exitButton])
+        view.addSubviews([mapView])
         mapView.addSubviews([infoView])
+        view.addSubview(buttonStack)
+        [exitButton, zoomWayButton, pathButton, stackButton].map { button in
+            buttonStack.addArrangedSubview(button)
+        }
         infoView.addSubviews([distanceLabel, timeLabel, timeAssumptionLabel])
         
-//        self.view.bringSubviewToFront(buttonView)
-//        self.mapView.bringSubviewToFront(pathButton)
-//        self.mapView.bringSubviewToFront(zoomWayButton)
+        
+        buttons.map { button in
+            button.isHidden = true
+        }
         
         //위치 표시하기
         locationManager!.add(self)
@@ -192,33 +243,19 @@ class FindPathViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.leading.equalTo(self.view)
             make.trailing.equalTo(self.view)
-            make.bottom.equalTo(self.view).offset(-150)
+            make.bottom.equalTo(self.view)
             make.top.equalTo(self.view)
         }
         infoView.snp.makeConstraints { make in
-            make.leading.equalTo(mapView.snp.leading).offset(20)
+            make.leading.equalTo(mapView.snp.leading).offset(15)
             make.trailing.equalTo(mapView.snp.trailing).offset(-20)
             make.height.equalTo(31)
-            make.bottom.equalTo(mapView.snp.bottom).offset(-60)
+            make.bottom.equalTo(mapView.snp.bottom).offset(-55)
         }
         // UIButton
-        pathButton.snp.makeConstraints { make in
-            make.width.equalTo(60)
-            make.height.equalTo(60)
-            make.trailing.equalTo(self.view).offset(-30)
-            make.bottom.equalTo(self.view).offset(-40)
-        }
-        zoomWayButton.snp.makeConstraints { make in
-            make.width.equalTo(60)
-            make.height.equalTo(60)
-            make.trailing.equalTo(pathButton.snp.leading).offset(-20)
-            make.bottom.equalTo(self.view).offset(-40)
-        }
-        exitButton.snp.makeConstraints { make in
-            make.width.equalTo(60)
-            make.height.equalTo(60)
-            make.trailing.equalTo(zoomWayButton.snp.leading).offset(-20)
-            make.bottom.equalTo(self.view).offset(-40)
+        buttonStack.snp.makeConstraints { make in
+            make.bottom.equalTo(infoView.snp.top).offset(-15)
+            make.trailing.equalTo(self.view.snp.trailing).offset(-20)
         }
         
         // UILabel
@@ -346,6 +383,39 @@ class FindPathViewController: UIViewController {
 //        way2Mark.captionAligns = [NMFAlignType.top]
 //        way2Mark.captionText = wayPointNames[1]
 //        way2Mark.mapView = mapView
+        
+    }
+    
+    @objc func showButtons() {
+        if isShowFloating {
+            buttons.reversed().forEach { button in
+                UIView.animate(withDuration: 0.3) {
+                    button.isHidden = true
+                    self.view.layoutIfNeeded()
+                }
+            }
+        } else {
+            buttons.forEach { [weak self] button in
+                button.isHidden = false
+                button.alpha = 0
+
+                UIView.animate(withDuration: 0.3) {
+                    button.alpha = 1
+                    self?.view.layoutIfNeeded()
+                }
+            }
+        }
+        
+        isShowFloating = !isShowFloating
+        
+        // 플로팅 버튼 애니메이션
+        let image = isShowFloating ? UIImage(systemName: "multiply.circle") : UIImage(systemName: "plus.circle")
+        let roatation = isShowFloating ? CGAffineTransform(rotationAngle: .pi - (.pi / 2)) : CGAffineTransform.identity
+
+        UIView.animate(withDuration: 0.3) {
+            self.stackButton.setImage(image, for: .normal)
+            self.stackButton.transform = roatation
+        }
         
     }
     

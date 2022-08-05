@@ -34,6 +34,7 @@ extension UIColor {
     class var CjYellow : UIColor { UIColor(hex: 0xFFCE6E) }
     class var CjWhite : UIColor { UIColor(hex: 0xF9F9F9) }
     class var CjGreen : UIColor { UIColor(hex: 0x3CC953)}
+    class var CjGray : UIColor { UIColor(hex: 0xACACAC) }
     
     class var deppBlue : UIColor { UIColor(hex: 0x193640) }
     class var primaryFontColor : UIColor { UIColor(hex: 0x3F3F3F)}
