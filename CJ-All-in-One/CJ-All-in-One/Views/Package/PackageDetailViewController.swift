@@ -26,6 +26,13 @@ class PackageDetailViewController: UIViewController {
     var photoURL : String?
     
 
+    lazy var viewScrollContain = UIView()
+    lazy var scrollView = UIScrollView().then {
+        $0.alwaysBounceVertical = false
+        $0.bounces = $0.contentOffset.y > 0
+    }
+    lazy var viewContent = UIView()
+    
     let navigationView = UIView().then {
         $0.backgroundColor = .deppBlue
     }
@@ -46,8 +53,7 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-        $0.layer.addShadow(location: [.top, .bottom])
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.allowsSelection = false
         $0.tableHeaderView = .none
         $0.register(PackageBasicTableViewCell.self, forCellReuseIdentifier: PackageBasicTableViewCell.identifier)
@@ -60,13 +66,11 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-        $0.layer.addShadow(location: [.top, .bottom])
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.allowsSelection = false
         $0.tableHeaderView = .none
         $0.register(PackageDeliveryTableViewCell.self, forCellReuseIdentifier: PackageDeliveryTableViewCell.identifier)
     }
-    
     
     //Button
     let completedButton = MainButton(type: .main).then {
@@ -75,6 +79,7 @@ class PackageDetailViewController: UIViewController {
         $0.setTitle("배송완료", for: .normal)
         $0.addTarget(self, action: #selector(deliveryComplete), for: .touchUpInside)
     }
+    
     let declinedButton = MainButton(type: .sub).then {
         $0.backgroundColor = .CjYellow
         $0.layer.borderColor = UIColor.CjYellow.cgColor
@@ -110,7 +115,7 @@ class PackageDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .CjWhite
         
         navigationController?.navigationBar.isHidden = true
         
@@ -121,41 +126,56 @@ class PackageDetailViewController: UIViewController {
 
         
 //        view.addSubviews([containerView])
+        // -MARK: addSubViews
+        self.view.addSubviews([
+            navigationView,
+            viewScrollContain,
+//            basicInfoLabel,
+//            basicTableView,
+//            deliveryInfoLabel,
+//            deliveryTableView,
+            missedButton,
+            declinedButton,
+            completedButton
+        ])
         
-        self.view.addSubviews([navigationView, basicInfoLabel, basicTableView, deliveryInfoLabel, deliveryTableView, missedButton, declinedButton, completedButton])
-        navigationView.addSubviews([backButton, completedLabel])
+        navigationView.addSubviews([
+            backButton,
+            completedLabel
+        ])
         
+        viewScrollContain.addSubviews([scrollView])
+        scrollView.addSubviews([viewContent])
+        viewContent.addSubviews([
+            basicInfoLabel,basicTableView,
+            deliveryInfoLabel,deliveryTableView
+        ])
         setConstraints()
-        
-
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-    
         
-        
-        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
+        //        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
     }
     
-    
-//    private func presentCircleView() {
-//        let width = self.containerView.frame.width / 2
-//        let height = self.containerView.frame.height / 2
-//
-//        let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-////        pieChartView.center = self.view.center
-//
-//        pieChartView.slices = [Slice(percent: 0.75, color: UIColor.systemOrange),
-//                                Slice(percent: 0.1, color: UIColor.systemTeal),
-//                                Slice(percent: 0.15, color: UIColor.systemRed)]
-//
-//        containerView.addSubview(pieChartView)
-//        pieChartView.animateChart()
-//    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        basicTableView.snp.updateConstraints { make in
+            make.height.equalTo(basicTableView.contentSize.height)
+        }
+        deliveryTableView.snp.updateConstraints { make in
+            make.height.equalTo(deliveryTableView.contentSize.height)
+        }
+        print(basicTableView.frame.height,deliveryTableView.frame.height)
+        viewContent.snp.updateConstraints { make in
+            make.height.equalTo(basicTableView.frame.height+deliveryTableView.frame.height+170)
+        }
+    }
     
     func setConstraints( ){
         // ScrollView
+        // -MARK: setConstraints
         navigationView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.trailing.equalToSuperview()
@@ -172,6 +192,20 @@ class PackageDetailViewController: UIViewController {
             make.centerX.equalTo(navigationView.snp.centerX)
             make.bottom.equalTo(navigationView.snp.bottom).offset(-10)
         }
+        viewScrollContain.snp.makeConstraints { make in
+            make.top.equalTo(navigationView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(completedButton.snp.top).offset(-20)
+        }
+        scrollView.snp.makeConstraints { make in
+            make.top.left.right.bottom.equalToSuperview()
+        }
+        viewContent.snp.makeConstraints { make in
+            make.edges.equalTo(0)
+            make.width.equalToSuperview()
+            make.height.equalTo(10000)
+        }
+//
         missedButton.snp.makeConstraints { make in
             make.centerY.equalTo(declinedButton.snp.centerY)
             make.leading.equalTo(self.view.snp.centerX).offset(5)
@@ -190,28 +224,30 @@ class PackageDetailViewController: UIViewController {
             make.leading.equalTo(self.view).offset(24)
             make.trailing.equalTo(self.view).offset(-24)
         }
-        
+//
         basicInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(navigationView.snp.bottom).offset(20)
-            make.leading.equalTo(self.view).offset(24)
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(24)
         }
         basicTableView.snp.makeConstraints { make in
-            make.leading.equalTo(self.view).offset(24)
-            make.trailing.equalTo(self.view).offset(-24)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
             make.top.equalTo(basicInfoLabel.snp.bottom).offset(10)
-            make.height.equalTo(249)
+//            make.bottom.equalToSuperview()
+//            make.height.equalTo(249)
+            make.height.equalTo(basicTableView.contentSize.height)
         }
         deliveryInfoLabel.snp.makeConstraints { make in
             make.top.equalTo(basicTableView.snp.bottom).offset(30)
-            make.leading.equalTo(self.view).offset(24)
+            make.leading.equalToSuperview().offset(24)
         }
         deliveryTableView.snp.makeConstraints { make in
-            make.leading.equalTo(self.view).offset(24)
-            make.trailing.equalTo(self.view).offset(-24)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
             make.top.equalTo(deliveryInfoLabel.snp.bottom).offset(10)
-            make.height.equalTo(234)
+//            make.height.equalTo(234)
+            make.height.equalTo(deliveryTableView.contentSize.height)
         }
-        
     }
     
     @objc func back(){
@@ -265,10 +301,8 @@ class PackageDetailViewController: UIViewController {
         if let num = deliveryPK {
             dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: "")
             self.navigationController?.popViewController(animated: true)
-
         } else {
             self.presentAlert(title: "사진을 첨부해 주세요.")
-
         }
 
     }
@@ -285,6 +319,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == basicTableView {
+            print("here")
             let cell = tableView.dequeueReusableCell(withIdentifier: PackageBasicTableViewCell.identifier, for: indexPath) as! PackageBasicTableViewCell
     
             cell.titleLabel.text = titles[indexPath.row]
