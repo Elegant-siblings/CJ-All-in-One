@@ -398,7 +398,7 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
     func didSuccessGetPackageDetail(_ result: PackageResponse) {
         packageItemInfo = result
         
-        contents.append(ManId)
+        contents.append(Constant.shared.ManId)
         contents.append("123456")
         contents.append(result.itemCategory ?? "")
         contents.append(result.sender ?? "")

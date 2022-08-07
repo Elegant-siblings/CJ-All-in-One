@@ -21,12 +21,11 @@ class Constant {
         ]
     }
     var account: String = ""
-    
+    var ManId: String = ""
 }
 
 let mainButtonHeight = 48
 let mainButtonWidth = 343
 let base_url = "http://34.125.0.122:3000"
-var ManId: String = ""
 let mainButtonTopOffset = UIScreen.main.bounds.size.height*(754/850)
 

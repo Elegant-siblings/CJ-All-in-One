@@ -332,7 +332,7 @@ class ApplyViewController: UIViewController {
         let vc = AssignViewController()
         vc.date = self.date
         vc.toLists = self.toLists
-        vc.applyForm = ApplyDataModel(deliveryPK: [], deliveryManID: ManId, deliveryDate: self.date, deliveryType: self.type, deliveryTime: self.time, deliveryCar: self.vehicle, terminalAddr: self.receivAddr)
+        vc.applyForm = ApplyDataModel(deliveryPK: [], deliveryManID: Constant.shared.ManId, deliveryDate: self.date, deliveryType: self.type, deliveryTime: self.time, deliveryCar: self.vehicle, terminalAddr: self.receivAddr)
         navigationController?.pushViewController(vc, animated: true)
     }
     
