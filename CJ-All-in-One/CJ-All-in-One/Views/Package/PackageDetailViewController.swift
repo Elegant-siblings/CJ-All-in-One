@@ -155,7 +155,7 @@ class PackageDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        //        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
+        dataManager.getPackageDetail(deliveryPK: deliveryPK!)
     }
     
     override func viewDidLayoutSubviews() {
@@ -167,7 +167,6 @@ class PackageDetailViewController: UIViewController {
         deliveryTableView.snp.updateConstraints { make in
             make.height.equalTo(deliveryTableView.contentSize.height)
         }
-        print(basicTableView.frame.height,deliveryTableView.frame.height)
         viewContent.snp.updateConstraints { make in
             make.height.equalTo(basicTableView.frame.height+deliveryTableView.frame.height+170)
         }
@@ -319,7 +318,6 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == basicTableView {
-            print("here")
             let cell = tableView.dequeueReusableCell(withIdentifier: PackageBasicTableViewCell.identifier, for: indexPath) as! PackageBasicTableViewCell
     
             cell.titleLabel.text = titles[indexPath.row]
