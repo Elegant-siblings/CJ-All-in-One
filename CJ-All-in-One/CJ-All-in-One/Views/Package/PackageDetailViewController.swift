@@ -71,7 +71,6 @@ class PackageDetailViewController: UIViewController {
         $0.tableHeaderView = .none
         $0.register(PackageDeliveryTableViewCell.self, forCellReuseIdentifier: PackageDeliveryTableViewCell.identifier)
     }
-
     
     //Button
     let completedButton = MainButton(type: .main).then {
@@ -80,6 +79,7 @@ class PackageDetailViewController: UIViewController {
         $0.setTitle("배송완료", for: .normal)
         $0.addTarget(self, action: #selector(deliveryComplete), for: .touchUpInside)
     }
+    
     let declinedButton = MainButton(type: .sub).then {
         $0.backgroundColor = .CjYellow
         $0.layer.borderColor = UIColor.CjYellow.cgColor
