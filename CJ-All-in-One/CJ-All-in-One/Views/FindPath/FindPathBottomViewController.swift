@@ -232,6 +232,7 @@ extension FindPathBottomViewController: DeliveryCompletedViewDelegate {
 extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = tableInfo {
+            print(data.count)
             return data.count
         } else {
             return 0
@@ -262,7 +263,7 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
                 cell.checkImage.image = UIImage(named: "CellUncheck")
             } else if data[indexPath.row].complete == 1 {
                 cell.checkImage.image = UIImage(named: "CellCheck")
-            } else if data[indexPath.row].complete == 2{
+            } else if data[indexPath.row].complete == 2 {
                 cell.checkImage.image = UIImage(named: "CellRejected")
             } else {
                 cell.checkImage.isHidden = true
@@ -282,7 +283,7 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
         self.dismiss(animated: true)
-        tableDelegate.cellTouched(info: tableInfo![indexPath.row].deliveryPK)
+        tableDelegate.cellTouched(info: tableInfo![indexPath.row].deliveryPK, complete: tableInfo![indexPath.row].complete == 0 ? nil : tableInfo![indexPath.row].complete)
     }
 }
 
