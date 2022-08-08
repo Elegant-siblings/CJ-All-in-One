@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
+import DropDown
 
 class PackageDetailViewController: UIViewController {
     
@@ -24,8 +25,14 @@ class PackageDetailViewController: UIViewController {
     var deliveryImgStr : String?
     var deliveryPK : Int?
     var photoURL : String?
+    var complete: Int?
+    var receipt: String?
+    var recipient: String?
     
-
+    let dropDown1 = DropDown()
+    let dropDown2 = DropDown()
+    
+    
     lazy var viewScrollContain = UIView()
     lazy var scrollView = UIScrollView().then {
         $0.alwaysBounceVertical = false
@@ -110,6 +117,16 @@ class PackageDetailViewController: UIViewController {
         $0.setImage(UIImage(named: "defaultPhoto"), for: .normal)
         $0.cornerRadius = 10
         $0.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
+    }
+    
+    //셀 내 드롭다운
+    let dropDownButton1 = UIButton().then {
+        $0.setImage(UIImage(named: "btnDown"), for: .normal)
+        $0.addTarget(self, action: #selector(showMenu1), for: .touchUpInside)
+    }
+    let dropDownButton2 = UIButton().then {
+        $0.setImage(UIImage(named: "btnDown"), for: .normal)
+        $0.addTarget(self, action: #selector(showMenu2), for: .touchUpInside)
     }
     
     
@@ -249,6 +266,25 @@ class PackageDetailViewController: UIViewController {
         }
     }
     
+    func initDropDown(dropDown: DropDown, anchor: UILabel) {
+        dropDown.anchorView = anchor
+        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+        dropDown.direction = .bottom
+        
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            anchor.text = item
+            
+            if dropDown == dropDown1 {
+                receipt = item
+            } else {
+                recipient = item
+            }
+            
+            //선택한 아이템 초기화
+            dropDown.clearSelection()
+        }
+    }
+    
     @objc func back(){
         self.navigationController?.popViewController(animated: true)
     }
@@ -273,14 +309,14 @@ class PackageDetailViewController: UIViewController {
     }
     
     @objc func deliveryComplete() {
-        if let str = photoURL, let num = deliveryPK {
+        if let str = photoURL, let num = deliveryPK, let receipt = self.receipt, let recipient = self.recipient {
             print(str)
             
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str)
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: receipt, recipient: recipient, picture: str)
             
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.presentAlert(title: "사진을 첨부해 주세요.")
+            self.presentAlert(title: "누락한 정보가 있습니다.")
         }
         
         
@@ -291,8 +327,6 @@ class PackageDetailViewController: UIViewController {
             dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: "")
             self.navigationController?.popViewController(animated: true)
 
-        } else {
-            self.presentAlert(title: "사진을 첨부해 주세요.")
         }
 
     }
@@ -300,10 +334,15 @@ class PackageDetailViewController: UIViewController {
         if let num = deliveryPK {
             dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: "")
             self.navigationController?.popViewController(animated: true)
-        } else {
-            self.presentAlert(title: "사진을 첨부해 주세요.")
         }
 
+    }
+    
+    @objc func showMenu1() {
+        dropDown1.show()
+    }
+    @objc func showMenu2() {
+        dropDown2.show()
     }
 }
 
@@ -364,18 +403,54 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                     }
             
                 } else if indexPath.row == 0 {
-                    
-                    if packageItemInfo.complete == 0{
-                        cell.contentLabel.text = "미배송"
-                        cell.contentLabel.textColor = .CjOrange
-                    } else if packageItemInfo.complete == 1 {
-                        cell.contentLabel.text = "배송완료"
-                        cell.contentLabel.textColor = .CjBlue
-                    } else {
-                        cell.contentLabel.text = "수취 거부"
-                        cell.contentLabel.textColor = .CjRed
+                    if let num = self.complete { //complete 상태 값이 있는 경우
+                        if packageItemInfo.complete == 0{
+                            cell.contentLabel.text = "미배송"
+                            cell.contentLabel.textColor = .CjOrange
+                        } else if packageItemInfo.complete == 1 {
+                            cell.contentLabel.text = "배송완료"
+                            cell.contentLabel.textColor = .CjBlue
+                        } else {
+                            cell.contentLabel.text = "수취 거부"
+                            cell.contentLabel.textColor = .CjRed
+                        }
+                    } else { // complete 상태 값이 없는 경우
+                        cell.contentLabel.text = "배송 전"
+                        cell.contentLabel.textColor = .black
                     }
                     
+                } else if indexPath.row == 2 {
+                    if let num = self.complete {
+                        cell.contentLabel.text = deliveryContents[indexPath.row]
+                        
+                    } else {
+                        cell.contentLabel.text = "해당 없음"
+                        cell.contentView.addSubview(dropDownButton1)
+                        dropDownButton1.snp.makeConstraints { make in
+                            make.height.equalTo(20)
+                            make.width.equalTo(20)
+                            make.centerY.equalToSuperview()
+                            make.leading.equalToSuperview().offset(130)
+                        }
+                        dropDown1.dataSource = ["직접 전달", "경비실 전달", "문앞 전달", "무인 택배함", "기타"]
+                        initDropDown(dropDown: dropDown1, anchor: cell.contentLabel)
+                    }
+                    
+                } else if indexPath.row == 3 {
+                    if let num = self.complete {
+                        cell.contentLabel.text = deliveryContents[indexPath.row]
+                    } else {
+                        cell.contentLabel.text = "해당 없음"
+                        cell.contentView.addSubview(dropDownButton2)
+                        dropDownButton2.snp.makeConstraints { make in
+                            make.height.equalTo(20)
+                            make.width.equalTo(20)
+                            make.centerY.equalToSuperview()
+                            make.leading.equalToSuperview().offset(120)
+                        }
+                        dropDown2.dataSource = ["본인", "가족", "(직장)동료", "이웃", "기타"]
+                        initDropDown(dropDown: dropDown2, anchor: cell.contentLabel)
+                    }
                 } else {
                     cell.contentLabel.text = deliveryContents[indexPath.row]
                 }
@@ -409,14 +484,8 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
         
         
         deliveryContents.append(result.completeTime ?? "")
-        if let result = result.completeTime{
-            deliveryContents.append("대면 배달")
-            deliveryContents.append("본인")
-        }
-        else{
-            deliveryContents.append("")
-            deliveryContents.append("")
-        }
+        deliveryContents.append(result.receipt ?? "")
+        deliveryContents.append(result.recipient ?? "")
         deliveryContents.append(result.picture ?? "")
         
         basicTableView.reloadData()

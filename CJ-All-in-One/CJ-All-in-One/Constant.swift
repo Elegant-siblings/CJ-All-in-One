@@ -16,8 +16,8 @@ class Constant {
     let FIND_PATH_BASE_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving"
     
     var HEADERS: HTTPHeaders {
-        return ["X-NCP-APIGW-API-KEY-ID" : "ze98l8nczg",
-                "X-NCP-APIGW-API-KEY" : "WZ2rtCWUOKJrKd1BJn0XEvLoqC0DELzG8yQCDnCI"
+        return ["X-NCP-APIGW-API-KEY-ID" : "ydvsw8uw7f",
+                "X-NCP-APIGW-API-KEY" : "Isa53LLQOqdW4ZspSCnROmLwWOTrxCMFm6ojETGB"
         ]
     }
     var account: String = ""
