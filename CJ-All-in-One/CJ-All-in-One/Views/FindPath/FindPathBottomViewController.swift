@@ -38,6 +38,7 @@ class FindPathBottomViewController: UIViewController {
     let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
         $0.layer.addShadow(location: [.top, .bottom])
         $0.tableHeaderView = .none
+        $0.isScrollEnabled = true
         $0.register(FindPathBottomTableViewCell.self, forCellReuseIdentifier: FindPathBottomTableViewCell.identifier)
     }
     
