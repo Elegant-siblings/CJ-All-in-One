@@ -312,9 +312,13 @@ class PackageDetailViewController: UIViewController {
         if let str = photoURL, let num = deliveryPK, let receipt = self.receipt, let recipient = self.recipient {
             print(str)
             
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: receipt, recipient: recipient, picture: str)
-            
-            self.navigationController?.popViewController(animated: true)
+            if receipt != "해당 없음", recipient != "해당 없음" {
+                dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: receipt, recipient: recipient, picture: str)
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.presentAlert(title: "누락한 정보가 있습니다.")
+            }
+
         } else {
             self.presentAlert(title: "누락한 정보가 있습니다.")
         }
@@ -324,18 +328,15 @@ class PackageDetailViewController: UIViewController {
     @objc func deliveryReject(){
         if let num = deliveryPK {
             
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: "")
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "", recipient: "", picture: "")
             self.navigationController?.popViewController(animated: true)
-
         }
-
     }
     @objc func deliveryMiss() {
         if let num = deliveryPK {
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: "")
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "", recipient: "", picture: "")
             self.navigationController?.popViewController(animated: true)
         }
-
     }
     
     @objc func showMenu1() {
@@ -394,13 +395,20 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                     }
                     
                     if let img = data.picture {
-                        packageImage.image = UIImage(named: "택배사진")
+                        if img != "" {
+                            packageImage.image = UIImage(named: "택배사진")
+                        } else {
+                            packageImage.image = UIImage(named: "selectPhoto")
+                        }
+                        packageImageTouch.isHidden = true
                         cameraButton.isHidden = true
                         
                     } else {
-                        
+                        packageImageTouch.isHidden = false
                         cameraButton.isHidden = false
                     }
+                    
+                    
             
                 } else if indexPath.row == 0 {
                     if let num = self.complete { //complete 상태 값이 있는 경우
@@ -432,7 +440,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                             make.centerY.equalToSuperview()
                             make.leading.equalToSuperview().offset(130)
                         }
-                        dropDown1.dataSource = ["직접 전달", "경비실 전달", "문앞 전달", "무인 택배함", "기타"]
+                        dropDown1.dataSource = ["해당 없음", "직접 전달", "경비실 전달", "문앞 전달", "무인 택배함", "기타"]
                         initDropDown(dropDown: dropDown1, anchor: cell.contentLabel)
                     }
                     
@@ -448,7 +456,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                             make.centerY.equalToSuperview()
                             make.leading.equalToSuperview().offset(120)
                         }
-                        dropDown2.dataSource = ["본인", "가족", "(직장)동료", "이웃", "기타"]
+                        dropDown2.dataSource = ["해당 없음", "본인", "가족", "(직장)동료", "이웃", "기타"]
                         initDropDown(dropDown: dropDown2, anchor: cell.contentLabel)
                     }
                 } else {
