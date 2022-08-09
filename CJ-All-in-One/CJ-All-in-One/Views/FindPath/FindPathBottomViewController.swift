@@ -283,7 +283,7 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
         self.dismiss(animated: true)
-        tableDelegate.cellTouched(info: tableInfo![indexPath.row].deliveryPK, complete: tableInfo![indexPath.row].complete == 0 ? nil : tableInfo![indexPath.row].complete)
+        tableDelegate.cellTouched(info: tableInfo![indexPath.row].deliveryPK)
     }
 }
 
