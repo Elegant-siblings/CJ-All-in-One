@@ -225,12 +225,15 @@ class FindPathViewController: UIViewController {
         deliveryPKtoString.removeLast()
         deliveryPKtoString.removeFirst()
         dataManager.getLocation(terminalAddr: terminalAddr, deliveryPK: deliveryPKtoString)
+        self.showIndicator()
+
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
 //        //path 설정
 //        configurePath()
 //    }
+
     
     override func viewDidDisappear(_ animated: Bool) {
         //뷰 벗어날 때 위치 받기 해제
@@ -310,7 +313,6 @@ class FindPathViewController: UIViewController {
         coords.removeAll()
         stringCoords.removeAll()
         
-        self.showIndicator()
         
         //경유지 쿼리 스트링 일부 만들기
         if totalPoints.count < 8 {
