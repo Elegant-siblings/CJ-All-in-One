@@ -467,11 +467,10 @@ extension FindPathViewController: ViewDelegate {
 }
 
 extension FindPathViewController: TableViewDelegate {
-    func cellTouched(info: Int, complete: Int?) {
+    func cellTouched(info: Int) {
         print(info)
         let nextVC = PackageDetailViewController()
         nextVC.deliveryPK = info
-        nextVC.complete = complete
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

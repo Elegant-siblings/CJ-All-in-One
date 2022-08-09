@@ -25,7 +25,6 @@ class PackageDetailViewController: UIViewController {
     var deliveryImgStr : String?
     var deliveryPK : Int?
     var photoURL : String?
-    var complete: Int?
     var receipt: String?
     var recipient: String?
     
@@ -407,28 +406,26 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                         packageImageTouch.isHidden = false
                         cameraButton.isHidden = false
                     }
-                    
-                    
-            
+
                 } else if indexPath.row == 0 {
-                    if let num = self.complete { //complete 상태 값이 있는 경우
-                        if packageItemInfo.complete == 0{
-                            cell.contentLabel.text = "미배송"
-                            cell.contentLabel.textColor = .CjOrange
-                        } else if packageItemInfo.complete == 1 {
-                            cell.contentLabel.text = "배송완료"
-                            cell.contentLabel.textColor = .CjBlue
-                        } else {
-                            cell.contentLabel.text = "수취 거부"
-                            cell.contentLabel.textColor = .CjRed
-                        }
-                    } else { // complete 상태 값이 없는 경우
+                    
+                    switch packageItemInfo.complete {
+                    case 0:
                         cell.contentLabel.text = "배송 전"
                         cell.contentLabel.textColor = .black
+                    case 1:
+                        cell.contentLabel.text = "배송완료"
+                        cell.contentLabel.textColor = .CjBlue
+                    case 2:
+                        cell.contentLabel.text = "수취 거부"
+                        cell.contentLabel.textColor = .CjYellow
+                    default:
+                        cell.contentLabel.text = "미배송"
+                        cell.contentLabel.textColor = .CjRed
+                        
                     }
-                    
                 } else if indexPath.row == 2 {
-                    if let num = self.complete {
+                    if packageItemInfo.complete != 0 {
                         cell.contentLabel.text = deliveryContents[indexPath.row]
                         
                     } else {
@@ -445,7 +442,7 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                     }
                     
                 } else if indexPath.row == 3 {
-                    if let num = self.complete {
+                    if packageItemInfo.complete != 0{
                         cell.contentLabel.text = deliveryContents[indexPath.row]
                     } else {
                         cell.contentLabel.text = "해당 없음"
