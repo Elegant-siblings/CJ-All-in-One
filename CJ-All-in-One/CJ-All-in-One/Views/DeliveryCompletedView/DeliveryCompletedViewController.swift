@@ -142,7 +142,7 @@ class DeliveryCompletedViewController: UIViewController {
 //    let mapView = UIImageView().then {
 //        $0.cornerRadius = 10
 //        $0.clipsToBounds = true
-//        $0.layer.addShadow(location: [.bottom])
+//        $0.layer.addShadow(location: [.bottoCJ-All-in-One.appm])
 //        $0.layer.borderWidth = 1
 //    }
     let totalDistanceLabel = MainLabel(type: .main).then {

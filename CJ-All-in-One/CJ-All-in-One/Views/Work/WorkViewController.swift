@@ -84,6 +84,7 @@ class WorkViewController: UIViewController {
         view.backgroundColor = .CjWhite
         self.navigationController?.navigationBar.tintColor = .CjWhite
         self.navigationController?.navigationBar.topItem?.title = ""
+        navigationController?.navigationBar.isHidden = false
         
         view.addSubviews([
             navBar,

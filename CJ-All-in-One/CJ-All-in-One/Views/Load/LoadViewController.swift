@@ -109,6 +109,7 @@ class LoadViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
+        
         view.addSubviews([
             navBar,
             viewImageContainer,
