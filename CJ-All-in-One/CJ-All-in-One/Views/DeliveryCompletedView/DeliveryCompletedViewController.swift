@@ -62,7 +62,7 @@ class DeliveryCompletedViewController: UIViewController {
     let dateLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 20)
         $0.textColor = .white
-        $0.text = "2022.07.22 / 주간"
+        $0.text = "0000.00.00 / XX"
     }
     let infoView = UIView().then{
         $0.backgroundColor = .white
@@ -75,16 +75,16 @@ class DeliveryCompletedViewController: UIViewController {
     }
     let incomeLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 30)
-        $0.text = "35,680원"
+        $0.text = "0원"
     }
     let accountLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 12)
-        $0.text = "3333-0604-*****"
+        $0.text = "****-****-*****"
     }
     let deliveryLabel = MainLabel(type: .main).then {
         $0.font = UIFont.AppleSDGothicNeo(.bold, size: 10)
         $0.textColor = .lightGray
-        $0.text = "AXSD-SDXD-****-ZS**"
+        $0.text = "XXXX-XXXX-XXXX-XXXX"
     }
     let separateLine1 = UIView().then {
         $0.backgroundColor = .gray
@@ -198,7 +198,7 @@ class DeliveryCompletedViewController: UIViewController {
         let confirmTableLabel = MainLabel(type: .table).then {
             $0.text = "확인"
         }
-        $0.layer.addShadow(location: [.top, .bottom])
+//        $0.layer.addShadow(location: [.top, .bottom])
         $0.allowsSelection = false
         $0.tableHeaderView?.addSubviews([sharpLabel, productLabel, destLabel, confirmTableLabel])
         $0.register(DeliveryCompletedTableViewCell.self, forCellReuseIdentifier: DeliveryCompletedTableViewCell.identifier)
@@ -479,7 +479,7 @@ class DeliveryCompletedViewController: UIViewController {
       let count = unformatted.count
 
       unformatted.enumerated().forEach {
-        if $0.offset % 3 == 0 && $0.offset != 0 && $0.offset != count - 1 || $0.offset == count - 2 && count % 3 != 0 {
+        if $0.offset % 4 == 0 && $0.offset != 0{
           formatted += "-" + String($0.element)
           return
         }
@@ -491,7 +491,7 @@ class DeliveryCompletedViewController: UIViewController {
     
     private func presentCircleView() {
         
-        print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
+//        print("dsdfdsfds", infoContainerView2.frame.width, infoContainerView2.frame.height)
         
         let width = CGFloat(172)
         let height = CGFloat(102)
@@ -549,7 +549,7 @@ extension DeliveryCompletedViewController: UITableViewDataSource, UITableViewDel
         
         // 셀 정보 업데이트
         if let list = itemList {
-            cell.numLabel.text = "\(indexPath.row)"
+            cell.numLabel.text = "\(indexPath.row+1)"
             cell.titleLabel.text = list[indexPath.row].itemCategory
             cell.contentLabel.text = list[indexPath.row].receiverAddr
             
@@ -605,8 +605,8 @@ extension DeliveryCompletedViewController: DeliveryCompletedViewDelegate {
             deliveryLabel.text = format(info.deliveryManID)
             deliveryTimeLabel.text = "배송 시간: \(info.startTime!.substring(range: 12..<17)) ~ \(info.endTime!.substring(range: 12..<17))"
             itemCountLabel.text = "배송물품: \(info.itemNum)개"
-            completedItemCountLabel.text = "배송완료: \(info.completeNum!)개"
-            missedItemCountLabel.text = "미배송: \(info.itemNum - (info.completeNum ?? 0))개"
+            completedItemCountLabel.text = "배송완료: \(info.itemNum - (info.completeNum ?? 0))개"
+            missedItemCountLabel.text = "미배송: \(info.completeNum!)개"
         }
         
         tableView.reloadData()

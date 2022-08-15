@@ -163,6 +163,7 @@ class SignInViewController: UIViewController {
         UserDefaults.standard.set(result.userID, forKey: "id")
         UserDefaults.standard.set(result.userPassword, forKey: "pwd")
         UserDefaults.standard.set(result.deliveryManID, forKey: "ManID")
+        UserDefaults.standard.set(result.userAccount, forKey: "account")
         
         self.dismiss(animated: true, completion: nil)
     }

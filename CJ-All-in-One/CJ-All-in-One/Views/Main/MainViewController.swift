@@ -171,6 +171,7 @@ class MainViewController: UIViewController {
             UserDefaults.standard.removeObject(forKey: "id")
             UserDefaults.standard.removeObject(forKey: "pwd")
             UserDefaults.standard.removeObject(forKey: "ManID")
+            UserDefaults.standard.removeObject(forKey: "account")
             
             let vc = SignInViewController()
             vc.modalPresentationStyle = .fullScreen
@@ -321,6 +322,7 @@ class MainViewController: UIViewController {
         // Check auth status
         if let manID = UserDefaults.standard.string(forKey: "ManID") {
             Constant.shared.ManId = manID
+            Constant.shared.account = UserDefaults.standard.string(forKey: "account")!
             print(Constant.shared.ManId, UserDefaults.standard.string(forKey: "id"), UserDefaults.standard.string(forKey: "pwd"))
         }
         else {

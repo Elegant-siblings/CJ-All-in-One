@@ -36,7 +36,7 @@ class FindPathBottomViewController: UIViewController {
     //MARK: - 컴포넌트 정의
     
     let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-        $0.layer.addShadow(location: [.top, .bottom])
+//        $0.layer.addShadow(location: [.top, .bottom])
         $0.tableHeaderView = .none
         $0.register(FindPathBottomTableViewCell.self, forCellReuseIdentifier: FindPathBottomTableViewCell.identifier)
     }
@@ -295,7 +295,7 @@ extension FindPathBottomViewController: PanModalPresentable {
     
     // 스크롤되는 tableview 나 collectionview 가 있다면 여기에 넣어주면 PanModal 이 모달과 스크롤 뷰 사이에서 팬 제스처를 원활하게 전환합니다.
     var panScrollable: UIScrollView? {
-        return tableView
+        return nil
     }
 
     var shortFormHeight: PanModalHeight {

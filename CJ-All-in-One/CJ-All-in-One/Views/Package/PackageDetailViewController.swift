@@ -474,12 +474,28 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
+func format(_ unformatted:String) -> String {
+
+  var formatted = ""
+  let count = unformatted.count
+
+  unformatted.enumerated().forEach {
+    if $0.offset % 4 == 0 && $0.offset != 0{
+      formatted += "-" + String($0.element)
+      return
+    }
+    formatted += String($0.element)
+    return
+  }
+  return formatted
+}
+
 extension PackageDetailViewController: PackageDetailViewControllerDelegate {
     func didSuccessGetPackageDetail(_ result: PackageResponse) {
         packageItemInfo = result
         
-        contents.append(Constant.shared.ManId)
-        contents.append("123456")
+        contents.append(format(Constant.shared.ManId))
+        contents.append("71541241-1573131")
         contents.append(result.itemCategory ?? "")
         contents.append(result.sender ?? "")
         contents.append(result.receiver ?? "")
