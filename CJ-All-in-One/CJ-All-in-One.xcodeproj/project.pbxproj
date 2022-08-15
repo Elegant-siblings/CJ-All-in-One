@@ -900,11 +900,12 @@
 				CODE_SIGN_ENTITLEMENTS = "CJ-All-in-One";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = H8B2PN25Z8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CJ-All-in-One/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "CJ CS";
+				INFOPLIST_KEY_NSCameraUsageDescription = "바코드 스캔을 위하여 카메라 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
@@ -912,12 +913,13 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedFInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "wonjune.CJ-All-in-One";
 				PRODUCT_NAME = "CJ-All-in-One";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -937,23 +939,25 @@
 				CODE_SIGN_ENTITLEMENTS = "CJ-All-in-One";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = H8B2PN25Z8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CJ-All-in-One/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "CJ CS";
+				INFOPLIST_KEY_NSCameraUsageDescription = "바코드 스캔을 위하여 카메라 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "wonjune.CJ-All-in-One";
 				PRODUCT_NAME = "CJ-All-in-One";
 				PROVISIONING_PROFILE_SPECIFIER = "";
