@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.2)
+  - DropDown (2.3.13)
   - NMapsMap (3.15.0)
   - PanModal (1.2.7)
   - SnapKit (5.6.0)
@@ -7,6 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - DropDown
   - NMapsMap
   - PanModal
   - SnapKit
@@ -15,6 +17,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - DropDown
     - NMapsMap
     - PanModal
     - SnapKit
@@ -22,11 +25,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   NMapsMap: f151761c088d6516064c59da03ab6503769486e6
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: 8012bae51fde69e78df51844055bc54e3df7ecf1
+PODFILE CHECKSUM: 42048fc0c3a4ef8a56e7cc1fa13052a60671a153
 
 COCOAPODS: 1.11.2

@@ -151,7 +151,7 @@ class LoadViewController: UIViewController {
 
         let okAction = UIAlertAction(title: "확인", style: .default) {(_) in
             // 배송 시작 && 상태 업데이트 쿼리 보내기
-            self.startDataManager.sendWorkStart(workPk: self.workPK!, manID: ManId, deliveryPKs: self.lists, seatNum: self.seatNums)
+            self.startDataManager.sendWorkStart(workPk: self.workPK!, manID: Constant.shared.ManId, deliveryPKs: self.lists, seatNum: self.seatNums)
             self.updateDataManager.updateWorkState(workPK: self.workPK!, workState: 3)
             // 뷰 넘기기
             let vc = FindPathViewController()

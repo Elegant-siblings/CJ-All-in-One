@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
+import DropDown
 
 class PackageDetailViewController: UIViewController {
     
@@ -24,8 +25,20 @@ class PackageDetailViewController: UIViewController {
     var deliveryImgStr : String?
     var deliveryPK : Int?
     var photoURL : String?
+    var receipt: String?
+    var recipient: String?
     
-
+    let dropDown1 = DropDown()
+    let dropDown2 = DropDown()
+    
+    
+    lazy var viewScrollContain = UIView()
+    lazy var scrollView = UIScrollView().then {
+        $0.alwaysBounceVertical = false
+        $0.bounces = $0.contentOffset.y > 0
+    }
+    lazy var viewContent = UIView()
+    
     let navigationView = UIView().then {
         $0.backgroundColor = .deppBlue
     }
@@ -46,8 +59,7 @@ class PackageDetailViewController: UIViewController {
         $0.text = "기본 정보"
         $0.textColor = .lightGray
     }
-    let basicTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-        $0.layer.addShadow(location: [.top, .bottom])
+    let basicTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.allowsSelection = false
         $0.tableHeaderView = .none
         $0.register(PackageBasicTableViewCell.self, forCellReuseIdentifier: PackageBasicTableViewCell.identifier)
@@ -60,13 +72,11 @@ class PackageDetailViewController: UIViewController {
         $0.text = "배송 정보"
         $0.textColor = .lightGray
     }
-    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-        $0.layer.addShadow(location: [.top, .bottom])
+    let deliveryTableView = ListTableView(rowHeight: 40, scrollType: .none).then {
         $0.allowsSelection = false
         $0.tableHeaderView = .none
         $0.register(PackageDeliveryTableViewCell.self, forCellReuseIdentifier: PackageDeliveryTableViewCell.identifier)
     }
-    
     
     //Button
     let completedButton = MainButton(type: .main).then {
@@ -75,6 +85,7 @@ class PackageDetailViewController: UIViewController {
         $0.setTitle("배송완료", for: .normal)
         $0.addTarget(self, action: #selector(deliveryComplete), for: .touchUpInside)
     }
+    
     let declinedButton = MainButton(type: .sub).then {
         $0.backgroundColor = .CjYellow
         $0.layer.borderColor = UIColor.CjYellow.cgColor
@@ -107,10 +118,20 @@ class PackageDetailViewController: UIViewController {
         $0.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
     }
     
+    //셀 내 드롭다운
+    let dropDownButton1 = UIButton().then {
+        $0.setImage(UIImage(named: "btnDown"), for: .normal)
+        $0.addTarget(self, action: #selector(showMenu1), for: .touchUpInside)
+    }
+    let dropDownButton2 = UIButton().then {
+        $0.setImage(UIImage(named: "btnDown"), for: .normal)
+        $0.addTarget(self, action: #selector(showMenu2), for: .touchUpInside)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .CjWhite
         
         navigationController?.navigationBar.isHidden = true
         
@@ -121,41 +142,55 @@ class PackageDetailViewController: UIViewController {
 
         
 //        view.addSubviews([containerView])
+        // -MARK: addSubViews
+        self.view.addSubviews([
+            navigationView,
+            viewScrollContain,
+//            basicInfoLabel,
+//            basicTableView,
+//            deliveryInfoLabel,
+//            deliveryTableView,
+            missedButton,
+            declinedButton,
+            completedButton
+        ])
         
-        self.view.addSubviews([navigationView, basicInfoLabel, basicTableView, deliveryInfoLabel, deliveryTableView, missedButton, declinedButton, completedButton])
-        navigationView.addSubviews([backButton, completedLabel])
+        navigationView.addSubviews([
+            backButton,
+            completedLabel
+        ])
         
+        viewScrollContain.addSubviews([scrollView])
+        scrollView.addSubviews([viewContent])
+        viewContent.addSubviews([
+            basicInfoLabel,basicTableView,
+            deliveryInfoLabel,deliveryTableView
+        ])
         setConstraints()
-        
-
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-    
-        
         
         dataManager.getPackageDetail(deliveryPK: deliveryPK!)
     }
     
-    
-//    private func presentCircleView() {
-//        let width = self.containerView.frame.width / 2
-//        let height = self.containerView.frame.height / 2
-//
-//        let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-////        pieChartView.center = self.view.center
-//
-//        pieChartView.slices = [Slice(percent: 0.75, color: UIColor.systemOrange),
-//                                Slice(percent: 0.1, color: UIColor.systemTeal),
-//                                Slice(percent: 0.15, color: UIColor.systemRed)]
-//
-//        containerView.addSubview(pieChartView)
-//        pieChartView.animateChart()
-//    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        basicTableView.snp.updateConstraints { make in
+            make.height.equalTo(basicTableView.contentSize.height)
+        }
+        deliveryTableView.snp.updateConstraints { make in
+            make.height.equalTo(deliveryTableView.contentSize.height)
+        }
+        viewContent.snp.updateConstraints { make in
+            make.height.equalTo(basicTableView.frame.height+deliveryTableView.frame.height+170)
+        }
+    }
     
     func setConstraints( ){
         // ScrollView
+        // -MARK: setConstraints
         navigationView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.trailing.equalToSuperview()
@@ -172,6 +207,20 @@ class PackageDetailViewController: UIViewController {
             make.centerX.equalTo(navigationView.snp.centerX)
             make.bottom.equalTo(navigationView.snp.bottom).offset(-10)
         }
+        viewScrollContain.snp.makeConstraints { make in
+            make.top.equalTo(navigationView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(completedButton.snp.top).offset(-20)
+        }
+        scrollView.snp.makeConstraints { make in
+            make.top.left.right.bottom.equalToSuperview()
+        }
+        viewContent.snp.makeConstraints { make in
+            make.edges.equalTo(0)
+            make.width.equalToSuperview()
+            make.height.equalTo(10000)
+        }
+//
         missedButton.snp.makeConstraints { make in
             make.centerY.equalTo(declinedButton.snp.centerY)
             make.leading.equalTo(self.view.snp.centerX).offset(5)
@@ -190,28 +239,49 @@ class PackageDetailViewController: UIViewController {
             make.leading.equalTo(self.view).offset(24)
             make.trailing.equalTo(self.view).offset(-24)
         }
-        
+//
         basicInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(navigationView.snp.bottom).offset(20)
-            make.leading.equalTo(self.view).offset(24)
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(24)
         }
         basicTableView.snp.makeConstraints { make in
-            make.leading.equalTo(self.view).offset(24)
-            make.trailing.equalTo(self.view).offset(-24)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
             make.top.equalTo(basicInfoLabel.snp.bottom).offset(10)
-            make.height.equalTo(249)
+//            make.bottom.equalToSuperview()
+//            make.height.equalTo(249)
+            make.height.equalTo(basicTableView.contentSize.height)
         }
         deliveryInfoLabel.snp.makeConstraints { make in
             make.top.equalTo(basicTableView.snp.bottom).offset(30)
-            make.leading.equalTo(self.view).offset(24)
+            make.leading.equalToSuperview().offset(24)
         }
         deliveryTableView.snp.makeConstraints { make in
-            make.leading.equalTo(self.view).offset(24)
-            make.trailing.equalTo(self.view).offset(-24)
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
             make.top.equalTo(deliveryInfoLabel.snp.bottom).offset(10)
-            make.height.equalTo(234)
+//            make.height.equalTo(234)
+            make.height.equalTo(deliveryTableView.contentSize.height)
         }
+    }
+    
+    func initDropDown(dropDown: DropDown, anchor: UILabel) {
+        dropDown.anchorView = anchor
+        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+        dropDown.direction = .bottom
         
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            anchor.text = item
+            
+            if dropDown == dropDown1 {
+                receipt = item
+            } else {
+                recipient = item
+            }
+            
+            //선택한 아이템 초기화
+            dropDown.clearSelection()
+        }
     }
     
     @objc func back(){
@@ -238,14 +308,18 @@ class PackageDetailViewController: UIViewController {
     }
     
     @objc func deliveryComplete() {
-        if let str = photoURL, let num = deliveryPK {
+        if let str = photoURL, let num = deliveryPK, let receipt = self.receipt, let recipient = self.recipient {
             print(str)
             
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: "haha", recipient: "hoho", picture: str)
-            
-            self.navigationController?.popViewController(animated: true)
+            if receipt != "해당 없음", recipient != "해당 없음" {
+                dataManager.updateDeliveryInfo(deliveryPK: num, complete: 1, receipt: receipt, recipient: recipient, picture: str)
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.presentAlert(title: "누락한 정보가 있습니다.")
+            }
+
         } else {
-            self.presentAlert(title: "사진을 첨부해 주세요.")
+            self.presentAlert(title: "누락한 정보가 있습니다.")
         }
         
         
@@ -253,24 +327,22 @@ class PackageDetailViewController: UIViewController {
     @objc func deliveryReject(){
         if let num = deliveryPK {
             
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "haha", recipient: "hoho", picture: "")
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 2, receipt: "", recipient: "", picture: "")
             self.navigationController?.popViewController(animated: true)
-
-        } else {
-            self.presentAlert(title: "사진을 첨부해 주세요.")
         }
-
     }
     @objc func deliveryMiss() {
         if let num = deliveryPK {
-            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "haha", recipient: "hoho", picture: "")
+            dataManager.updateDeliveryInfo(deliveryPK: num, complete: 4, receipt: "", recipient: "", picture: "")
             self.navigationController?.popViewController(animated: true)
-
-        } else {
-            self.presentAlert(title: "사진을 첨부해 주세요.")
-
         }
-
+    }
+    
+    @objc func showMenu1() {
+        dropDown1.show()
+    }
+    @objc func showMenu2() {
+        dropDown2.show()
     }
 }
 
@@ -322,27 +394,68 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
                     }
                     
                     if let img = data.picture {
-                        packageImage.image = UIImage(named: "택배사진")
+                        if img != "" {
+                            packageImage.image = UIImage(named: "택배사진")
+                        } else {
+                            packageImage.image = UIImage(named: "selectPhoto")
+                        }
+                        packageImageTouch.isHidden = true
                         cameraButton.isHidden = true
                         
                     } else {
-                        
+                        packageImageTouch.isHidden = false
                         cameraButton.isHidden = false
                     }
-            
+
                 } else if indexPath.row == 0 {
                     
-                    if packageItemInfo.complete == 0{
-                        cell.contentLabel.text = "미배송"
-                        cell.contentLabel.textColor = .CjOrange
-                    } else if packageItemInfo.complete == 1 {
+                    switch packageItemInfo.complete {
+                    case 0:
+                        cell.contentLabel.text = "배송 전"
+                        cell.contentLabel.textColor = .black
+                    case 1:
                         cell.contentLabel.text = "배송완료"
                         cell.contentLabel.textColor = .CjBlue
-                    } else {
+                    case 2:
                         cell.contentLabel.text = "수취 거부"
+                        cell.contentLabel.textColor = .CjYellow
+                    default:
+                        cell.contentLabel.text = "미배송"
                         cell.contentLabel.textColor = .CjRed
+                        
+                    }
+                } else if indexPath.row == 2 {
+                    if packageItemInfo.complete != 0 {
+                        cell.contentLabel.text = deliveryContents[indexPath.row]
+                        
+                    } else {
+                        cell.contentLabel.text = "해당 없음"
+                        cell.contentView.addSubview(dropDownButton1)
+                        dropDownButton1.snp.makeConstraints { make in
+                            make.height.equalTo(20)
+                            make.width.equalTo(20)
+                            make.centerY.equalToSuperview()
+                            make.leading.equalToSuperview().offset(130)
+                        }
+                        dropDown1.dataSource = ["해당 없음", "직접 전달", "경비실 전달", "문앞 전달", "무인 택배함", "기타"]
+                        initDropDown(dropDown: dropDown1, anchor: cell.contentLabel)
                     }
                     
+                } else if indexPath.row == 3 {
+                    if packageItemInfo.complete != 0{
+                        cell.contentLabel.text = deliveryContents[indexPath.row]
+                    } else {
+                        cell.contentLabel.text = "해당 없음"
+                        cell.contentView.addSubview(dropDownButton2)
+                        dropDownButton2.snp.makeConstraints { make in
+                            make.height.equalTo(20)
+                            make.width.equalTo(20)
+                            make.centerY.equalToSuperview()
+                            make.leading.equalToSuperview().offset(120)
+                        }
+                        dropDown2.dataSource = ["해당 없음", "본인", "가족", "(직장)동료", "이웃", "기타"]
+                        initDropDown(dropDown: dropDown2, anchor: cell.contentLabel)
+                    }
                 } else {
                     cell.contentLabel.text = deliveryContents[indexPath.row]
                 }
@@ -361,12 +474,28 @@ extension PackageDetailViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
+func format(_ unformatted:String) -> String {
+
+  var formatted = ""
+  let count = unformatted.count
+
+  unformatted.enumerated().forEach {
+    if $0.offset % 4 == 0 && $0.offset != 0{
+      formatted += "-" + String($0.element)
+      return
+    }
+    formatted += String($0.element)
+    return
+  }
+  return formatted
+}
+
 extension PackageDetailViewController: PackageDetailViewControllerDelegate {
     func didSuccessGetPackageDetail(_ result: PackageResponse) {
         packageItemInfo = result
         
-        contents.append(ManId)
-        contents.append("123456")
+        contents.append(format(Constant.shared.ManId))
+        contents.append("71541241-1573131")
         contents.append(result.itemCategory ?? "")
         contents.append(result.sender ?? "")
         contents.append(result.receiver ?? "")
@@ -376,14 +505,8 @@ extension PackageDetailViewController: PackageDetailViewControllerDelegate {
         
         
         deliveryContents.append(result.completeTime ?? "")
-        if let result = result.completeTime{
-            deliveryContents.append("대면 배달")
-            deliveryContents.append("본인")
-        }
-        else{
-            deliveryContents.append("")
-            deliveryContents.append("")
-        }
+        deliveryContents.append(result.receipt ?? "")
+        deliveryContents.append(result.recipient ?? "")
         deliveryContents.append(result.picture ?? "")
         
         basicTableView.reloadData()

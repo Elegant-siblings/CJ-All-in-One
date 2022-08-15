@@ -24,7 +24,7 @@ class FindPathBottomViewController: UIViewController {
     var dataManager: WorksItemListDataManager = WorksItemListDataManager()
     lazy var completedDataManager: DeliveryCompletedDataManager = DeliveryCompletedDataManager(delegate: self)
     var workPK: Int?
-    var dliveryNum: Int!
+    var deliveryNum: Int!
     
     // Bool Variable
     var onDelivery : Bool = true
@@ -36,7 +36,7 @@ class FindPathBottomViewController: UIViewController {
     //MARK: - 컴포넌트 정의
     
     let tableView = ListTableView(rowHeight: 40, scrollType: .vertical).then {
-        $0.layer.addShadow(location: [.top, .bottom])
+//        $0.layer.addShadow(location: [.top, .bottom])
         $0.tableHeaderView = .none
         $0.register(FindPathBottomTableViewCell.self, forCellReuseIdentifier: FindPathBottomTableViewCell.identifier)
     }
@@ -110,15 +110,7 @@ class FindPathBottomViewController: UIViewController {
         if let workPK = workPK {
             dataManager.getPackageDetail(workPK: workPK, vc: self)
         }
-        dliveryNum = 0
-        if let item = tableInfo {
-            for i in item {
-                if i.complete == 0{
-                    dliveryNum += 1
-                }
-            }
-        }
-        leftDeliveryItemsLabel.text = "남은 배송 물품 \(dliveryNum!)개"
+        
     }
     
     func setConstraints(){
@@ -169,13 +161,18 @@ class FindPathBottomViewController: UIViewController {
         tableInfo = result.itemList
         tableView.reloadData()
         
+        deliveryNum = 0
+
         for i in result.itemList{
             if i.complete == 0{ //아무 상태도 아닐 때
                 deliveryCompletedButton.isEnabled = false
+                deliveryNum += 1
             } else {
                 deliveryCompletedButton.isEnabled = true
             }
         }
+        
+        leftDeliveryItemsLabel.text = "남은 배송 물품 \(deliveryNum!)개"
     }
     func failedToRequest(message: String) {
         print(message)
@@ -235,6 +232,7 @@ extension FindPathBottomViewController: DeliveryCompletedViewDelegate {
 extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = tableInfo {
+            print(data.count)
             return data.count
         } else {
             return 0
@@ -265,7 +263,7 @@ extension FindPathBottomViewController: UITableViewDataSource, UITableViewDelega
                 cell.checkImage.image = UIImage(named: "CellUncheck")
             } else if data[indexPath.row].complete == 1 {
                 cell.checkImage.image = UIImage(named: "CellCheck")
-            } else if data[indexPath.row].complete == 2{
+            } else if data[indexPath.row].complete == 2 {
                 cell.checkImage.image = UIImage(named: "CellRejected")
             } else {
                 cell.checkImage.isHidden = true
@@ -297,7 +295,7 @@ extension FindPathBottomViewController: PanModalPresentable {
     
     // 스크롤되는 tableview 나 collectionview 가 있다면 여기에 넣어주면 PanModal 이 모달과 스크롤 뷰 사이에서 팬 제스처를 원활하게 전환합니다.
     var panScrollable: UIScrollView? {
-        return tableView
+        return nil
     }
 
     var shortFormHeight: PanModalHeight {

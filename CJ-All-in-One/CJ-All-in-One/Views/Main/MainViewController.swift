@@ -159,15 +159,19 @@ class MainViewController: UIViewController {
     }
     
     @objc func refreshTable(_ sender: UIRefreshControl) {
-        taskDataManager.getTasks(self, id: ManId)
+        taskDataManager.getTasks(self, id: Constant.shared.ManId)
         sender.endRefreshing()
     }
     @objc func logOut() {
         print("로그 아웃")
         let alert = UIAlertController(title: "로그아웃", message: "정말 로그아웃 하시겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { (_) in
-            ManId = ""
+            Constant.shared.ManId = ""
             Constant.shared.account = ""
+            UserDefaults.standard.removeObject(forKey: "id")
+            UserDefaults.standard.removeObject(forKey: "pwd")
+            UserDefaults.standard.removeObject(forKey: "ManID")
+            UserDefaults.standard.removeObject(forKey: "account")
             
             let vc = SignInViewController()
             vc.modalPresentationStyle = .fullScreen
@@ -180,7 +184,7 @@ class MainViewController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        taskDataManager.getTasks(self, id: ManId)
+        taskDataManager.getTasks(self, id: Constant.shared.ManId)
         tableAssignedTask.reloadData()
     }
 
@@ -191,7 +195,7 @@ class MainViewController: UIViewController {
         
         handleNotAuthenticated()
         
-        taskDataManager.getTasks(self, id: ManId)
+        taskDataManager.getTasks(self, id: Constant.shared.ManId)
         
         self.view.addSubviews([
             navBar,
@@ -316,15 +320,17 @@ class MainViewController: UIViewController {
     
     private func handleNotAuthenticated() {
         // Check auth status
-        if ManId == "" {
-            // show log in
+        if let manID = UserDefaults.standard.string(forKey: "ManID") {
+            Constant.shared.ManId = manID
+            Constant.shared.account = UserDefaults.standard.string(forKey: "account")!
+            print(Constant.shared.ManId, UserDefaults.standard.string(forKey: "id"), UserDefaults.standard.string(forKey: "pwd"))
+        }
+        else {
             let loginVC = SignInViewController()
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: false)
         }
-
     }
-    
 }
 
 // -MARK: TableView Extension

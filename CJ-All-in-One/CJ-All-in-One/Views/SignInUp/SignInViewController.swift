@@ -124,7 +124,7 @@ class SignInViewController: UIViewController {
         print(password)
         
         dataManager.postLogIn(userID: usernameEmail, userPassword: password, viewController: self)
-
+//        UserDefaults.standard.set(
     }
     
     @objc func keyboardWillShow(_ sender: Notification) {
@@ -159,9 +159,13 @@ class SignInViewController: UIViewController {
     func didSuccessLogIn(result: UserInfo){
         print("LogIn 성공")
         Constant.shared.account = result.userAccount
-        ManId = result.deliveryManID
+        Constant.shared.ManId = result.deliveryManID
+        UserDefaults.standard.set(result.userID, forKey: "id")
+        UserDefaults.standard.set(result.userPassword, forKey: "pwd")
+        UserDefaults.standard.set(result.deliveryManID, forKey: "ManID")
+        UserDefaults.standard.set(result.userAccount, forKey: "account")
+        
         self.dismiss(animated: true, completion: nil)
-//        self.navigationController?.changeRootViewController(vc)
     }
     func failedToLogIn(message: String) {
         let alert = UIAlertController(title: "로그인 실패", message: message, preferredStyle: .alert)
