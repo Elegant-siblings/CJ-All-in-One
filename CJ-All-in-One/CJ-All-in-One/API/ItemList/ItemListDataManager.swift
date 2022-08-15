@@ -34,7 +34,7 @@ class ItemListDataManager: ItemListDataManagerDelegate {
     
     func getTermAddress(terminalAddr: String, vc: WorkViewController) {
         
-        let urlString = "\(base_url)/map/terminal?terminalAddr=\(vc.terminalAddr)"
+        let urlString = "\(base_url)/map/terminal?terminalAddr=\(terminalAddr)"
 
         print(urlString)
         
