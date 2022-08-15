@@ -106,7 +106,8 @@ class LoadViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .CjWhite
-        navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         view.addSubviews([
             navBar,

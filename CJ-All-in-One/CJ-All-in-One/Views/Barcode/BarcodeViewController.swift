@@ -110,6 +110,7 @@ class BarcodeViewController: UIViewController {
         
         view.backgroundColor = .CjWhite
         navigationController?.navigationBar.tintColor = .CjWhite
+        navigationController?.navigationBar.topItem?.title = ""
         readerView.backgroundColor = .opaqueSeparator
         view.addSubviews([
             navBar,
